@@ -2,11 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="../template/common/commonLayout.xhtml">
 	<ui:define name="content">
-	File Upload..
+		<h:form enctype="multipart/form-data">
+			<p:fileUpload value="#{fileUploader.file }" mode="simple"
+				fileUploadListener="#{fileUploader.handleFileUpload}"></p:fileUpload>
+			<p:commandButton value="upload" ajax="false"></p:commandButton>
+		</h:form>
+
+		<!-- <h:form enctype="multipart/form-data">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:fileUpload value="#{fileUploader.file}" mode="simple"
+				skinSimple="true" />
+
+			<p:commandButton value="Submit" ajax="false"
+				actionListener="#{fileUploader.upload}" />
+		</h:form>
+ -->
+
 	</ui:define>
 </ui:composition>
 </html>
