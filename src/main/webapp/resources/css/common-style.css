@@ -1,5 +1,17 @@
+/* body {
+    margin: 0px;
+    padding: 0;
+    font-size: 12px;
+    color: #616161;
+} */
+
+.ui-widget, .ui-widget .ui-widget {
+     font-size: 12px !important;
+}
+
 #page{
-	width: 800px;
+	/* width: 800px; */
+	width: 95%;
 	margin: 0 auto;
 }
 
