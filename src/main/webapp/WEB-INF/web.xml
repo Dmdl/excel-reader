@@ -11,7 +11,7 @@
 	<!-- Add Support for Spring -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/ApplicationContext.xml</param-value>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
 	</context-param>
 	
   <listener>
@@ -62,7 +62,7 @@
 
 	<context-param> 
             <param-name>primefaces.UPLOADER</param-name> 
-            <param-value>auto|native|commons</param-value> 
+            <param-value>auto</param-value>
     </context-param> 
     <filter> 
            <filter-name>PrimeFaces FileUpload Filter</filter-name> 

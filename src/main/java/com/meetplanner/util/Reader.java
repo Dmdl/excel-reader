@@ -2,5 +2,5 @@ package com.meetplanner.util;
 
 public interface Reader {
 
-	public void read();
+	public void read(String path) throws Exception;
 }

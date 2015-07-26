@@ -7,23 +7,10 @@
 
 <ui:composition template="../template/common/commonLayout.xhtml">
 	<ui:define name="content">
-		<h:form enctype="multipart/form-data">
-			<p:fileUpload value="#{fileUploader.file }" mode="simple"
-				fileUploadListener="#{fileUploader.handleFileUpload}"></p:fileUpload>
-			<p:commandButton value="upload" ajax="false"></p:commandButton>
-		</h:form>
-
-		<!-- <h:form enctype="multipart/form-data">
-			<p:growl id="messages" showDetail="true" />
-
-			<p:fileUpload value="#{fileUploader.file}" mode="simple"
-				skinSimple="true" />
-
-			<p:commandButton value="Submit" ajax="false"
-				actionListener="#{fileUploader.upload}" />
-		</h:form>
- -->
-
-	</ui:define>
+	<p:growl id="fileUploadGrowl"></p:growl>
+        <h:form enctype="multipart/form-data">
+            <p:fileUpload value="#{fileUploadbackingBean.file}" fileUploadListener="#{fileUploadbackingBean.handleFileUpload}" update="fileUploadGrowl"/>
+        </h:form>
+    </ui:define>
 </ui:composition>
 </html>

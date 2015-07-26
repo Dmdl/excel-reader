@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.meetplanner.service.UserBo;
+import com.meetplanner.util.Reader;
 
 @Component
 @ManagedBean
@@ -16,6 +17,9 @@ public class UserBean {
 	@Autowired
 	UserBo userBo;
 	private String value = "Test Message";
+	
+	@Autowired
+	Reader reader;
 
 	public void setUserBo(UserBo userBo) {
 		this.userBo = userBo;
@@ -38,4 +42,18 @@ public class UserBean {
 		System.out.println("set val "+value);
 		this.value = value;
 	}
+	
+	public void insertInvoice(){
+		System.out.println("in insert service");
+		//userBo.insert();
+	}
+
+	public Reader getReader() {
+		return reader;
+	}
+
+	public void setReader(Reader reader) {
+		this.reader = reader;
+	}
+	
 }
