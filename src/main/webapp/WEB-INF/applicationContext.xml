@@ -15,6 +15,10 @@
 	<bean id="testDAO" class="com.meetplanner.dto.TestDaoImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	
+	<bean id="fileUploadDao" class="com.meetplanner.dao.FileUploadDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -30,7 +34,7 @@
 				<prop key="portNumber">3306</prop>
 				<prop key="serverName">localhost</prop>
 				<prop key="user">root</prop>
-				<prop key="databaseName">test</prop>
+				<prop key="databaseName">meetplanner</prop>
 				<prop key="password">1234</prop>
 			</props>
 		</property>

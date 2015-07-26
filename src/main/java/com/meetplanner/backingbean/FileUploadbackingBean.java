@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -17,6 +20,8 @@ import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.meetplanner.dto.GroupDTO;
+import com.meetplanner.service.FileUploadService;
 import com.meetplanner.util.Reader;
 
 @Component
@@ -29,9 +34,23 @@ public class FileUploadbackingBean implements Serializable{
 	private Reader reader;
 	private UploadedFile file;
 	private static final String FILE_SAVE_LOCATION="E:\\doc\\upload\\";
+	private Map<Integer, String> allGroups=new HashMap<Integer, String>();
+	@Autowired
+	private FileUploadService fileUploadService;
 
 	public FileUploadbackingBean(){
-		//reader=new ExcelReader();
+		try{		
+			System.out.println("reader::::::: "+reader);
+			System.out.println("fileUploadService :::::: "+fileUploadService);
+			List<GroupDTO> groups = fileUploadService.getAllGroups();
+			if(groups.size()>0){
+				for(GroupDTO e:groups){
+					allGroups.put(e.getId(), e.getName());
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 	}
 	
 	public void handleFileUpload(FileUploadEvent event){
@@ -91,6 +110,22 @@ public class FileUploadbackingBean implements Serializable{
 
 	public void setReader(Reader reader) {
 		this.reader = reader;
+	}
+
+	public Map<Integer, String> getAllGroups() {
+		return allGroups;
+	}
+
+	public void setAllGroups(Map<Integer, String> allGroups) {
+		this.allGroups = allGroups;
+	}
+
+	public FileUploadService getFileUploadService() {
+		return fileUploadService;
+	}
+
+	public void setFileUploadService(FileUploadService fileUploadService) {
+		this.fileUploadService = fileUploadService;
 	}
 
 }
