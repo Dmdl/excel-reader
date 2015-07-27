@@ -9,6 +9,10 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 	</application>
 
+	<lifecycle>
+		<phase-listener>com.meetplanner.util.LoginErrorPhaseListener</phase-listener>
+	</lifecycle>
+
 	<managed-bean>
 		<managed-bean-name>fileUploadbackingBean</managed-bean-name>
 		<managed-bean-class>com.meetplanner.backingbean.FileUploadbackingBean</managed-bean-class>
@@ -21,6 +25,12 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 			<property-name>reader</property-name>
 			<value>#{excelReader}</value>
 		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>loginBean</managed-bean-name>
+		<managed-bean-class>com.meetplanner.backingbean.LoginBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 
 </faces-config>
