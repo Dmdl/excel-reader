@@ -9,4 +9,18 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 	</application>
 
+	<managed-bean>
+		<managed-bean-name>fileUploadbackingBean</managed-bean-name>
+		<managed-bean-class>com.meetplanner.backingbean.FileUploadbackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>fileUploadService</property-name>
+			<value>#{fileUploadService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>reader</property-name>
+			<value>#{excelReader}</value>
+		</managed-property>
+	</managed-bean>
+
 </faces-config>

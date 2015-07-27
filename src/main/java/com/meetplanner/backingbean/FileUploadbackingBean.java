@@ -11,36 +11,29 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.meetplanner.dto.GroupDTO;
 import com.meetplanner.service.FileUploadService;
 import com.meetplanner.util.Reader;
+import com.meetplanner.util.SpringApplicationContex;
 
-@Component
-@ManagedBean
-@RequestScoped
 public class FileUploadbackingBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	@Autowired
 	private Reader reader;
 	private UploadedFile file;
-	private static final String FILE_SAVE_LOCATION="E:\\doc\\upload\\";
+	private static final String FILE_SAVE_LOCATION="D:\\doc\\upload\\";
 	private Map<Integer, String> allGroups=new HashMap<Integer, String>();
-	@Autowired
 	private FileUploadService fileUploadService;
+	private String selectedGroup;
 
 	public FileUploadbackingBean(){
 		try{		
-			System.out.println("reader::::::: "+reader);
+			fileUploadService=(FileUploadService)SpringApplicationContex.getBean("fileUploadService");
 			System.out.println("fileUploadService :::::: "+fileUploadService);
 			List<GroupDTO> groups = fileUploadService.getAllGroups();
 			if(groups.size()>0){
@@ -57,7 +50,7 @@ public class FileUploadbackingBean implements Serializable{
 		System.out.println("file upload....");
 		System.out.println(event.getFile().getFileName()+" type "+event.getFile().getContentType());
 		String contentType=event.getFile().getContentType();
-		if("application/vnd.ms-excel".equalsIgnoreCase(contentType) || "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equalsIgnoreCase(contentType)){
+		if("application/vnd.ms-excel".equalsIgnoreCase(contentType) || "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equalsIgnoreCase(contentType) || "application/kset".equals(contentType)){
 			OutputStream outputStream=null;
 			InputStream inputStream=null;
 			try{
@@ -126,6 +119,14 @@ public class FileUploadbackingBean implements Serializable{
 
 	public void setFileUploadService(FileUploadService fileUploadService) {
 		this.fileUploadService = fileUploadService;
+	}
+
+	public String getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(String selectedGroup) {
+		this.selectedGroup = selectedGroup;
 	}
 
 }

@@ -14,7 +14,7 @@ public class FileUploadDaoImpl extends JdbcDaoSupport implements FileUploadDao {
 	public List<GroupDTO> getAllGroups() {
 		List<GroupDTO> groups = new ArrayList<GroupDTO>();
 		try {
-			String sql = "SELECT * FROM group";
+			String sql = "SELECT * FROM groups";
 			groups = (List<GroupDTO>)getJdbcTemplate().query(sql,
 					new BeanPropertyRowMapper<>(GroupDTO.class));
 			return groups;

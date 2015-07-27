@@ -10,7 +10,7 @@ import com.meetplanner.dto.AllEvents;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.GroupDTO;
 
-@Service
+@Service("fileUploadService")
 public class FileUploadServiceImpl implements FileUploadService {
 
 	@Autowired
