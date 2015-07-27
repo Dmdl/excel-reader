@@ -50,3 +50,8 @@ li ul li.ui-menuitem-active>a{
     background-image: none !important;
     background-color:green !important;    
 }
+
+.companyHeaderGrid.ui-panelgrid>*>tr,
+.companyHeaderGrid.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+}

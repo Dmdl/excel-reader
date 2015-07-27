@@ -10,14 +10,14 @@
 		<p:growl id="fileUploadGrowl"></p:growl>
 
 		<h:form>
-					
-			<p:outputLabel for="groupType" value="Select Group " />
-            <p:selectOneMenu id="groupType" value="#{fileUploadbackingBean.selectedGroup}" style="width:150px;">                
-                <f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
-                <f:selectItems value="#{fileUploadbackingBean.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" 
-                itemLabel="#{entry.value}"/>
-            </p:selectOneMenu>
-			
+			<p:panelGrid columns="2" styleClass="companyHeaderGrid">		
+				<p:outputLabel for="groupType" value="Select Group " />
+	            <p:selectOneMenu id="groupType" value="#{fileUploadbackingBean.selectedGroup}" style="width:150px;">                
+	                <f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
+	                <f:selectItems value="#{fileUploadbackingBean.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" 
+	                itemLabel="#{entry.value}"/>
+	            </p:selectOneMenu>
+			</p:panelGrid>
 		</h:form>
 		<br /><br />
 		<h:form enctype="multipart/form-data">
