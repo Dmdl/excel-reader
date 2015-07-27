@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.meetplanner.dto.TestDaoImpl;
+import com.meetplanner.dto.UserDTO;
 
 @Service
 public class UserBoImpl implements UserBo {
@@ -21,5 +22,10 @@ public class UserBoImpl implements UserBo {
 	@Override
 	public void insert() {
 		testDao.test();
+	}
+
+	@Override
+	public UserDTO findUser(String userName) {
+		return null;
 	}
 }

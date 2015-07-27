@@ -26,7 +26,7 @@ public class FileUploadbackingBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Reader reader;
 	private UploadedFile file;
-	private static final String FILE_SAVE_LOCATION="D:\\doc\\upload\\";
+	private static final String FILE_SAVE_LOCATION="E:\\doc\\upload\\";
 	private Map<Integer, String> allGroups=new HashMap<Integer, String>();
 	private FileUploadService fileUploadService;
 	private String selectedGroup;
