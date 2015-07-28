@@ -9,6 +9,8 @@ public class UserDTO {
 	private String password;
 	private List<RoleDTO> roles;
 	private boolean enabled;
+	private int groupId;
+	private boolean adminUser;
 
 	public int getId() {
 		return id;
@@ -48,6 +50,22 @@ public class UserDTO {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public int getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
+
+	public boolean isAdminUser() {
+		return adminUser;
+	}
+
+	public void setAdminUser(boolean adminUser) {
+		this.adminUser = adminUser;
 	}
 
 }
