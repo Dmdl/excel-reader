@@ -32,5 +32,5 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 		<managed-bean-class>com.meetplanner.backingbean.LoginBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
-
+	
 </faces-config>

@@ -9,6 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 /**
  * @author lakmal.d
  */
@@ -30,6 +32,17 @@ public class LoginBean {
 		return null;
 	}
 
+	public String doLogout(){
+		try{
+			SecurityContextHolder.clearContext();
+			userName=null;
+			return "faces/pages/login";
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public String getUserName() {
 		return userName;
 	}

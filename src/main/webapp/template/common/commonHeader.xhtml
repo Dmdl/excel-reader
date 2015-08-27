@@ -54,13 +54,14 @@
 					</p:submenu>
 				</p:submenu>
 
-				<p:menuitem value="upload Excel"
-					action="#{menuBean.goToFileUpload}" ajax="false"></p:menuitem>
+				<!-- <p:menuitem value="upload Excel"
+					action="#{menuBean.goToFileUpload}" ajax="false"></p:menuitem> -->
+				<p:menuitem value="upload Excel" url="/faces/pages/fileUpload.xhtml"></p:menuitem>
 
 				<f:facet name="options">
 					<p:inputText style="margin-right:10px" placeholder="Search" />
-					<p:commandButton type="button" value="Logout"
-						icon="ui-icon-extlink" />
+					<p:commandButton type="button"
+						icon="ui-icon-extlink" value="Logout"  actionListener="#{loginBean.doLogout}" />
 				</f:facet>
 			</p:menubar>
 		</h:form>

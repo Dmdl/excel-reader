@@ -13,6 +13,6 @@ public class MenuBackingBean {
 
 	public String goToFileUpload(){
 		System.out.println("in goToFileUpload");
-		return "pages/fileUpload";
+		return "faces/pages/fileUpload";
 	}
 }
