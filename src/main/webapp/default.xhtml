@@ -1,22 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!--<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> -->
+
+<ui:composition template="template/common/commonLayout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:body>
-	<ui:composition template="template/common/commonLayout.xhtml">
+ <!--<h:body> 
+	<ui:composition template="template/common/commonLayout.xhtml">-->
+	<ui:define name="title">Index</ui:define>
 		<ui:define name="content">			
 			<h:form>
 				<h:body>
-					Select Date : <p:calendar pattern="yyyy-MM-dd" showOn="button"></p:calendar>
+					<!-- Select Date : <p:calendar pattern="yyyy-MM-dd" showOn="button"></p:calendar>
 					<p:separator></p:separator>
-					<p:commandButton value="insert" actionListener="#{userBean.insertInvoice}"></p:commandButton>
+					<p:commandButton value="insert" actionListener="#{userBean.insertInvoice}"></p:commandButton> -->
 				</h:body>
 			</h:form>
 		</ui:define>
 	</ui:composition>
-</h:body>
+<!-- </h:body> 
 
-</html>
+</html>-->
