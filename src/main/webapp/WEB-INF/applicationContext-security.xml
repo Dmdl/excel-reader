@@ -28,8 +28,8 @@
 			login-page="/login.xhtml"
 			default-target-url="/"
 			authentication-failure-url="/login.xhtml" />
-		<logout logout-url="/logout"
-			logout-success-url="/" />
+			<!-- logout-url="/logout" delete-cookies="JSESSIONID" -->
+		<logout logout-success-url="/" invalidate-session="true" delete-cookies="true"/>
 	</http>
  
  <authentication-manager>

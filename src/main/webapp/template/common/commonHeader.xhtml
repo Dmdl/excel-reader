@@ -60,8 +60,9 @@
 
 				<f:facet name="options">
 					<p:inputText style="margin-right:10px" placeholder="Search" />
-					<p:commandButton type="button"
-						icon="ui-icon-extlink" value="Logout"  actionListener="#{loginBean.doLogout}" />
+					<p:commandButton type="submit" actionListener="#{loginBean.doLogout()}"
+						icon="ui-icon-extlink" value="Logout" ajax="false"/>
+					<!-- <h:outputLink value="${pageContext.request.contextPath}/j_spring_security_logout">logout</h:outputLink> -->
 				</f:facet>
 			</p:menubar>
 		</h:form>

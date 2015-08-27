@@ -8,6 +8,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -33,14 +34,21 @@ public class LoginBean {
 	}
 
 	public String doLogout(){
+		/*ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		try{
+			Object session = externalContext.getSession(false);
+			HttpSession httpSession = (HttpSession) session;
 			SecurityContextHolder.clearContext();
+			httpSession.invalidate();
 			userName=null;
-			return "faces/pages/login";
+			return "login";
+//			externalContext.redirect("faces/pages/login.xhtml");
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
-		}
+		}*/
+		SecurityContextHolder.clearContext();
+        return "/faces/login.xhtml";
 	}
 	
 	public String getUserName() {
