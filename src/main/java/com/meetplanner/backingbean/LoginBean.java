@@ -48,7 +48,7 @@ public class LoginBean {
 			return null;
 		}*/
 		SecurityContextHolder.clearContext();
-//        return "/faces/login.xhtml";
+//        return "login";
 		try{
 			externalContext.redirect("login.xhtml");
 		}catch(Exception e){

@@ -9,7 +9,7 @@
 	<global-method-security secured-annotations="enabled">
 	</global-method-security>
  
-	<http
+	<!-- <http
 		auto-config="true"
 		access-denied-page="/default.xhtml">
  
@@ -28,8 +28,24 @@
 			login-page="/login.xhtml"
 			default-target-url="/"
 			authentication-failure-url="/login.xhtml" />
-			<!-- logout-url="/logout" delete-cookies="JSESSIONID" -->
+			logout-url="/logout" delete-cookies="JSESSIONID"
 		<logout logout-success-url="/" invalidate-session="true" delete-cookies="true"/>
+	</http> -->
+	
+	
+	
+	<http auto-config="true">
+		<remember-me/>		
+		
+		<intercept-url pattern="/login.xhtml*" access="ROLE_ANONYMOUS,ROLE_USER" />
+		<intercept-url pattern="/index.jsp*" access="ROLE_USER" />	
+		<intercept-url pattern="/faces/pages/**" access="ROLE_USER" /> 
+		<intercept-url pattern="/faces/faces/pages/**" access="ROLE_USER" /> 		
+					
+			<form-login login-processing-url="/j_spring_security_check"
+				login-page="/faces/login.xhtml" default-target-url="/"
+				authentication-failure-url="/faces/login.xhtml?login_error=1"/>
+			<logout/>		
 	</http>
  
  <authentication-manager>
