@@ -33,9 +33,9 @@ public class LoginBean {
 		return null;
 	}
 
-	public String doLogout(){
-		/*ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		try{
+	public void doLogout(){
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		/*try{
 			Object session = externalContext.getSession(false);
 			HttpSession httpSession = (HttpSession) session;
 			SecurityContextHolder.clearContext();
@@ -48,7 +48,12 @@ public class LoginBean {
 			return null;
 		}*/
 		SecurityContextHolder.clearContext();
-        return "/faces/login.xhtml";
+//        return "/faces/login.xhtml";
+		try{
+			externalContext.redirect("login.xhtml");
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 	}
 	
 	public String getUserName() {
