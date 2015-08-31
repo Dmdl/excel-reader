@@ -12,6 +12,16 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	<lifecycle>
 		<phase-listener>com.meetplanner.util.LoginErrorPhaseListener</phase-listener>
 	</lifecycle>
+	
+	<navigation-rule>
+        <display-name>loginView</display-name>
+        <from-view-id>/*</from-view-id>
+        <navigation-case>
+            <from-outcome>loginPage</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect/>     
+        </navigation-case>
+	</navigation-rule>
 
 	<managed-bean>
 		<managed-bean-name>fileUploadbackingBean</managed-bean-name>
