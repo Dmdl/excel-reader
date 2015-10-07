@@ -1,0 +1,79 @@
+<ui:composition template="../template/common/commonLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<p:growl id="addAthlete"></p:growl>
+
+		<h:form>
+			<p:accordionPanel>
+				<p:tab title="Men">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:outputLabel value="School/Club Name" />
+						<p:selectOneMenu>							
+							<f:selectItems value="#{athlete.groupList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Age Group" />
+						<p:selectOneMenu>							
+							<f:selectItems value="#{athlete.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Full Name" />
+						<p:inputText value="#{athlete.athleteName}" />
+						
+						<p:outputLabel value="Date of Birth" />
+						<p:inputText value="" />
+						
+						<p:outputLabel value="Event" />
+						<p:selectOneMenu>							
+							<f:selectItems value="#{athlete.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="NIC No (If Applicable)" />
+						<p:inputText value="#{athlete.nic}" />
+					</h:panelGrid>
+					<p:panelGrid columns="2">
+						<p:commandButton value="Submit" />
+						<p:commandButton value="Clear" />
+					</p:panelGrid>
+				</p:tab>
+				<p:tab title="Women">
+					<h:panelGrid columns="2" cellpadding="10">
+						<p:outputLabel value="School/Club Name" />
+						<p:selectOneMenu>							
+							<f:selectItems value="#{athlete.groupList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Age Group" />
+						<p:selectOneMenu>							
+							<f:selectItems value="#{athlete.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="Full Name" />
+						<p:inputText value="#{athlete.athleteName}" />
+						
+						<p:outputLabel value="Date of Birth" />
+						<p:inputText value="" />
+						
+						<p:outputLabel value="Event" />
+						<p:selectOneMenu>							
+							<f:selectItems value="#{athlete.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+						</p:selectOneMenu>
+						
+						<p:outputLabel value="NIC No (If Applicable)" />
+						<p:inputText value="#{athlete.nic}" />
+					</h:panelGrid>
+					<p:panelGrid columns="2" cellpadding="10" styleClass="noBoaderStyle">
+						<p:commandButton value="Submit" />
+						<p:commandButton value="Clear" />
+					</p:panelGrid>
+				</p:tab>
+			</p:accordionPanel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

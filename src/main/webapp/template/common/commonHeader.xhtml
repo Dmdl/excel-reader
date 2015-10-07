@@ -14,7 +14,7 @@
 			<p:growl id="messages" />
 
 			<p:menubar>
-				<p:submenu label="File" icon="ui-icon-document">
+				<!-- <p:submenu label="File" icon="ui-icon-document">
 					<p:submenu label="New" icon="ui-icon-contact">
 						<p:menuitem value="Project" url="#" />
 						<p:menuitem value="Other" url="#" />
@@ -52,11 +52,20 @@
 						<p:menuitem value="Delete" actionListener="#{menuView.delete}"
 							icon="ui-icon-close" update="messages" ajax="false" />
 					</p:submenu>
+				</p:submenu> -->
+
+				<p:submenu label="Athlete" icon="ui-icon-pencil" styleClass="menuitemStyle">
+					<p:menuitem value="Add Entry" url="/faces/pages/add-athlete.xhtml"
+						icon="ui-icon-arrowreturnthick-1-w" />
+					<p:menuitem value="Update Entry" url="/faces/pages/update-athlete.xhtml"
+						icon="ui-icon-arrowreturnthick-1-e" />
 				</p:submenu>
 
 				<!-- <p:menuitem value="upload Excel"
 					action="#{menuBean.goToFileUpload}" ajax="false"></p:menuitem> -->
-				<p:menuitem value="upload Excel" url="/faces/pages/fileUpload.xhtml"></p:menuitem>
+				<p:menuitem value="upload Excel" url="/faces/pages/fileUpload.xhtml" styleClass="menuitemStyle"></p:menuitem>
+				
+				
 
 				<f:facet name="options">
 					<p:inputText style="margin-right:10px" placeholder="Search" />

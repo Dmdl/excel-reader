@@ -55,3 +55,16 @@ li ul li.ui-menuitem-active>a{
 .companyHeaderGrid.ui-panelgrid .ui-panelgrid-cell {
     border: none;
 }
+.menuitemStyle{
+	margin-right:20px;
+}
+.noBoaderStyle.ui-panelgrid>*>tr,
+.noBoaderStyle.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+}
+.ui-selectonemenu{
+     width: 95% !important;
+}
+.ui-selectonemenu-label{
+     width: 95% !important;
+}  
