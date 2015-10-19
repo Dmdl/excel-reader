@@ -62,9 +62,9 @@ li ul li.ui-menuitem-active>a{
 .noBoaderStyle.ui-panelgrid .ui-panelgrid-cell {
     border: none;
 }
-.ui-selectonemenu{
-     width: 95% !important;
+/* .ui-selectonemenu{
+     width: 100px !important;
 }
 .ui-selectonemenu-label{
-     width: 95% !important;
-}  
+     width: 100px !important;
+} */
