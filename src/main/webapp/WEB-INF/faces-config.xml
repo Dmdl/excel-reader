@@ -47,6 +47,10 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 		<managed-bean-name>athlete</managed-bean-name>
 		<managed-bean-class>com.meetplanner.backingbean.AddAthlete</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>fileUploadService</property-name>
+			<value>#{fileUploadService}</value>
+		</managed-property>
 	</managed-bean>
 	
 </faces-config>

@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.meetplanner.dao.FileUploadDao;
+import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.AllEvents;
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.GroupDTO;
 
 @Service("fileUploadService")
@@ -40,6 +42,16 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 	public void setFileUploadDao(FileUploadDao fileUploadDao) {
 		this.fileUploadDao = fileUploadDao;
+	}
+
+	@Override
+	public List<AgeGroupDTO> getAllAgeGroups() {
+		return fileUploadDao.getAllAgeGroups();
+	}
+
+	@Override
+	public List<EventDTO> getAllEvents() {
+		return fileUploadDao.getAllEvents();
 	}
 
 }

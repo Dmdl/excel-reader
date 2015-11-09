@@ -9,16 +9,21 @@
 		<p:growl id="addAthlete"></p:growl>
 
 		<h:form>
+		<div style="margin-left:10%;">
 			<p:accordionPanel>
 				<p:tab title="Men">
 					<h:panelGrid columns="2" cellpadding="10">
 						<p:outputLabel value="School/Club Name" />
-						<p:selectOneMenu>							
-							<f:selectItems value="#{athlete.groupList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedGroup}">
+							<p:ajax event="change" update="@this" />									
+							<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
+			                <f:selectItems value="#{athlete.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="Age Group" />
-						<p:selectOneMenu>							
+						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedAgeGroup}">
+							<p:ajax event="change" update="@this" />
+							<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
 							<f:selectItems value="#{athlete.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 						</p:selectOneMenu>
 						
@@ -26,10 +31,12 @@
 						<p:inputText value="#{athlete.athleteName}" />
 						
 						<p:outputLabel value="Date of Birth" />
-						<p:inputText value="" />
+						<p:inputText />
 						
 						<p:outputLabel value="Event" />
-						<p:selectOneMenu>							
+						<p:selectOneMenu style="width:200px;" value="#{athlete.selectedEvent}">
+							<p:ajax event="change" update="@this" />
+							<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
 							<f:selectItems value="#{athlete.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 						</p:selectOneMenu>
 						
@@ -37,19 +44,23 @@
 						<p:inputText value="#{athlete.nic}" />
 					</h:panelGrid>
 					<p:panelGrid columns="2" cellpadding="10" styleClass="noBoaderStyle">
-						<p:commandButton value="Submit" />
+						<p:commandButton value="Submit" action="#{athlete.saveAthlete()}">
+							<f:setPropertyActionListener value="male" target="#{athlete.gender}" />
+						</p:commandButton>
 						<p:commandButton value="Clear" />
 					</p:panelGrid>
 				</p:tab>
 				<p:tab title="Women">
 					<h:panelGrid columns="2" cellpadding="10">
 						<p:outputLabel value="School/Club Name" />
-						<p:selectOneMenu>							
-							<f:selectItems value="#{athlete.groupList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedGroup}">								
+							<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
+			                <f:selectItems value="#{athlete.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>						
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="Age Group" />
-						<p:selectOneMenu>							
+						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedAgeGroup}">	
+							<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />						
 							<f:selectItems value="#{athlete.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 						</p:selectOneMenu>
 						
@@ -57,10 +68,11 @@
 						<p:inputText value="#{athlete.athleteName}" />
 						
 						<p:outputLabel value="Date of Birth" />
-						<p:inputText value="" />
+						<p:inputText />
 						
 						<p:outputLabel value="Event" />
-						<p:selectOneMenu>							
+						<p:selectOneMenu style="width:200px;" value="#{athlete.selectedEvent}">
+							<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />							
 							<f:selectItems value="#{athlete.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 						</p:selectOneMenu>
 						
@@ -68,11 +80,14 @@
 						<p:inputText value="#{athlete.nic}" />
 					</h:panelGrid>
 					<p:panelGrid columns="2" cellpadding="10" styleClass="noBoaderStyle">
-						<p:commandButton value="Submit" />
+						<p:commandButton value="Submit" actionListener="#{athlete.saveAthlete()}">
+							<f:setPropertyActionListener value="female" target="#{athlete.gender}" />
+						</p:commandButton>
 						<p:commandButton value="Clear" />
 					</p:panelGrid>
 				</p:tab>
 			</p:accordionPanel>
+			</div>
 		</h:form>
 
 	</ui:define>
