@@ -1,67 +1,26 @@
 package com.meetplanner.backingbean;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import com.meetplanner.dto.AgeGroupDTO;
-import com.meetplanner.dto.EventDTO;
-import com.meetplanner.dto.GroupDTO;
 import com.meetplanner.service.FileUploadService;
-import com.meetplanner.util.SpringApplicationContex;
 
 public class AddAthlete implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private HashMap<Integer, String> ageList = new HashMap<Integer, String>();
-	private HashMap<Integer, String> eventList = new HashMap<Integer, String>();
 	private String athleteName;
 	private String nic;
 	private FileUploadService fileUploadService;
-	private Map<Integer, String> allGroups = new HashMap<Integer, String>();
 	private String gender = null;
 	private String selectedGroup = null;
 	private String selectedAgeGroup = null;
 	private String selectedEvent = null;
 
 	public AddAthlete() {
-		try {
-			fileUploadService = (FileUploadService) SpringApplicationContex
-					.getBean("fileUploadService");
-			List<GroupDTO> groups = fileUploadService.getAllGroups();
-			if (groups.size() > 0) {
-				for (GroupDTO e : groups) {
-					allGroups.put(e.getId(), e.getName());
-				}
-			}
-			List<AgeGroupDTO> ageGroups = fileUploadService.getAllAgeGroups();
-			if (ageGroups.size() > 0) {
-				for (AgeGroupDTO e : ageGroups) {
-					ageList.put(e.getId(), e.getAgeGroup());
-				}
-			}
-			List<EventDTO> events = fileUploadService.getAllEvents();
-			if (events.size() > 0) {
-				for (EventDTO e : events) {
-					eventList.put(e.getId(), e.getEventName());
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
 	}
 
-	public void saveAthlete(){
-		System.out.println("gender "+gender+" age group "+selectedAgeGroup+" event "+selectedEvent+" group "+selectedGroup);
-	}
-	
-	public HashMap<Integer, String> getAgeList() {
-		return ageList;
-	}
-
-	public void setAgeList(HashMap<Integer, String> ageList) {
-		this.ageList = ageList;
+	public void saveAthlete() {
+		System.out.println("gender " + gender + " age group " + selectedAgeGroup + " event " + selectedEvent + " group " + selectedGroup);
 	}
 
 	public String getAthleteName() {
@@ -70,14 +29,6 @@ public class AddAthlete implements Serializable {
 
 	public void setAthleteName(String athleteName) {
 		this.athleteName = athleteName;
-	}
-
-	public HashMap<Integer, String> getEventList() {
-		return eventList;
-	}
-
-	public void setEventList(HashMap<Integer, String> eventList) {
-		this.eventList = eventList;
 	}
 
 	public String getNic() {
@@ -94,14 +45,6 @@ public class AddAthlete implements Serializable {
 
 	public void setFileUploadService(FileUploadService fileUploadService) {
 		this.fileUploadService = fileUploadService;
-	}
-
-	public Map<Integer, String> getAllGroups() {
-		return allGroups;
-	}
-
-	public void setAllGroups(Map<Integer, String> allGroups) {
-		this.allGroups = allGroups;
 	}
 
 	public String getGender() {
@@ -135,5 +78,5 @@ public class AddAthlete implements Serializable {
 	public void setSelectedEvent(String selectedEvent) {
 		this.selectedEvent = selectedEvent;
 	}
-	
+
 }

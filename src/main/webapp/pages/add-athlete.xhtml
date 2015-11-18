@@ -12,19 +12,17 @@
 		<div style="margin-left:10%;">
 			<p:accordionPanel>
 				<p:tab title="Men">
-					<h:panelGrid columns="2" cellpadding="10">
+					<h:panelGrid id="menAthlete" columns="2" cellpadding="10">
 						<p:outputLabel value="School/Club Name" />
-						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedGroup}">
-							<p:ajax event="change" update="@this" />									
+						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedGroup}" required="true" requiredMessage="Group is required">									
 							<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
-			                <f:selectItems value="#{athlete.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
+			                <f:selectItems value="#{commonData.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="Age Group" />
-						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedAgeGroup}">
-							<p:ajax event="change" update="@this" />
+						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedAgeGroup}" required="true" requiredMessage="Age is required">
 							<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
-							<f:selectItems value="#{athlete.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+							<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="Full Name" />
@@ -34,34 +32,32 @@
 						<p:inputText />
 						
 						<p:outputLabel value="Event" />
-						<p:selectOneMenu style="width:200px;" value="#{athlete.selectedEvent}">
-							<p:ajax event="change" update="@this" />
+						<p:selectOneMenu style="width:200px;" value="#{athlete.selectedEvent}" required="true" requiredMessage="Event is required">
 							<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
-							<f:selectItems value="#{athlete.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+							<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="NIC No (If Applicable)" />
 						<p:inputText value="#{athlete.nic}" />
-					</h:panelGrid>
-					<p:panelGrid columns="2" cellpadding="10" styleClass="noBoaderStyle">
-						<p:commandButton value="Submit" action="#{athlete.saveAthlete()}">
+						
+						<p:commandButton value="Submit" action="#{athlete.saveAthlete()}" ajax="true" process="menAthlete" update="addAthlete">
 							<f:setPropertyActionListener value="male" target="#{athlete.gender}" />
 						</p:commandButton>
 						<p:commandButton value="Clear" />
-					</p:panelGrid>
+					</h:panelGrid>																
 				</p:tab>
 				<p:tab title="Women">
-					<h:panelGrid columns="2" cellpadding="10">
+					<h:panelGrid id="womenAthlete" columns="2" cellpadding="10">
 						<p:outputLabel value="School/Club Name" />
-						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedGroup}">								
+						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedGroup}" required="true" requiredMessage="Group is required">								
 							<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
-			                <f:selectItems value="#{athlete.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>						
+			                <f:selectItems value="#{commonData.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>						
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="Age Group" />
-						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedAgeGroup}">	
+						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedAgeGroup}" required="true" requiredMessage="Age is required">	
 							<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />						
-							<f:selectItems value="#{athlete.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+							<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="Full Name" />
@@ -71,20 +67,19 @@
 						<p:inputText />
 						
 						<p:outputLabel value="Event" />
-						<p:selectOneMenu style="width:200px;" value="#{athlete.selectedEvent}">
+						<p:selectOneMenu style="width:200px;" value="#{athlete.selectedEvent}" required="true" requiredMessage="Event is required">
 							<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />							
-							<f:selectItems value="#{athlete.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+							<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="NIC No (If Applicable)" />
 						<p:inputText value="#{athlete.nic}" />
-					</h:panelGrid>
-					<p:panelGrid columns="2" cellpadding="10" styleClass="noBoaderStyle">
-						<p:commandButton value="Submit" actionListener="#{athlete.saveAthlete()}">
+						
+						<p:commandButton value="Submit" action="#{athlete.saveAthlete()}" process="womenAthlete" ajax="true" update="addAthlete">
 							<f:setPropertyActionListener value="female" target="#{athlete.gender}" />
 						</p:commandButton>
 						<p:commandButton value="Clear" />
-					</p:panelGrid>
+					</h:panelGrid>						
 				</p:tab>
 			</p:accordionPanel>
 			</div>
