@@ -195,7 +195,7 @@ public class ExcelReader implements Reader {
 		athlete.setEmpNo(each.get(1));
 		athlete.setName(each.get(2));
 		athlete.setNic(each.get(3));
-		athlete.setDateOfBirth(each.get(4));
+		//athlete.setDateOfBirth(each.get(4));
 		athlete.setAge(each.get(5));
 		String no = each.get(0);
 		String empNo = each.get(1);

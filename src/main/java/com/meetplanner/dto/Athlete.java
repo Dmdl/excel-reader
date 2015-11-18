@@ -1,5 +1,6 @@
 package com.meetplanner.dto;
 
+import java.util.Date;
 import java.util.List;
 
 public class Athlete {
@@ -9,9 +10,10 @@ public class Athlete {
 	private String name;
 	private String nic;
 	private String age;
-	private String dateOfBirth;
+	private Date dateOfBirth;
 	private List<String> events;
 	private String ageGroup;
+	private String group;
 
 	public String getId() {
 		return id;
@@ -61,14 +63,6 @@ public class Athlete {
 		this.events = events;
 	}
 
-	public String getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
 	public String getAgeGroup() {
 		return ageGroup;
 	}
@@ -76,4 +70,21 @@ public class Athlete {
 	public void setAgeGroup(String ageGroup) {
 		this.ageGroup = ageGroup;
 	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+	
 }

@@ -7,6 +7,7 @@
 <ui:composition> 
 	<ui:define name="title">Login</ui:define>
 		<h:form id="loginForm" prependId="false">
+		<div id="login" align="center" style="margin-top:15%;font-size:150%;">
 			<label for="j_username"><h:outputText value="Username:" /><br />
 			</label>
 			<h:inputText id="j_username" required="true" value="#{loginBean.userName}">
@@ -20,15 +21,15 @@
 			</h:inputSecret>
 
 			<br />
-			<br />
-			<label for="_spring_security_remember_me"> <h:outputText
+			<!-- <label for="_spring_security_remember_me"> <h:outputText
 					value="Remember me" />
 			</label>
-			<h:selectBooleanCheckbox id="_spring_security_remember_me" />
+			<h:selectBooleanCheckbox id="_spring_security_remember_me" /> -->
 			<br />
 
 			<h:commandButton type="submit" id="login"
 				action="#{loginBean.doLogin}" value="Login" />
+				</div>
 		</h:form>
 
 </ui:composition>

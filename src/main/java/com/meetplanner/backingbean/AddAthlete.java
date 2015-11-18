@@ -3,7 +3,13 @@ package com.meetplanner.backingbean;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
+import com.meetplanner.dto.Athlete;
+import com.meetplanner.service.CommonService;
 import com.meetplanner.service.FileUploadService;
+import com.meetplanner.util.SpringApplicationContex;
 
 public class AddAthlete implements Serializable {
 
@@ -16,13 +22,28 @@ public class AddAthlete implements Serializable {
 	private String selectedAgeGroup = null;
 	private String selectedEvent = null;
 	private Date dateOfBirth;
+	private CommonService commonService;
 
 	public AddAthlete() {
-
+		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
 	}
 
 	public void saveAthlete() {
 		System.out.println("gender " + gender + " age group " + selectedAgeGroup + " event " + selectedEvent + " group " + selectedGroup+" dateOfBirth "+dateOfBirth+" name "+athleteName+" nic "+nic);
+		Athlete athlete = new Athlete();
+		athlete.setDateOfBirth(dateOfBirth);
+		athlete.setGroup(selectedGroup.toString());
+		athlete.setName(athleteName);
+		athlete.setNic("893660500V");
+		athlete.setEmpNo("00145");
+		boolean ok = commonService.saveAthlete(athlete);
+		if(ok){
+			System.out.println("success......");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Saved."));
+		}else{
+			System.out.println("Error........");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured."));
+		}
 	}
 
 	public String getAthleteName() {
@@ -87,6 +108,14 @@ public class AddAthlete implements Serializable {
 
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public CommonService getCommonService() {
+		return commonService;
+	}
+
+	public void setCommonService(CommonService commonService) {
+		this.commonService = commonService;
 	}
 
 }
