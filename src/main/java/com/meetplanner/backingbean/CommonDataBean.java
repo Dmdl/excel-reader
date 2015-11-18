@@ -19,7 +19,6 @@ public class CommonDataBean implements Serializable{
 	private Map<Integer, String> allGroups = new HashMap<Integer, String>();
 	private HashMap<Integer, String> ageList = new HashMap<Integer, String>();
 	private HashMap<Integer, String> eventList = new HashMap<Integer, String>();
-	private List<Integer> years = new ArrayList<Integer>(0);
 
 	public CommonDataBean() {
 		fileUploadService = (FileUploadService) SpringApplicationContex.getBean("fileUploadService");
@@ -42,9 +41,6 @@ public class CommonDataBean implements Serializable{
 				System.out.println("id " + e.getId() + " val " + e.getEventName());
 				eventList.put(e.getId(), e.getEventName());
 			}
-		}
-		for(int i=1960;i<=2015;i++){
-			years.add(i);
 		}
 	}
 
@@ -78,14 +74,6 @@ public class CommonDataBean implements Serializable{
 
 	public void setEventList(HashMap<Integer, String> eventList) {
 		this.eventList = eventList;
-	}
-
-	public List<Integer> getYears() {
-		return years;
-	}
-
-	public void setYears(List<Integer> years) {
-		this.years = years;
 	}
 
 }

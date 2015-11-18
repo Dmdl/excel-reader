@@ -22,7 +22,7 @@ public class AddAthlete implements Serializable {
 	}
 
 	public void saveAthlete() {
-		System.out.println("gender " + gender + " age group " + selectedAgeGroup + " event " + selectedEvent + " group " + selectedGroup+" dateOfBirth "+dateOfBirth);
+		System.out.println("gender " + gender + " age group " + selectedAgeGroup + " event " + selectedEvent + " group " + selectedGroup+" dateOfBirth "+dateOfBirth+" name "+athleteName+" nic "+nic);
 	}
 
 	public String getAthleteName() {
