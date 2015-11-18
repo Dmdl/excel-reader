@@ -1,6 +1,7 @@
 package com.meetplanner.backingbean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.meetplanner.service.FileUploadService;
 
@@ -14,13 +15,14 @@ public class AddAthlete implements Serializable {
 	private String selectedGroup = null;
 	private String selectedAgeGroup = null;
 	private String selectedEvent = null;
+	private Date dateOfBirth;
 
 	public AddAthlete() {
 
 	}
 
 	public void saveAthlete() {
-		System.out.println("gender " + gender + " age group " + selectedAgeGroup + " event " + selectedEvent + " group " + selectedGroup);
+		System.out.println("gender " + gender + " age group " + selectedAgeGroup + " event " + selectedEvent + " group " + selectedGroup+" dateOfBirth "+dateOfBirth);
 	}
 
 	public String getAthleteName() {
@@ -77,6 +79,14 @@ public class AddAthlete implements Serializable {
 
 	public void setSelectedEvent(String selectedEvent) {
 		this.selectedEvent = selectedEvent;
+	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 }

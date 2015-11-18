@@ -1,5 +1,7 @@
 package com.meetplanner.backingbean;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,12 +12,14 @@ import com.meetplanner.dto.GroupDTO;
 import com.meetplanner.service.FileUploadService;
 import com.meetplanner.util.SpringApplicationContex;
 
-public class CommonDataBean {
+public class CommonDataBean implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private FileUploadService fileUploadService;
 	private Map<Integer, String> allGroups = new HashMap<Integer, String>();
 	private HashMap<Integer, String> ageList = new HashMap<Integer, String>();
 	private HashMap<Integer, String> eventList = new HashMap<Integer, String>();
+	private List<Integer> years = new ArrayList<Integer>(0);
 
 	public CommonDataBean() {
 		fileUploadService = (FileUploadService) SpringApplicationContex.getBean("fileUploadService");
@@ -38,6 +42,9 @@ public class CommonDataBean {
 				System.out.println("id " + e.getId() + " val " + e.getEventName());
 				eventList.put(e.getId(), e.getEventName());
 			}
+		}
+		for(int i=1960;i<=2015;i++){
+			years.add(i);
 		}
 	}
 
@@ -71,6 +78,14 @@ public class CommonDataBean {
 
 	public void setEventList(HashMap<Integer, String> eventList) {
 		this.eventList = eventList;
+	}
+
+	public List<Integer> getYears() {
+		return years;
+	}
+
+	public void setYears(List<Integer> years) {
+		this.years = years;
 	}
 
 }
