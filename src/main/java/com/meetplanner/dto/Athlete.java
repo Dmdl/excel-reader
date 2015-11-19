@@ -16,6 +16,7 @@ public class Athlete {
 	private String group;
 	private String gender;
 	private String bibNumber;
+	private int groupId;
 
 	public String getId() {
 		return id;
@@ -103,6 +104,14 @@ public class Athlete {
 
 	public void setBibNumber(String bibNumber) {
 		this.bibNumber = bibNumber;
+	}
+
+	public int getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
 	}
 	
 }

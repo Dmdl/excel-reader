@@ -38,7 +38,10 @@ public class BibNumbersBean implements Serializable {
 	}
 	
 	public void onRowEdit(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Car Edited", ((Athlete) event.getObject()).getId());
+		Athlete athlete = (Athlete) event.getObject();
+		/*String id = athlete.getId();
+		String name = athlete.getName();*/
+        FacesMessage msg = new FacesMessage("BIB Edited", (athlete.getBibNumber()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 	

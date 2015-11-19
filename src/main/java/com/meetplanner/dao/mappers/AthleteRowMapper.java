@@ -15,7 +15,8 @@ public class AthleteRowMapper implements RowMapper<Athlete>{
 		athlete.setId(String.valueOf(rs.getInt("id")));
 		athlete.setName(rs.getString("athlete_name"));
 		athlete.setBibNumber(rs.getString("bib"));
-		athlete.setGroup(rs.getString("group_name"));		
+		athlete.setGroup(rs.getString("group_name"));
+		athlete.setGroupId(rs.getInt("group_id"));
 		return athlete;
 	}
 

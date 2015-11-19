@@ -30,7 +30,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 	public List<Athlete> searchAthleteByGroupAndAge(int groupId, int ageGroupId) {
 		List<Athlete> resultList = null;
 		try{			
-			String sql = "SELECT athlete.id,athlete.name AS athlete_name,groups.name AS group_name,athlete.bib FROM athlete JOIN groups ON athlete.group_id=groups.id WHERE athlete.age_group_id=? AND athlete.group_id=?";
+			String sql = "SELECT athlete.id,athlete.name AS athlete_name,groups.name AS group_name,athlete.bib,athlete.group_id FROM athlete JOIN groups ON athlete.group_id=groups.id WHERE athlete.age_group_id=? AND athlete.group_id=?";
 			resultList = getJdbcTemplate().query(sql, new Object[] { groupId,ageGroupId }, new AthleteRowMapper());
 			return resultList;
 		}catch(Exception e){

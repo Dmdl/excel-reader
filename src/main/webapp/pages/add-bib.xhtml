@@ -50,10 +50,10 @@
 						               <f:facet name="input"><p:inputText id="nameInput" value="#{athlete.name}" style="width:100%"/></f:facet>
 						           </p:cellEditor>
 						       	</p:column>
-						       	<p:column headerText="Club">
+						       	<p:column headerText="Club / Group">
 						           <p:cellEditor>
 						               <f:facet name="output"><h:outputText value="#{athlete.group}" /></f:facet>
-						               <f:facet name="input"><p:inputText id="groupInput" value="#{athlete.group}" style="width:100%"/></f:facet>
+						               <f:facet name="input"><p:inputText id="groupInput" value="#{athlete.group}" style="width:100%"/></f:facet>						               
 						           </p:cellEditor>
 						       	</p:column>
 						       	<p:column headerText="BIB">
@@ -85,18 +85,18 @@
 							
 							<p:commandButton value="Search" action="#{bibNumbers.search()}" update="addBib athleteTableUpdate" process="updateTab"></p:commandButton>
 						</p:panelGrid>
-						<p:spacer height="10"></p:spacer>
+						<br/><br/><br/>
 						<p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4">
 							<p:dataTable id="athleteTableUpdate" var="athlete" value="#{bibNumbers.athleteList}" editable="true">
 								
 								<f:facet name="header">
-						           Asign BIB Numbers
+						           Update BIB Numbers
 						        </f:facet>
 						        
 								<p:ajax event="rowEdit" listener="#{bibNumbers.onRowEdit}" update="addBib"/>
        							<p:ajax event="rowEditCancel" listener="#{bibNumbers.onRowCancel}" update="addBib"/>
 								
-								<p:column headerText="Id">
+								<p:column headerText="Id" rendered="false">
 						           <p:cellEditor>
 						               <f:facet name="output"><h:outputText value="#{athlete.id}" /></f:facet>
 						               <f:facet name="input"><p:inputText id="idInputUpdate" value="#{athlete.id}" style="width:100%"/></f:facet>
@@ -108,7 +108,7 @@
 						               <f:facet name="input"><p:inputText id="nameInputUpdate" value="#{athlete.name}" style="width:100%"/></f:facet>
 						           </p:cellEditor>
 						       	</p:column>
-						       	<p:column headerText="Club">
+						       	<p:column headerText="Club / Group">
 						           <p:cellEditor>
 						               <f:facet name="output"><h:outputText value="#{athlete.group}" /></f:facet>
 						               <f:facet name="input"><p:inputText id="groupInputUpdate" value="#{athlete.group}" style="width:100%"/></f:facet>
