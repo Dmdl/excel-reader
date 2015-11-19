@@ -1,6 +1,8 @@
 package com.meetplanner.backingbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -19,7 +21,6 @@ public class BibNumbersBean implements Serializable {
 	private String selectedAgeGroup = null;
 	private CommonService commonService;
 	private List<Athlete> athleteList = null;
-	List<Athlete> updatedList;
 
 	public BibNumbersBean() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -28,7 +29,6 @@ public class BibNumbersBean implements Serializable {
 	public void search(){
 		System.out.println("in search....selectedGroup "+selectedGroup+" selectedAgeGroup "+selectedAgeGroup);
 		athleteList = commonService.searchAthleteByGroupAndAge(Integer.parseInt(selectedGroup), Integer.parseInt(selectedAgeGroup));
-		updatedList = athleteList;
 		if(null!=athleteList && athleteList.size()>0){
 			System.out.println("result list size "+athleteList.size());
 		}else if(null!=athleteList && athleteList.size()==0){
@@ -60,19 +60,22 @@ public class BibNumbersBean implements Serializable {
 		try{
 			Athlete athlete = (Athlete) event.getObject();
 			String startNumer = athlete.getBibNumber();
+			List<Athlete> temp = new ArrayList<Athlete>(0);
 			if(null!=startNumer && isInt(startNumer)){
 				int start = Integer.parseInt(startNumer);
-//				updatedList.clear();
-				for(Athlete each:athleteList){
-					each.setBibNumber(String.valueOf(start));
-					start = start+1;
-					updatedList.add(each);
-				}
-				int count = commonService.addBibNumbers(updatedList);
-				if(count>0){
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Aded."));
-				}else{
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error?", "Error Occured."));
+				System.out.println("size "+athleteList.size());
+				if(null!=athleteList && athleteList.size()>0){
+					Iterator<Athlete> ite = athleteList.iterator();
+					while(ite.hasNext()){
+						Athlete each = ite.next();
+						each.setBibNumber(String.valueOf(start));
+						temp.add(each);
+						start = start+1;
+					}
+					athleteList.clear();
+					athleteList.addAll(temp);
+					int count = commonService.addBibNumbers(athleteList);
+					System.out.println("count "+count);
 				}
 			}
 		}catch(Exception e){
@@ -121,14 +124,6 @@ public class BibNumbersBean implements Serializable {
 
 	public void setAthleteList(List<Athlete> athleteList) {
 		this.athleteList = athleteList;
-	}
-
-	public List<Athlete> getUpdatedList() {
-		return updatedList;
-	}
-
-	public void setUpdatedList(List<Athlete> updatedList) {
-		this.updatedList = updatedList;
 	}
 
 }

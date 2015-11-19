@@ -29,13 +29,13 @@
 						</p:panelGrid>
 						<br/><br/><br/>
 						<p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4">
-							<p:dataTable id="athleteTable" var="athlete" value="#{bibNumbers.updatedList}" editable="true">
+							<p:dataTable id="athleteTable" var="athlete" value="#{bibNumbers.athleteList}" editable="true">
 								
 								<f:facet name="header">
 						           Asign BIB Numbers
 						        </f:facet>
 						        
-								<p:ajax event="rowEdit" listener="#{bibNumbers.onRowEdit}" update="addBib"/>
+								<p:ajax event="rowEdit" listener="#{bibNumbers.addBulkBbiNumbers}" update="addBib athleteTable"/>
        							<p:ajax event="rowEditCancel" listener="#{bibNumbers.onRowCancel}" update="addBib"/>
 								
 								<p:column headerText="Id" rendered="false">
