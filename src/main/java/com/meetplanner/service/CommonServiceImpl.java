@@ -24,4 +24,14 @@ public class CommonServiceImpl implements CommonService{
 		return commonDao.searchAthleteByGroupAndAge(groupId, ageGroupId);
 	}
 
+	@Override
+	public boolean updateBibNumber(int number, int id) {
+		return commonDao.updateBibNumber(number, id);
+	}
+
+	@Override
+	public int addBibNumbers(List<Athlete> athletes) {
+		return commonDao.addBibNumbers(athletes);
+	}
+
 }
