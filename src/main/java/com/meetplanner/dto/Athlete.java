@@ -14,6 +14,8 @@ public class Athlete {
 	private List<String> events;
 	private String ageGroup;
 	private String group;
+	private String gender;
+	private String bibNumber;
 
 	public String getId() {
 		return id;
@@ -85,6 +87,22 @@ public class Athlete {
 
 	public void setGroup(String group) {
 		this.group = group;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getBibNumber() {
+		return bibNumber;
+	}
+
+	public void setBibNumber(String bibNumber) {
+		this.bibNumber = bibNumber;
 	}
 	
 }

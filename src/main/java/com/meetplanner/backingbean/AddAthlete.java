@@ -15,7 +15,7 @@ public class AddAthlete implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String athleteName;
-	private String nic;
+	private String nic = null;
 	private FileUploadService fileUploadService;
 	private String gender = null;
 	private String selectedGroup = null;
@@ -34,14 +34,18 @@ public class AddAthlete implements Serializable {
 		athlete.setDateOfBirth(dateOfBirth);
 		athlete.setGroup(selectedGroup.toString());
 		athlete.setName(athleteName);
-		athlete.setNic("893660500V");
-		athlete.setEmpNo("00145");
+		athlete.setNic(nic == null ? "" : nic);
+		athlete.setEmpNo("");
+		if(null!=gender && gender.equals("male")){
+			athlete.setGender("M");
+		}else if(null!=gender && gender.equals("female")){
+			athlete.setGender("F");
+		}
+		athlete.setAgeGroup(selectedAgeGroup);
 		boolean ok = commonService.saveAthlete(athlete);
 		if(ok){
-			System.out.println("success......");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Saved."));
 		}else{
-			System.out.println("Error........");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured."));
 		}
 	}

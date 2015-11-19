@@ -1,0 +1,134 @@
+<ui:composition template="../template/common/commonLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<p:growl id="addBib" showDetail="true"></p:growl>
+
+		<h:form id="addBibFrm">
+			<div class="ui-fluid">
+				<p:tabView dynamic="true" cache="true">
+					<p:tab title="Add BIB Numbers" id="addTab">
+						<p:panelGrid columns="5" cellpadding="10" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-4" layout="grid">
+							<h:outputText value="Age Group" />
+							<p:selectOneMenu id="selectAgeGroup" style="width:150px;" value="#{bibNumbers.selectedAgeGroup}" required="true" requiredMessage="Select Age Group">
+								<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
+								<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+							</p:selectOneMenu>
+							
+							<h:outputText value="School/Club Name" />
+							<p:selectOneMenu id="selectGroup" style="width:150px;" value="#{bibNumbers.selectedGroup}" required="true" requiredMessage="Select School/Club Name">									
+								<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
+				                <f:selectItems value="#{commonData.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
+							</p:selectOneMenu>
+							
+							<p:commandButton value="Search" action="#{bibNumbers.search()}" update="addBib athleteTable" process="addTab"></p:commandButton>
+						</p:panelGrid>
+						<br/><br/><br/>
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4">
+							<p:dataTable id="athleteTable" var="athlete" value="#{bibNumbers.athleteList}" editable="true">
+								
+								<f:facet name="header">
+						           Asign BIB Numbers
+						        </f:facet>
+						        
+								<p:ajax event="rowEdit" listener="#{bibNumbers.onRowEdit}" update="addBib"/>
+       							<p:ajax event="rowEditCancel" listener="#{bibNumbers.onRowCancel}" update="addBib"/>
+								
+								<p:column headerText="Id" rendered="false">
+						           <p:cellEditor>
+						               <f:facet name="output"><h:outputText value="#{athlete.id}" /></f:facet>
+						               <f:facet name="input"><p:inputText id="idInput" value="#{athlete.id}" style="width:100%"/></f:facet>
+						           </p:cellEditor>
+						       	</p:column>
+						       	<p:column headerText="Name">
+						           <p:cellEditor>
+						               <f:facet name="output"><h:outputText value="#{athlete.name}" /></f:facet>
+						               <f:facet name="input"><p:inputText id="nameInput" value="#{athlete.name}" style="width:100%"/></f:facet>
+						           </p:cellEditor>
+						       	</p:column>
+						       	<p:column headerText="Club">
+						           <p:cellEditor>
+						               <f:facet name="output"><h:outputText value="#{athlete.group}" /></f:facet>
+						               <f:facet name="input"><p:inputText id="groupInput" value="#{athlete.group}" style="width:100%"/></f:facet>
+						           </p:cellEditor>
+						       	</p:column>
+						       	<p:column headerText="BIB">
+						           <p:cellEditor>
+						               <f:facet name="output"><h:outputText value="#{athlete.bibNumber}" /></f:facet>
+						               <f:facet name="input"><p:inputText id="bibInput" value="#{athlete.bibNumber}" style="width:100%"/></f:facet>
+						           </p:cellEditor>
+						       	</p:column>
+						       	<p:column style="width:32px">
+						           <p:rowEditor />
+						        </p:column>
+							</p:dataTable>
+						</p:panelGrid>
+					</p:tab>
+					
+					<p:tab title="Update BIB Numbers" id="updateTab">
+						<p:panelGrid columns="5" cellpadding="10" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-4" layout="grid">
+							<h:outputText value="Age Group" />
+							<p:selectOneMenu id="selectAgeGroupUpdate" style="width:150px;" value="#{bibNumbers.selectedAgeGroup}" required="true" requiredMessage="Select Age Group">
+								<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
+								<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+							</p:selectOneMenu>
+							
+							<h:outputText value="School/Club Name" />
+							<p:selectOneMenu id="selectGroupUpdate" style="width:150px;" value="#{bibNumbers.selectedGroup}" required="true" requiredMessage="Select School/Club Name">									
+								<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
+				                <f:selectItems value="#{commonData.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
+							</p:selectOneMenu>
+							
+							<p:commandButton value="Search" action="#{bibNumbers.search()}" update="addBib athleteTableUpdate" process="updateTab"></p:commandButton>
+						</p:panelGrid>
+						<p:spacer height="10"></p:spacer>
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4">
+							<p:dataTable id="athleteTableUpdate" var="athlete" value="#{bibNumbers.athleteList}" editable="true">
+								
+								<f:facet name="header">
+						           Asign BIB Numbers
+						        </f:facet>
+						        
+								<p:ajax event="rowEdit" listener="#{bibNumbers.onRowEdit}" update="addBib"/>
+       							<p:ajax event="rowEditCancel" listener="#{bibNumbers.onRowCancel}" update="addBib"/>
+								
+								<p:column headerText="Id">
+						           <p:cellEditor>
+						               <f:facet name="output"><h:outputText value="#{athlete.id}" /></f:facet>
+						               <f:facet name="input"><p:inputText id="idInputUpdate" value="#{athlete.id}" style="width:100%"/></f:facet>
+						           </p:cellEditor>
+						       	</p:column>
+						       	<p:column headerText="Name">
+						           <p:cellEditor>
+						               <f:facet name="output"><h:outputText value="#{athlete.name}" /></f:facet>
+						               <f:facet name="input"><p:inputText id="nameInputUpdate" value="#{athlete.name}" style="width:100%"/></f:facet>
+						           </p:cellEditor>
+						       	</p:column>
+						       	<p:column headerText="Club">
+						           <p:cellEditor>
+						               <f:facet name="output"><h:outputText value="#{athlete.group}" /></f:facet>
+						               <f:facet name="input"><p:inputText id="groupInputUpdate" value="#{athlete.group}" style="width:100%"/></f:facet>
+						           </p:cellEditor>
+						       	</p:column>
+						       	<p:column headerText="BIB">
+						           <p:cellEditor>
+						               <f:facet name="output"><h:outputText value="#{athlete.bibNumber}" /></f:facet>
+						               <f:facet name="input"><p:inputText id="bibInputUpdate" value="#{athlete.bibNumber}" style="width:100%"/></f:facet>
+						           </p:cellEditor>
+						       	</p:column>
+						       	<p:column style="width:32px">
+						           <p:rowEditor />
+						        </p:column>
+							</p:dataTable>
+						</p:panelGrid>
+					</p:tab>					
+				</p:tabView>
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

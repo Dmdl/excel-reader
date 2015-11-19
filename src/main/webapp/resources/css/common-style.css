@@ -62,9 +62,13 @@ li ul li.ui-menuitem-active>a{
 .noBoaderStyle.ui-panelgrid .ui-panelgrid-cell {
     border: none;
 }
-/* .ui-selectonemenu{
-     width: 100px !important;
+.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
+.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
+.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
+.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
+.ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
+.ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
+.ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
+    background: none !important;
+    border: 0 none !important;
 }
-.ui-selectonemenu-label{
-     width: 100px !important;
-} */
