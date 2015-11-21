@@ -17,9 +17,9 @@
 
 #header{
 	width: 100%;
-	height:100px;
+	/* height:80px; */
 	 /* border: 1px solid #000; */
-	margin-bottom:16px;
+	margin-bottom:0%;
 }
 
 #content{
@@ -43,12 +43,12 @@ ul.ui-menu-child {
 
 ul li.ui-menuitem-active>a{
     background-image: none !important;
-    background-color:#1abc9c !important;   
+    background-color:none !important;   
 }
 
 li ul li.ui-menuitem-active>a{
     background-image: none !important;
-    background-color:#e67e22 !important;    
+    background-color:#ffcc66 !important;   
 }
 
 .companyHeaderGrid.ui-panelgrid>*>tr,
@@ -71,4 +71,7 @@ li ul li.ui-menuitem-active>a{
 .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
     background: none !important;
     border: 0 none !important;
+}
+.headingColor{
+	color: blue;
 }

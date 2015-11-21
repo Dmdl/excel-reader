@@ -3,6 +3,7 @@ package com.meetplanner.service;
 import java.util.List;
 
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.ResultDTO;
 
 public interface CommonService {
 
@@ -13,4 +14,8 @@ public interface CommonService {
 	public boolean updateBibNumber(int number,int id);
 	
 	public int addBibNumbers(List<Athlete> athletes);
+	
+	public List<ResultDTO> getAthletesForEvents(int eventId, int ageGroupId,String gender);
+	
+	public boolean saveAthletesPerformances(List<ResultDTO> results);
 }

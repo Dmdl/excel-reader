@@ -10,6 +10,7 @@
 
 		<h:form id="addBibFrm">
 			<div class="ui-fluid">
+			<div align="center" class="headingColor"><h2>Add / Update BIB Numbers</h2></div>
 				<p:tabView dynamic="true" cache="true">
 					<p:tab title="Add BIB Numbers" id="addTab">
 						<p:panelGrid columns="5" cellpadding="10" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-4" layout="grid">
@@ -28,7 +29,7 @@
 							<p:commandButton value="Search" action="#{bibNumbers.search()}" update="addBib athleteTable" process="addTab"></p:commandButton>
 						</p:panelGrid>
 						<br/><br/><br/>
-						<p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4">
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-10,ui-grid-col-2">
 							<p:dataTable id="athleteTable" var="athlete" value="#{bibNumbers.athleteList}" editable="true">
 								
 								<f:facet name="header">
@@ -86,7 +87,7 @@
 							<p:commandButton value="Search" action="#{bibNumbers.search()}" update="addBib athleteTableUpdate" process="updateTab"></p:commandButton>
 						</p:panelGrid>
 						<br/><br/><br/>
-						<p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4">
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-10,ui-grid-col-2">
 							<p:dataTable id="athleteTableUpdate" var="athlete" value="#{bibNumbers.athleteList}" editable="true">
 								
 								<f:facet name="header">

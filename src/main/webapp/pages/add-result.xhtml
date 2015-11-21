@@ -1,0 +1,187 @@
+<ui:composition template="../template/common/commonLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<p:growl id="addResult" showDetail="true"></p:growl>
+
+		<h:form id="addResultFrm">
+			<div>
+			<div align="center" class="headingColor"><h2>Add / Update Final Results</h2></div>
+				<p:accordionPanel id="resultPanel">
+					<p:tab id="trackResultTab" title="Track Events">
+						<p:tabView id="trackResultTabView" binding="#{resultsBean.trackResultTabView}">
+							<p:tab id="trackResultTabMan" title="Men">
+								<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
+									<h:outputText value="Age Group" />
+									<p:selectOneMenu value="#{resultsBean.selectedAgeGroup}" style="width:150px;" required="true" requiredMessage="Select Age Group">
+										<p:ajax listener="#{resultsBean.handleAgegroupChange}" update="selectmenuEventMen trackResultTableMan"></p:ajax>
+										<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
+										<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+									</p:selectOneMenu>
+									
+									<p:outputLabel value="Event" />
+									<p:selectOneMenu id="selectmenuEventMen" value="#{resultsBean.selectedEvent}" style="width:200px;" required="true" requiredMessage="Event is required">
+										<p:ajax listener="#{resultsBean.handleEventChange('M')}" update="trackResultTableMan"></p:ajax>
+										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
+										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+									</p:selectOneMenu>
+								</p:panelGrid>
+								<br/><br/><br/>
+								<p:dataTable id="trackResultTableMan" var="result" value="#{resultsBean.results}">
+								    <p:column headerText="BIB Number">
+								        <h:outputText value="#{result.bibNo}" />
+								    </p:column>
+								 
+								 	<p:column headerText="Name">
+								        <h:outputText value="#{result.name}" />
+								    </p:column>
+								    
+								    <p:column headerText="School / Club">
+								        <h:outputText value="#{result.group}" />
+								    </p:column>
+								    
+								    <p:column headerText="Performance" style="center">
+								        <div align="center"><h:inputText value="#{result.performance}" /></div>
+								    </p:column>								 							    
+								</p:dataTable>
+								<br/><br/>
+								<div align="right">
+									<p:commandButton value="Submit" action="#{resultsBean.saveResults()}" process="trackResultTabMan" update="addResult"></p:commandButton>
+								</div>
+							</p:tab>
+							
+							<p:tab id="trackResultTabWomen" title="Women">
+								<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
+									<h:outputText value="Age Group" />
+									<p:selectOneMenu value="#{resultsBean.selectedAgeGroup}" style="width:150px;" required="true" requiredMessage="Select Age Group">
+										<p:ajax listener="#{resultsBean.handleAgegroupChange}" update="selectmenuEventWomen trackResultTableWomen"></p:ajax>
+										<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
+										<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+									</p:selectOneMenu>
+									
+									<p:outputLabel value="Event" />
+									<p:selectOneMenu id="selectmenuEventWomen" value="#{resultsBean.selectedEvent}" style="width:200px;" required="true" requiredMessage="Event is required">
+										<p:ajax listener="#{resultsBean.handleEventChange('F')}" update="trackResultTableWomen"></p:ajax>
+										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
+										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+									</p:selectOneMenu>
+								</p:panelGrid>
+								<br/><br/><br/>
+								<p:dataTable id="trackResultTableWomen" var="result" value="#{resultsBean.results}">
+								    <p:column headerText="BIB Number">
+								        <h:outputText value="#{result.bibNo}" />
+								    </p:column>
+								 
+								 	<p:column headerText="Name">
+								        <h:outputText value="#{result.name}" />
+								    </p:column>
+								    
+								    <p:column headerText="School / Club">
+								        <h:outputText value="#{result.group}" />
+								    </p:column>
+								    
+								    <p:column headerText="Performance" style="center">
+								        <div align="center"><h:inputText value="#{result.performance}" /></div>
+								    </p:column>								 							    
+								</p:dataTable>
+								<br/><br/>
+								<div align="right">
+									<p:commandButton value="Submit" action="#{resultsBean.saveResults()}" process="trackResultTabWomen" update="addResult"></p:commandButton>
+								</div>
+							</p:tab>
+						</p:tabView>
+					</p:tab>
+					
+					<p:tab id="fieldResultTab" title="Field Events">
+						<p:tabView id="fieldResultTabView">
+							<p:tab id="fieldResultTabMen" title="Men">
+								<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
+									<h:outputText value="Age Group" />
+									<p:selectOneMenu value="#{resultsBean.selectedAgeGroup}" style="width:150px;" required="true" requiredMessage="Select Age Group">
+										<p:ajax listener="#{resultsBean.handleAgegroupChange}" update="selectmenuEventMenField feildResultTableMan"></p:ajax>
+										<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
+										<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+									</p:selectOneMenu>
+									
+									<p:outputLabel value="Event" />
+									<p:selectOneMenu id="selectmenuEventMenField" value="#{resultsBean.selectedEvent}" style="width:200px;" required="true" requiredMessage="Event is required">
+										<p:ajax listener="#{resultsBean.handleEventChange('M')}" update="feildResultTableMan"></p:ajax>
+										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
+										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+									</p:selectOneMenu>
+								</p:panelGrid>
+								<br/><br/><br/>
+								<p:dataTable id="feildResultTableMan" var="result" value="#{resultsBean.results}">
+								    <p:column headerText="BIB Number">
+								        <h:outputText value="#{result.bibNo}" />
+								    </p:column>
+								 
+								 	<p:column headerText="Name">
+								        <h:outputText value="#{result.name}" />
+								    </p:column>
+								    
+								    <p:column headerText="School / Club">
+								        <h:outputText value="#{result.group}" />
+								    </p:column>
+								    
+								    <p:column headerText="Performance" style="center">
+								        <div align="center"><h:inputText value="#{result.performance}" /></div>
+								    </p:column>								 							    
+								</p:dataTable>
+								<br/><br/>
+								<div align="right">
+									<p:commandButton value="Submit" action="#{resultsBean.saveResults()}" process="fieldResultTabMen" update="addResult"></p:commandButton>
+								</div>
+							</p:tab>
+							
+							<p:tab id="fieldResultTabWomen" title="Women">
+								<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
+									<h:outputText value="Age Group" />
+									<p:selectOneMenu value="#{resultsBean.selectedAgeGroup}" style="width:150px;" required="true" requiredMessage="Select Age Group">
+										<p:ajax listener="#{resultsBean.handleAgegroupChange}" update="selectmenuEventWomenField feildResultTableWomen"></p:ajax>
+										<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
+										<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+									</p:selectOneMenu>
+									
+									<p:outputLabel value="Event" />
+									<p:selectOneMenu id="selectmenuEventWomenField" value="#{resultsBean.selectedEvent}" style="width:200px;" required="true" requiredMessage="Event is required">
+										<p:ajax listener="#{resultsBean.handleEventChange('F')}" update="feildResultTableWomen"></p:ajax>
+										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
+										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+									</p:selectOneMenu>
+								</p:panelGrid>
+								<br/><br/><br/>
+								<p:dataTable id="feildResultTableWomen" var="result" value="#{resultsBean.results}">
+								    <p:column headerText="BIB Number">
+								        <h:outputText value="#{result.bibNo}" />
+								    </p:column>
+								 
+								 	<p:column headerText="Name">
+								        <h:outputText value="#{result.name}" />
+								    </p:column>
+								    
+								    <p:column headerText="School / Club">
+								        <h:outputText value="#{result.group}" />
+								    </p:column>
+								    
+								    <p:column headerText="Performance" style="center">
+								        <div align="center"><h:inputText value="#{result.performance}" /></div>
+								    </p:column>								 							    
+								</p:dataTable>
+								<br/><br/>
+								<div align="right">
+									<p:commandButton value="Submit" action="#{resultsBean.saveResults()}" process="fieldResultTabWomen" update="addResult"></p:commandButton>
+								</div>
+							</p:tab>
+						</p:tabView>
+					</p:tab>
+				</p:accordionPanel>
+			</div>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

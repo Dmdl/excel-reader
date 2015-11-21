@@ -54,21 +54,26 @@
 					</p:submenu>
 				</p:submenu> -->
 
-				<p:submenu label="Athlete" icon="ui-icon-pencil" styleClass="menuitemStyle">
+				<p:submenu label="Athlete" icon="ui-icon-person" styleClass="menuitemStyle">
 					<p:menuitem value="Add Entry" url="/faces/pages/add-athlete.xhtml"
-						icon="ui-icon-arrowreturnthick-1-w" />
+						icon="ui-icon-disk" />
 					<p:menuitem value="Update Entry" url="/faces/pages/update-athlete.xhtml"
-						icon="ui-icon-arrowreturnthick-1-e" />
+						icon="ui-icon-pencil" />
 				</p:submenu>
 				
-				<p:submenu label="BIB Numbers" icon="ui-icon-pencil" styleClass="menuitemStyle">
+				<p:submenu label="BIB Numbers" icon="ui-icon-key" styleClass="menuitemStyle">
 					<p:menuitem value="Add/Update BIB Number" url="/faces/pages/add-bib.xhtml"
-						icon="ui-icon-arrowreturnthick-1-w" />					
+						icon="ui-icon-pencil" />					
+				</p:submenu>
+
+				<p:submenu label="Results" icon="ui-icon-suitcase" styleClass="menuitemStyle">
+					<p:menuitem value="Add/Update Results" url="/faces/pages/add-result.xhtml"
+						icon="ui-icon-disk" />					
 				</p:submenu>
 
 				<!-- <p:menuitem value="upload Excel"
 					action="#{menuBean.goToFileUpload}" ajax="false"></p:menuitem> -->
-				<p:menuitem value="upload Excel" url="/faces/pages/fileUpload.xhtml" styleClass="menuitemStyle"></p:menuitem>
+				<p:menuitem value="upload Excel" url="/faces/pages/fileUpload.xhtml" styleClass="menuitemStyle" icon="ui-icon-link"></p:menuitem>
 				
 				
 

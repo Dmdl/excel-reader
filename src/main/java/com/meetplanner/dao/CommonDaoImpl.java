@@ -1,11 +1,14 @@
 package com.meetplanner.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.meetplanner.dao.mappers.AthleteRowMapper;
+import com.meetplanner.dao.mappers.EventResultMapper;
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.ResultDTO;
 
 public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 
@@ -68,6 +71,47 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 			e.printStackTrace();
 		}
 		return count;
+	}
+
+	@Override
+	public List<ResultDTO> getAthletesForEvents(int eventId, int ageGroupId,String gender) {
+		List<ResultDTO> results = new ArrayList<ResultDTO>();
+		try{
+			String sql="SELECT athlete.id AS athlete_id,athlete_events.event_id AS event_id,athlete.name AS athlete_name,groups.name AS group_name,athlete.bib,athlete_events.performance "+
+					"FROM athlete_events JOIN athlete ON athlete_events.athlete_id=athlete.id "+
+					"LEFT JOIN groups ON athlete.group_id=groups.id "+
+					"WHERE athlete_events.event_id=? AND athlete.gender=? AND athlete.age_group_id=?";
+			
+			results = getJdbcTemplate().query(sql, new Object[] {eventId ,gender, ageGroupId}, new EventResultMapper());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return results;
+	}
+
+	private void updatePerformance(int athleteid,int eventId,double performance){
+		try{
+			String sql = "UPDATE athlete_events SET performance=? WHERE athlete_id=? AND event_id=?";
+			getJdbcTemplate().update(sql, performance,athleteid,eventId);
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+	}
+	
+	@Override
+	public boolean saveAthletesPerformances(List<ResultDTO> results) {
+		boolean ok = false;
+		try{
+			for(ResultDTO each:results){
+				updatePerformance(each.getAthleteId(), each.getEventId(), Double.parseDouble(each.getPerformance()));
+			}
+			ok = true;
+		}catch(Exception e){
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
+		return ok;
 	}
 
 }
