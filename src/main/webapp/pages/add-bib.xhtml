@@ -35,7 +35,7 @@
 						           Asign BIB Numbers
 						        </f:facet>
 						        
-								<p:ajax event="rowEdit" listener="#{bibNumbers.addBulkBbiNumbers}" update="addBib athleteTable"/>
+								<p:ajax event="rowEdit" listener="#{bibNumbers.addBulkBbiNumbers}" update="addBib athleteTable" />
        							<p:ajax event="rowEditCancel" listener="#{bibNumbers.onRowCancel}" update="addBib"/>
 								
 								<p:column headerText="Id" rendered="false">

@@ -43,12 +43,12 @@ ul.ui-menu-child {
 
 ul li.ui-menuitem-active>a{
     background-image: none !important;
-    background-color:red !important;   
+    background-color:#1abc9c !important;   
 }
 
 li ul li.ui-menuitem-active>a{
     background-image: none !important;
-    background-color:green !important;    
+    background-color:#e67e22 !important;    
 }
 
 .companyHeaderGrid.ui-panelgrid>*>tr,
