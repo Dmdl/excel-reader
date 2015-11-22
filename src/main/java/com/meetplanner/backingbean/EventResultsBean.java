@@ -27,7 +27,10 @@ public class EventResultsBean implements Serializable{
 
 	public void handleEventChange(String gender){
 		System.out.println("age "+selectedAgeGroup+" event "+selectedEvent+"tab "+trackResultTabView.getActiveIndex()+" gender "+gender);			
-			results = commonService.getAthletesForEvents(Integer.parseInt(selectedEvent), Integer.parseInt(selectedAgeGroup), gender);			
+			results = commonService.getAthletesForEvents(Integer.parseInt(selectedEvent), Integer.parseInt(selectedAgeGroup), gender);
+			if(results.size()==0){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "No Records Found."));
+			}
 	}
 	
 	public void handleAgegroupChange(){

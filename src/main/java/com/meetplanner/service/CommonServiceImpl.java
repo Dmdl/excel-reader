@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.meetplanner.dao.CommonDao;
@@ -14,6 +15,7 @@ import com.meetplanner.dto.ResultDTO;
 @Service("commonService")
 public class CommonServiceImpl implements CommonService{
 
+	@Qualifier("commondDao")
 	@Autowired
 	private CommonDao commonDao;
 	
@@ -46,6 +48,11 @@ public class CommonServiceImpl implements CommonService{
 	@Override
 	public boolean saveAthletesPerformances(List<ResultDTO> results) {
 		return commonDao.saveAthletesPerformances(results);
+	}
+
+	@Override
+	public List<Athlete> serachAthleteByBibOrName(String bib, String name) {
+		return commonDao.serachAthleteByBibOrName(bib, name);
 	}
 
 }

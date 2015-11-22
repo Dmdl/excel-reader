@@ -18,4 +18,6 @@ public interface CommonService {
 	public List<ResultDTO> getAthletesForEvents(int eventId, int ageGroupId,String gender);
 	
 	public boolean saveAthletesPerformances(List<ResultDTO> results);
+	
+	public List<Athlete> serachAthleteByBibOrName(String bib, String name);
 }

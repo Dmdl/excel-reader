@@ -25,7 +25,7 @@
 									
 									<p:outputLabel value="Event" />
 									<p:selectOneMenu id="selectmenuEventMen" value="#{resultsBean.selectedEvent}" style="width:200px;" required="true" requiredMessage="Event is required">
-										<p:ajax listener="#{resultsBean.handleEventChange('M')}" update="trackResultTableMan"></p:ajax>
+										<p:ajax listener="#{resultsBean.handleEventChange('M')}" update="trackResultTableMan addResult"></p:ajax>
 										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
 										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 									</p:selectOneMenu>
@@ -65,7 +65,7 @@
 									
 									<p:outputLabel value="Event" />
 									<p:selectOneMenu id="selectmenuEventWomen" value="#{resultsBean.selectedEvent}" style="width:200px;" required="true" requiredMessage="Event is required">
-										<p:ajax listener="#{resultsBean.handleEventChange('F')}" update="trackResultTableWomen"></p:ajax>
+										<p:ajax listener="#{resultsBean.handleEventChange('F')}" update="trackResultTableWomen addResult"></p:ajax>
 										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
 										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 									</p:selectOneMenu>
@@ -109,7 +109,7 @@
 									
 									<p:outputLabel value="Event" />
 									<p:selectOneMenu id="selectmenuEventMenField" value="#{resultsBean.selectedEvent}" style="width:200px;" required="true" requiredMessage="Event is required">
-										<p:ajax listener="#{resultsBean.handleEventChange('M')}" update="feildResultTableMan"></p:ajax>
+										<p:ajax listener="#{resultsBean.handleEventChange('M')}" update="feildResultTableMan addResult"></p:ajax>
 										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
 										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 									</p:selectOneMenu>
@@ -149,7 +149,7 @@
 									
 									<p:outputLabel value="Event" />
 									<p:selectOneMenu id="selectmenuEventWomenField" value="#{resultsBean.selectedEvent}" style="width:200px;" required="true" requiredMessage="Event is required">
-										<p:ajax listener="#{resultsBean.handleEventChange('F')}" update="feildResultTableWomen"></p:ajax>
+										<p:ajax listener="#{resultsBean.handleEventChange('F')}" update="feildResultTableWomen addResult"></p:ajax>
 										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
 										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 									</p:selectOneMenu>

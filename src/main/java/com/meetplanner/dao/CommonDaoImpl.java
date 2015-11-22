@@ -114,4 +114,9 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 		return ok;
 	}
 
+	@Override
+	public List<Athlete> serachAthleteByBibOrName(String bib, String name) {
+		return null;
+	}
+
 }
