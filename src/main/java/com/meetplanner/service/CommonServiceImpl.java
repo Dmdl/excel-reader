@@ -55,4 +55,9 @@ public class CommonServiceImpl implements CommonService{
 		return commonDao.serachAthleteByBibOrName(bib, name);
 	}
 
+	@Override
+	public boolean updateAthlete(Athlete athlete) {
+		return commonDao.updateAthlete(athlete);
+	}
+
 }

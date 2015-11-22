@@ -8,17 +8,17 @@
 	<ui:define name="content">
 		<p:growl id="addAthlete" showDetail="true"></p:growl>
 
-		<h:form>
+		<h:form id="editAthleteFrm">
 		<div align="center" class="headingColor"><h2>Update Athletes</h2></div>
-			<p:fieldset legend="update Athlete">
-				<p:panelGrid columns="5" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-2,ui-grid-col-3,ui-grid-col-2" style="width:60%;">
+			<p:fieldset id="editFieldSet" legend="update Athlete">
+				<p:panelGrid id="editSearch" columns="5" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-2,ui-grid-col-3,ui-grid-col-2" style="width:60%;" styleClass="panelGridCenter">
 					<p:outputLabel value="BIB Number" />
 					<p:inputText value="#{updateAthlete.serachBib}"/>
 					
 					<p:outputLabel value="Name" />
 					<p:inputText value="#{updateAthlete.searchname}"/>
 					
-					<p:commandButton value="Search" action="#{updateAthlete.searchAthlete()}" update="addAthlete serchResultTbl"></p:commandButton>
+					<p:commandButton value="Search" action="#{updateAthlete.searchAthlete()}" update="addAthlete serchResultTbl :editAthleteFrm:editAthlete"></p:commandButton>
 				</p:panelGrid>
 				<br/><br/><br/>
 				<p:dataTable id="serchResultTbl" var="result" value="#{updateAthlete.searchResult}">
@@ -36,12 +36,49 @@
 				    
 				    <p:column headerText="NIC">
 				        <h:outputText value="#{result.nic}" />
-				    </p:column>		
+				    </p:column>
+				    
+				    <p:column headerText="Date of Birth">
+				        <h:outputText value="#{result.dateOfBirth}" />
+				    </p:column>	
 				    
 				    <p:column>
-				    	<div align="center"><p:commandButton value="Edit" /> </div>
+				    	<div align="center"><p:commandButton value="Edit" action="#{updateAthlete.populateToEdit(result)}" update=":editAthleteFrm:editAthlete"/> </div>
 				    </p:column>			    				    	
-				</p:dataTable>			
+				</p:dataTable>
+				<br/><br/><br/>
+				<p:panelGrid id="editAthlete" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:60%;" styleClass="panelGridCenter">
+					<h:outputText value="School/Club Name" />
+					<p:selectOneMenu id="selectGroup" style="width:150px;" value="#{updateAthlete.athleteGroup}">									
+						<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
+		                <f:selectItems value="#{commonData.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
+					</p:selectOneMenu>
+					
+					<h:outputText value="Age Group" />
+					<p:selectOneMenu id="selectAgeGroup" style="width:150px;" value="#{updateAthlete.athleteAgeGroup}">
+						<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
+						<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+					</p:selectOneMenu>
+					
+					<h:outputText value="Gender" />
+					<p:selectOneMenu value="#{updateAthlete.athleteGender}" id="selectGender" style="width:150px;">
+						<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
+						<f:selectItem itemLabel="Male" itemValue="M" />
+						<f:selectItem itemLabel="Female" itemValue="F" />
+					</p:selectOneMenu>
+					
+					<h:outputText value="Full Name" />
+					<p:inputText value="#{updateAthlete.athleteName}"></p:inputText>
+					
+					<h:outputText value="Date of Birth" />
+					<p:calendar id="dobm" value="#{updateAthlete.athleteDoB}" showOn="button" pattern="dd-MM-yyyy" navigator="true" yearRange="c-50:c+1"/>
+					
+					<p:outputLabel value="NIC No (If Applicable)" />
+					<p:inputText value="#{updateAthlete.athleteNic}" />
+					
+					<p:commandButton value="Update" action="#{updateAthlete.updateAthlete()}" update="addAthlete serchResultTbl"></p:commandButton>
+					<p:commandButton value="Delete"></p:commandButton>
+				</p:panelGrid>			
 			</p:fieldset>
 		</h:form>
 		

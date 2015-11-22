@@ -119,4 +119,19 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 		return null;
 	}
 
+	@Override
+	public boolean updateAthlete(Athlete athlete) {
+		boolean ok = false;
+		try{
+			String sql = "UPDATE athlete SET name=? ,date_of_birth=? ,group_id=? ,nic=? ,gender=? ,age_group_id=? WHERE id=?";
+			int rows = getJdbcTemplate().update(sql, athlete.getName(),athlete.getDateOfBirth(),athlete.getGroupId(),athlete.getNic(),athlete.getGender(),athlete.getAgeGroup(),athlete.getId());
+			if(rows>0){
+				ok=true;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return ok;
+	}
+
 }

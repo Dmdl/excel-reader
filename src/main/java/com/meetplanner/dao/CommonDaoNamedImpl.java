@@ -77,4 +77,10 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		return results;
 	}
 
+	@Override
+	public boolean updateAthlete(Athlete athlete) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
