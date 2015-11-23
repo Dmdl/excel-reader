@@ -1,6 +1,7 @@
 package com.meetplanner.backingbean;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -15,8 +16,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @author lakmal.d
  */
 
-public class LoginBean {
+public class LoginBean implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private String userName;
 	private String password;
 
