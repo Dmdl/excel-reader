@@ -17,10 +17,11 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
         <display-name>loginView</display-name>
         <from-view-id>/*</from-view-id>
         <navigation-case>
-            <from-outcome>loginPage</from-outcome>
+        	<from-action>#{loginBean.doLogout}</from-action>
+            <from-outcome>logout</from-outcome>
             <to-view-id>/login.xhtml</to-view-id>
             <redirect/>     
-        </navigation-case>
+        </navigation-case>       
 	</navigation-rule>
 
 	<managed-bean>

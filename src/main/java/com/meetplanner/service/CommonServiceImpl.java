@@ -1,5 +1,6 @@
 package com.meetplanner.service;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -13,8 +14,9 @@ import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.ResultDTO;
 
 @Service("commonService")
-public class CommonServiceImpl implements CommonService{
+public class CommonServiceImpl implements CommonService,Serializable{
 
+	private static final long serialVersionUID = 1L;
 	@Qualifier("commondDao")
 	@Autowired
 	private CommonDao commonDao;
