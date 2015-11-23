@@ -7,15 +7,15 @@
 <ui:composition> 
 	<ui:define name="title">Login</ui:define>
 		<h:form id="loginForm" prependId="false">
-		<div id="login" align="center" style="margin-top:15%;font-size:150%;">
-			<label for="j_username"><h:outputText value="Username:" /><br />
+		<div id="login" align="center" style="font-size:150%;border:2px solid #73AD21;width:30%;margin: 15% auto;border-radius: 25px;padding: 15px;">
+			<label for="j_username"><h:outputText value="User Name" /><br />
 			</label>
 			<h:inputText id="j_username" required="true" value="#{loginBean.userName}">
 			</h:inputText>
 
 			<br />
 			<br />
-			<label for="j_password"><h:outputText value="Password:" /><br />
+			<label for="j_password"><h:outputText value="Password" /><br />
 			</label>
 			<h:inputSecret id="j_password" required="true">
 			</h:inputSecret>
@@ -28,7 +28,7 @@
 			<br />
 
 			<h:commandButton type="submit" id="login"
-				action="#{loginBean.doLogin}" value="Login" />
+				action="#{loginBean.doLogin}" value="Login" style="width:25%;"/>
 				</div>
 		</h:form>
 
