@@ -17,23 +17,27 @@
 							<p:tab id="trackResultTabMan" title="Men">
 								<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
 									<h:outputText value="Age Group" />
-									<p:selectOneMenu value="#{resultsBean.selectedAgeGroup}" style="width:150px;" required="true" requiredMessage="Select Age Group">
+									<p:selectOneMenu value="#{resultsBean.selectedAgeGroup}" style="width:150px;">
 										<p:ajax listener="#{resultsBean.handleAgegroupChange}" update="selectmenuEventMen trackResultTableMan"></p:ajax>
 										<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
 										<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 									</p:selectOneMenu>
 									
 									<p:outputLabel value="Event" />
-									<p:selectOneMenu id="selectmenuEventMen" value="#{resultsBean.selectedEvent}" style="width:200px;" required="true" requiredMessage="Event is required">
-										<p:ajax listener="#{resultsBean.handleEventChange('M')}" update="trackResultTableMan addResult"></p:ajax>
+									<p:selectOneMenu id="selectmenuEventMen" value="#{resultsBean.selectedEvent}" style="width:200px;">
+										<!-- <p:ajax listener="#{resultsBean.handleEventChange('M')}" update="trackResultTableMan addResult"></p:ajax> -->
 										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
 										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 									</p:selectOneMenu>
 								</p:panelGrid>
 								<br/><br/><br/>
-								<p:dataTable id="trackResultTableMan" var="result" value="#{resultsBean.results}">
+								<div align="right">
+									<p:commandButton value="Add Row" action="#{resultsBean.addRow()}" process="trackResultTabMan" update="addResult trackResultTableMan"></p:commandButton>
+									<p:commandButton value="Remove Row" action="#{resultsBean.RemoveRow()}" process="trackResultTabMan" update="addResult trackResultTableMan"></p:commandButton>
+								</div>
+								<p:dataTable id="trackResultTableMan" var="result" value="#{resultsBean.resultToFill}">
 								    <p:column headerText="BIB Number">
-								        <h:outputText value="#{result.bibNo}" />
+								        <div align="center"><h:inputText value="#{result.bibNumber}" /></div>
 								    </p:column>
 								 
 								 	<p:column headerText="Name">
@@ -45,12 +49,15 @@
 								    </p:column>
 								    
 								    <p:column headerText="Performance" style="center">
-								        <div align="center"><h:inputText value="#{result.performance}" /></div>
+								        <div align="center"><h:inputText /></div>
 								    </p:column>								 							    
-								</p:dataTable>
+								</p:dataTable>								
 								<br/><br/>
+								<div align="left">									
+									<p:commandButton value="verify" action="#{resultsBean.verify()}" process="trackResultTabMan" update="addResult trackResultTabManSub trackResultTableMan"></p:commandButton>
+								</div>
 								<div align="right">
-									<p:commandButton value="Submit" action="#{resultsBean.saveResults()}" process="trackResultTabMan" update="addResult"></p:commandButton>
+									<p:commandButton id="trackResultTabManSub" value="Submit" action="#{resultsBean.saveResults()}" process="trackResultTabMan" update="addResult" disabled="#{resultsBean.disableSubmit ne false}"></p:commandButton>
 								</div>
 							</p:tab>
 							

@@ -1,0 +1,45 @@
+<ui:composition template="../template/common/commonLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<p:growl id="addEvent" showDetail="true"></p:growl>
+
+		<h:form id="addEventFrm">
+		<div align="center" class="headingColor"><h2>Add / Update Events</h2></div>
+			<p:tabView id="addEventTabview">
+				<p:tab id="addEventTab" title="Add Event">
+					<p:panelGrid id="addEventGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
+						<h:outputText value="Event Name" />
+						<p:inputText style="width:70%;"></p:inputText>
+						
+						<h:outputText value="Event Type" />
+						<p:selectOneMenu value="#{updateAthlete.athleteGender}" id="selectEventType" style="width:65%;">
+							<f:selectItem itemLabel="Select Event Type" itemValue="" noSelectionOption="true" />
+							<f:selectItem itemLabel="Feild Event" itemValue="F" />
+							<f:selectItem itemLabel="Track Event" itemValue="T" />
+						</p:selectOneMenu>
+						
+						<h:outputText value="Participants" />
+						<p:selectOneMenu value="#{updateAthlete.athleteGender}" id="selectGender" style="width:65%;">
+							<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
+							<f:selectItem itemLabel="Male" itemValue="M" />
+							<f:selectItem itemLabel="Female" itemValue="F" />
+						</p:selectOneMenu>
+						
+						<p:commandButton value="Add"></p:commandButton>
+						<p:commandButton value="Cancel"></p:commandButton>
+					</p:panelGrid>
+				</p:tab>
+				
+				<p:tab id="updateEventTab" title="Update Event">
+					
+				</p:tab>
+			</p:tabView>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

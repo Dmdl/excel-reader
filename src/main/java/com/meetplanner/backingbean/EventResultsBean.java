@@ -1,6 +1,7 @@
 package com.meetplanner.backingbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -8,6 +9,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.component.tabview.TabView;
 
+import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.service.CommonService;
 import com.meetplanner.util.SpringApplicationContex;
@@ -20,8 +22,11 @@ public class EventResultsBean implements Serializable{
 	private TabView trackResultTabView;
 	private CommonService commonService;
 	private List<ResultDTO> results;
+	private List<Athlete> resultToFill;
+	private boolean disableSubmit = true;
 	
 	public EventResultsBean(){
+		resultToFill = new ArrayList<Athlete>(0);
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
 	}
 
@@ -62,6 +67,31 @@ public class EventResultsBean implements Serializable{
 		}		
 	}
 	
+	public void verify(){
+		disableSubmit = false;
+		if(null!=resultToFill){
+			for(Athlete each:resultToFill){
+				System.out.println("each "+each.getBibNumber());
+			}
+		}
+	}
+	
+	public void addRow(){
+		if((null!=selectedAgeGroup && !"".equals(selectedAgeGroup)) && (null!=selectedEvent && !"".equals(selectedEvent))){
+			resultToFill.add(new Athlete());
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Select Event and Age group"));
+		}
+	}
+	
+	public void RemoveRow(){
+		if(null!= resultToFill && resultToFill.size()>0){
+			resultToFill.remove(resultToFill.size()-1);
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "No Rows to Remove"));
+		}
+	}
+	
 	public String getSelectedAgeGroup() {
 		return selectedAgeGroup;
 	}
@@ -100,6 +130,22 @@ public class EventResultsBean implements Serializable{
 
 	public void setResults(List<ResultDTO> results) {
 		this.results = results;
-	}	
+	}
+
+	public List<Athlete> getResultToFill() {
+		return resultToFill;
+	}
+
+	public void setResultToFill(List<Athlete> resultToFill) {
+		this.resultToFill = resultToFill;
+	}
+
+	public boolean isDisableSubmit() {
+		return disableSubmit;
+	}
+
+	public void setDisableSubmit(boolean disableSubmit) {
+		this.disableSubmit = disableSubmit;
+	}
 	
 }
