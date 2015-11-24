@@ -86,7 +86,7 @@ CREATE TABLE `athlete` (
 
 
 
-insert  into `athlete`(`id`,`name`,`date_of_birth`,`group_id`,`nic`,`employee_no`,`gender`,`bib`,`age_group_id`) values (2,'sample my name','1991-04-01',1,'645757547547V','','M','500',3),(3,'saman darshana','1998-04-01',1,'234565455V','','M','600',1),(4,'kamali sampath','1984-03-04',1,'345673476V','','F','200',2),(5,'dasun munasinghe','1994-04-04',2,'2222322222V','','F','600',1);
+insert  into `athlete`(`id`,`name`,`date_of_birth`,`group_id`,`nic`,`employee_no`,`gender`,`bib`,`age_group_id`) values (2,'sample my','1991-04-01',1,'645757547547V','','M','500',3),(3,'saman darshana','1998-04-01',1,'234565455V','','M','600',1),(4,'kamal sampath','1984-03-04',1,'345673476V','','F','200',2),(5,'dasun munasinghe','1994-04-04',2,'2222322222V','','F','400',1);
 
 
 
@@ -125,6 +125,8 @@ DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `event_name` varchar(100) NOT NULL,
+  `type` varchar(5) DEFAULT NULL,
+  `participants` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
@@ -134,7 +136,7 @@ CREATE TABLE `events` (
 
 
 
-insert  into `events`(`id`,`event_name`) values (1,'Championship WOMEN'),(2,'NOVICES  WOMEN'),(3,'MEN CHAMPIONSHIPS'),(4,'NOVICES MEN'),(5,'over 30 women'),(6,'OVER 35 WOMEN'),(7,'OVER 40 WOMEN'),(8,'OVER 45 WOMEN'),(9,'OVER 50 WOMEN'),(10,'OVER 35 MEN'),(11,'OVER 40 MEN');
+insert  into `events`(`id`,`event_name`,`type`,`participants`) values (1,'Championship WOMEN','T','F'),(2,'NOVICES  WOMEN','F','F'),(3,'MEN CHAMPIONSHIPS','T','M'),(4,'NOVICES MEN','T','M'),(5,'over 30 women','T','F'),(6,'OVER 35 WOMEN','F','F'),(7,'OVER 40 WOMEN','T','F'),(8,'OVER 45 WOMEN','T','M'),(9,'OVER 50 WOMEN','T','M'),(10,'OVER 35 MEN','F','M'),(11,'OVER 40 MEN','T','M');
 
 
 
