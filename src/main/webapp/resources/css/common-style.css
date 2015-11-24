@@ -1,8 +1,8 @@
  body {
-    /* background-image: url("#{resource['images/background.png']}");
+    background-image: url("#{resource['images/sport1.jpg']}");
     background-size: cover;
     background-repeat: no-repeat; 
-    background-attachment:fixed; */
+    background-attachment:fixed;
 } 
 
 .ui-widget, .ui-widget .ui-widget {
