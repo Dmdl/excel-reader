@@ -27,4 +27,6 @@ public interface CommonDao {
 	public boolean updateAthlete(Athlete athlete);
 	
 	public Athlete getAthleteFromBibNumber(String bib,int ageGroupId,int eventId,String gender) throws GenricSqlException,NoDataException;
+	
+	public boolean updatePerformanceForEvent(int eventId,List<Athlete> athletes) throws GenricSqlException;
 }

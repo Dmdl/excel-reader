@@ -70,4 +70,9 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		return commonDao.getAthleteFromBibNumber(bib,ageGroupId,eventId,gender);
 	}
 
+	@Override
+	public boolean updatePerformanceForEvent(int eventId, List<Athlete> athletes) throws GenricSqlException {
+		return commonDao.updatePerformanceForEvent(eventId, athletes);
+	}
+
 }

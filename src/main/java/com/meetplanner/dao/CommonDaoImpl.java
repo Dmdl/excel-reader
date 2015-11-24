@@ -148,7 +148,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 	public Athlete getAthleteFromBibNumber(String bib,int ageGroupId,int eventId,String gender) throws GenricSqlException,NoDataException{
 		Athlete athlete = null;
 		try{
-			String sql = "SELECT athlete.id AS athlete_id,athlete.name AS thlete_name,athlete.nic,athlete.bib,groups.name AS group_name"+
+			String sql = "SELECT athlete.id AS athlete_id,athlete.name AS thlete_name,athlete.nic,athlete.bib,groups.name AS group_name,athlete_events.performance"+
 						" FROM athlete LEFT JOIN groups ON athlete.group_id=groups.id"+
 						" LEFT JOIN athlete_events ON athlete.id=athlete_events.athlete_id"+
 						" WHERE athlete.bib=? AND athlete.age_group_id=? AND athlete_events.event_id=? AND athlete.gender=?";
@@ -159,6 +159,20 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 			throw new GenricSqlException(e);
 		}
 		return athlete;
+	}
+
+	@Override
+	public boolean updatePerformanceForEvent(int eventId, List<Athlete> athletes) throws GenricSqlException{
+		boolean ok = false;
+		try{
+			for(Athlete each:athletes){
+				updatePerformance(Integer.parseInt(each.getId()),eventId,Double.parseDouble(each.getEventResult().getPerformance()));
+			}
+			ok = true;
+		}catch(Exception e){
+			throw new GenricSqlException(e);
+		}
+		return ok;
 	}
 
 }

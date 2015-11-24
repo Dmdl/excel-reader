@@ -72,8 +72,14 @@ public class EventResultsBean implements Serializable{
 	public void submit(){
 		if(null!=resultToFill && resultToFill.size()>0){
 			for(Athlete a:resultToFill){
-				System.out.println(a.getName()+" per "+a.getEventResult().getPerformance());
+				System.out.println(a.getName()+" per "+a.getEventResult().getPerformance()+" id "+a.getId());				
 			}
+			try{
+				commonService.updatePerformanceForEvent(Integer.parseInt(selectedEvent), resultToFill);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "Successfully Updated."));
+			}catch(GenricSqlException e){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Something went wrong!!!"));
+			}		
 		}
 	}
 	
@@ -89,6 +95,7 @@ public class EventResultsBean implements Serializable{
 						each.setNic(ath.getNic());
 						each.setBibNumber(ath.getBibNumber());
 						each.setGroup(ath.getGroup());
+						each.getEventResult().setPerformance(ath.getEventResult().getPerformance());
 					}catch(GenricSqlException e){
 						disableSubmit = true;
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured"));

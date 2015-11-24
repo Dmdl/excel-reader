@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import com.meetplanner.dao.mappers.UpdateAthleteRowMapper;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.ResultDTO;
+import com.meetplanner.exception.GenricSqlException;
 
 public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements CommonDao {
 	
@@ -87,6 +88,13 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 	public Athlete getAthleteFromBibNumber(String bib,int ageGroupId,int eventId,String gender) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean updatePerformanceForEvent(int eventId, List<Athlete> athletes)
+			throws GenricSqlException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
