@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import com.meetplanner.dao.CommonDao;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.ResultDTO;
+import com.meetplanner.exception.DuplicateValueException;
+import com.meetplanner.exception.GenricSqlException;
+import com.meetplanner.exception.NoDataException;
 
 @Service("commonService")
 public class CommonServiceImpl implements CommonService,Serializable{
@@ -32,12 +35,12 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	}
 
 	@Override
-	public boolean updateBibNumber(int number, int id) {
+	public boolean updateBibNumber(int number, int id) throws DuplicateValueException,GenricSqlException{
 		return commonDao.updateBibNumber(number, id);
 	}
 
 	@Override
-	public int addBibNumbers(List<Athlete> athletes) {
+	public int addBibNumbers(List<Athlete> athletes) throws DuplicateValueException,GenricSqlException{
 		return commonDao.addBibNumbers(athletes);
 	}
 
@@ -60,6 +63,11 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	@Override
 	public boolean updateAthlete(Athlete athlete) {
 		return commonDao.updateAthlete(athlete);
+	}
+
+	@Override
+	public Athlete getAthleteFromBibNumber(String bib,int ageGroupId,int eventId,String gender) throws GenricSqlException,NoDataException {
+		return commonDao.getAthleteFromBibNumber(bib,ageGroupId,eventId,gender);
 	}
 
 }

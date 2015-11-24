@@ -11,6 +11,8 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
 
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.exception.DuplicateValueException;
+import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.service.CommonService;
 import com.meetplanner.util.SpringApplicationContex;
 
@@ -43,12 +45,18 @@ public class BibNumbersBean implements Serializable {
 		Athlete athlete = (Athlete) event.getObject();
 		String id = athlete.getId();
 		String bibNum = athlete.getBibNumber();
-		boolean ok = commonService.updateBibNumber(Integer.parseInt(bibNum), Integer.parseInt(id));
-		if(ok){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Updated."));
-		}else{
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error?", "Error Occured."));
-		}
+		boolean ok = false;
+		try{
+			ok = commonService.updateBibNumber(Integer.parseInt(bibNum), Integer.parseInt(id));
+			if(ok){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Updated."));
+			}
+		}catch(DuplicateValueException inVex){
+			System.out.println("error "+inVex.getMessage());
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Duplicate BIB Number."));
+		}catch (GenricSqlException e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured."));
+		}				
     }
 	
 	public void onRowCancel(RowEditEvent event) {

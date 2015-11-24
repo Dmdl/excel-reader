@@ -11,6 +11,8 @@ import org.primefaces.component.tabview.TabView;
 
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.ResultDTO;
+import com.meetplanner.exception.GenricSqlException;
+import com.meetplanner.exception.NoDataException;
 import com.meetplanner.service.CommonService;
 import com.meetplanner.util.SpringApplicationContex;
 
@@ -67,12 +69,40 @@ public class EventResultsBean implements Serializable{
 		}		
 	}
 	
-	public void verify(){
-		disableSubmit = false;
-		if(null!=resultToFill){
-			for(Athlete each:resultToFill){
-				System.out.println("each "+each.getBibNumber());
+	public void submit(){
+		if(null!=resultToFill && resultToFill.size()>0){
+			for(Athlete a:resultToFill){
+				System.out.println(a.getName()+" per "+a.getEventResult().getPerformance());
 			}
+		}
+	}
+	
+	public void verify(String gender){
+		disableSubmit = false;	
+		if((null!=selectedAgeGroup && !"".equals(selectedAgeGroup)) && (null!=selectedEvent && !"".equals(selectedEvent)) && (null!=gender && !"".equals(gender))){
+			if(null!=resultToFill){
+				for(Athlete each:resultToFill){
+					try{
+						Athlete ath = commonService.getAthleteFromBibNumber(each.getBibNumber(),Integer.parseInt(selectedAgeGroup),Integer.parseInt(selectedEvent),gender);
+						each.setId(ath.getId());
+						each.setName(ath.getName());
+						each.setNic(ath.getNic());
+						each.setBibNumber(ath.getBibNumber());
+						each.setGroup(ath.getGroup());
+					}catch(GenricSqlException e){
+						disableSubmit = true;
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured"));
+					}catch(NoDataException e){
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Athlete not found for BIB Number "+each.getBibNumber()));
+						each.setName(null);
+						each.setGroup(null);
+						disableSubmit = true;
+						break;
+					}					
+				}
+			}
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Select Event and Age group"));
 		}
 	}
 	
@@ -89,6 +119,12 @@ public class EventResultsBean implements Serializable{
 			resultToFill.remove(resultToFill.size()-1);
 		}else{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "No Rows to Remove"));
+		}
+	}
+	
+	public void onTabChange(){
+		if(null!=resultToFill){
+			resultToFill.clear();
 		}
 	}
 	

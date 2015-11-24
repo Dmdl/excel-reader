@@ -3,12 +3,18 @@ package com.meetplanner.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.meetplanner.dao.mappers.AthleteRowMapper;
 import com.meetplanner.dao.mappers.EventResultMapper;
+import com.meetplanner.dao.mappers.EventResultRowMapper;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.ResultDTO;
+import com.meetplanner.exception.DuplicateValueException;
+import com.meetplanner.exception.GenricSqlException;
+import com.meetplanner.exception.NoDataException;
 
 public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 
@@ -43,7 +49,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 	}
 
 	@Override
-	public boolean updateBibNumber(int number,int id) {
+	public boolean updateBibNumber(int number,int id) throws DuplicateValueException,GenricSqlException{
 		boolean result = false;
 		try{
 			String sql = "UPDATE athlete SET bib=? WHERE id=?";
@@ -51,14 +57,16 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 			if(count>0){
 				result = true;
 			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		}catch(DataIntegrityViolationException e){
+			throw new DuplicateValueException(e);
+		}catch (Exception e) {
+			throw new GenricSqlException(e);
+		}				
 		return result;
 	}
 
 	@Override
-	public int addBibNumbers(List<Athlete> athletes) {
+	public int addBibNumbers(List<Athlete> athletes) throws DuplicateValueException,GenricSqlException{
 		int count = 0;
 		try{
 			for(Athlete each:athletes){
@@ -67,9 +75,11 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 					count++;
 				}
 			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		}catch(DataIntegrityViolationException e){
+			throw new DuplicateValueException(e);
+		}catch (Exception e) {
+			throw new GenricSqlException(e);
+		}	
 		return count;
 	}
 
@@ -132,6 +142,23 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 			e.printStackTrace();
 		}
 		return ok;
+	}
+
+	@Override
+	public Athlete getAthleteFromBibNumber(String bib,int ageGroupId,int eventId,String gender) throws GenricSqlException,NoDataException{
+		Athlete athlete = null;
+		try{
+			String sql = "SELECT athlete.id AS athlete_id,athlete.name AS thlete_name,athlete.nic,athlete.bib,groups.name AS group_name"+
+						" FROM athlete LEFT JOIN groups ON athlete.group_id=groups.id"+
+						" LEFT JOIN athlete_events ON athlete.id=athlete_events.athlete_id"+
+						" WHERE athlete.bib=? AND athlete.age_group_id=? AND athlete_events.event_id=? AND athlete.gender=?";
+			athlete = getJdbcTemplate().queryForObject(sql, new Object[] {bib,ageGroupId,eventId,gender}, new EventResultRowMapper());
+		}catch(EmptyResultDataAccessException e){
+			throw new NoDataException(e);
+		}catch(Exception e){
+			throw new GenricSqlException(e);
+		}
+		return athlete;
 	}
 
 }

@@ -1,10 +1,12 @@
 package com.meetplanner.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Athlete {
+public class Athlete implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String empNo;
 	private String name;
@@ -17,6 +19,7 @@ public class Athlete {
 	private String gender;
 	private String bibNumber;
 	private int groupId;
+	private ResultDTO eventResult = new ResultDTO();
 
 	public String getId() {
 		return id;
@@ -112,6 +115,14 @@ public class Athlete {
 
 	public void setGroupId(int groupId) {
 		this.groupId = groupId;
+	}
+
+	public ResultDTO getEventResult() {
+		return eventResult;
+	}
+
+	public void setEventResult(ResultDTO eventResult) {
+		this.eventResult = eventResult;
 	}
 	
 }

@@ -83,4 +83,10 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		return false;
 	}
 
+	@Override
+	public Athlete getAthleteFromBibNumber(String bib,int ageGroupId,int eventId,String gender) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
