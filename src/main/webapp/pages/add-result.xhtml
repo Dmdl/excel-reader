@@ -17,6 +17,7 @@
 						<p:tabView id="trackResultTabView" binding="#{resultsBean.trackResultTabView}">
 						<p:ajax event="tabChange" listener="#{resultsBean.onTabChange}" />
 							<p:tab id="trackResultTabMan" title="Men">
+							<p:defaultCommand target="trackResultTabManVerify" />
 								<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
 									<h:outputText value="Age Group" />
 									<p:selectOneMenu value="#{resultsBean.selectedAgeGroup}" style="width:150px;">
@@ -57,7 +58,7 @@
 								</p:dataTable>								
 								<br/><br/>
 								<div align="left">									
-									<p:commandButton value="verify" action="#{resultsBean.verify('M')}" process="trackResultTabMan" update="addResult trackResultTabManSub trackResultTableMan"></p:commandButton>
+									<p:commandButton value="verify" id="trackResultTabManVerify" action="#{resultsBean.verify('M')}" process="trackResultTabMan" update="addResult trackResultTabManSub trackResultTableMan"></p:commandButton>
 								</div>
 								<div align="right">
 									<p:commandButton id="trackResultTabManSub" value="Submit" action="#{resultsBean.submit()}" process="trackResultTabMan" update="addResult" disabled="#{resultsBean.disableSubmit ne false}"></p:commandButton>
@@ -65,6 +66,7 @@
 							</p:tab>
 							
 							<p:tab id="trackResultTabWomen" title="Women">
+							<p:defaultCommand target="trackResultTabWomenVerify" />
 								<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
 									<h:outputText value="Age Group" />
 									<p:selectOneMenu value="#{resultsBean.selectedAgeGroup}" style="width:150px;">
@@ -105,7 +107,7 @@
 								</p:dataTable>
 								<br/><br/>
 								<div align="left">									
-									<p:commandButton value="verify" action="#{resultsBean.verify('F')}" process="trackResultTabWomen" update="addResult trackResultTabWomenSub trackResultTableWomen"></p:commandButton>
+									<p:commandButton id="trackResultTabWomenVerify" value="verify" action="#{resultsBean.verify('F')}" process="trackResultTabWomen" update="addResult trackResultTabWomenSub trackResultTableWomen"></p:commandButton>
 								</div>
 								<div align="right">
 									<p:commandButton id="trackResultTabWomenSub" value="Submit" action="#{resultsBean.submit()}" process="trackResultTabWomen" update="addResult" disabled="#{resultsBean.disableSubmit ne false}"></p:commandButton>
@@ -117,7 +119,7 @@
 					<p:tab id="fieldResultTab" title="Field Events">
 						<p:tabView id="fieldResultTabView">
 						<p:ajax event="tabChange" listener="#{resultsBean.onTabChange}" />
-							<p:tab id="fieldResultTabMen" title="Men">
+							<p:tab id="fieldResultTabMen" title="Men">							
 								<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
 									<h:outputText value="Age Group" />
 									<p:selectOneMenu value="#{resultsBean.selectedAgeGroup}" style="width:150px;">
