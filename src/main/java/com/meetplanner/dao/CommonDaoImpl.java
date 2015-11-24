@@ -167,6 +167,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 		try{
 			for(Athlete each:athletes){
 				updatePerformance(Integer.parseInt(each.getId()),eventId,Double.parseDouble(each.getEventResult().getPerformance()));
+				throw new GenricSqlException();
 			}
 			ok = true;
 		}catch(Exception e){

@@ -3,11 +3,10 @@ package com.meetplanner.service;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.meetplanner.dao.CommonDao;
 import com.meetplanner.dto.Athlete;
@@ -70,6 +69,7 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		return commonDao.getAthleteFromBibNumber(bib,ageGroupId,eventId,gender);
 	}
 
+	@Transactional(rollbackFor=GenricSqlException.class)
 	@Override
 	public boolean updatePerformanceForEvent(int eventId, List<Athlete> athletes) throws GenricSqlException {
 		return commonDao.updatePerformanceForEvent(eventId, athletes);
