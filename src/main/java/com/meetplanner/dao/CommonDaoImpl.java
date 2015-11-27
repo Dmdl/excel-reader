@@ -175,4 +175,17 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 		return ok;
 	}
 
+	@Override
+	public List<Athlete> getAllAthletesForGroup(int groupid) {
+		List<Athlete> athletes = new ArrayList<Athlete>(0);
+		try{
+			String sql = "SELECT athlete.id,athlete.name AS athlete_name,athlete.bib,groups.name AS group_name,athlete.group_id AS group_id FROM athlete"+
+						" JOIN groups ON athlete.group_id=groups.id WHERE athlete.group_id=?";
+			athletes = getJdbcTemplate().query(sql, new Object[] {groupid}, new AthleteRowMapper());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return athletes;
+	}
+
 }

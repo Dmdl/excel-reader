@@ -97,4 +97,10 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		return false;
 	}
 
+	@Override
+	public List<Athlete> getAllAthletesForGroup(int groupid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

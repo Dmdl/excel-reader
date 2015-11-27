@@ -29,4 +29,6 @@ public interface CommonService {
 	public Athlete getAthleteFromBibNumber(String bib,int ageGroupId,int eventId,String gender) throws GenricSqlException,NoDataException;
 	
 	public boolean updatePerformanceForEvent(int eventId, List<Athlete> athletes) throws GenricSqlException;
+	
+	public List<Athlete> getAllAthletesForGroup(int groupid);
 }

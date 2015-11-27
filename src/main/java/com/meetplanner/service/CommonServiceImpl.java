@@ -75,4 +75,9 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		return commonDao.updatePerformanceForEvent(eventId, athletes);
 	}
 
+	@Override
+	public List<Athlete> getAllAthletesForGroup(int groupid) {
+		return commonDao.getAllAthletesForGroup(groupid);
+	}
+
 }

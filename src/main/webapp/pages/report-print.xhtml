@@ -1,0 +1,27 @@
+<ui:composition template="../template/common/commonLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<p:growl id="printRepGr" showDetail="true"></p:growl>
+
+		<h:form>
+			<div style="margin-left:10%;">
+			<div align="center" class="headingColor"><h2>Print Reports</h2></div>
+				<p:panelGrid columns="2" style="width:60%;">
+					<p:outputLabel value="Report Type"></p:outputLabel>
+					<p:selectOneMenu value="#{reportBean.selectedReportType}" id="reportType" style="width:50%;">
+						<p:ajax listener="#{reportBean.onReportTypeChange()}"></p:ajax>
+						<f:selectItem itemLabel="Select Report Type" itemValue="" noSelectionOption="true" />
+						<f:selectItem itemLabel="Athlete" itemValue="At" />
+						<f:selectItem itemLabel="Events" itemValue="Ev" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
