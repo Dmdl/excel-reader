@@ -3,12 +3,23 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<head>
+		<title>MeetPlanner</title>
+		<style type="text/css">
+			body {background-image: url("#{resource['images/login-back.png']}");
+			background-size: cover;
+    		background-repeat: no-repeat; 
+    		background-attachment:fixed;
+    		color: #2c3e50;
+    		}
+		</style>
+	</head>
+ 
 
-<ui:composition> 
-	<ui:define name="title">Login</ui:define>
 		<h:form id="loginForm" prependId="false">
-		<div id="login" align="center" style="font-size:150%;border:2px solid #73AD21;width:30%;margin: 15% auto;border-radius: 25px;padding: 15px;">
-			<label for="j_username"><h:outputText value="User Name" /><br />
+		<div id="login" align="center" style="font-size:150%;border:2px solid #3498db;width:30%;margin: 15% auto;border-radius: 25px;padding: 15px;">
+			<label for="j_username"><h:outputText value="Username" /><br />
 			</label>
 			<h:inputText id="j_username" required="true" value="#{loginBean.userName}">
 			</h:inputText>
@@ -32,5 +43,5 @@
 				</div>
 		</h:form>
 
-</ui:composition>
+
 </html>
