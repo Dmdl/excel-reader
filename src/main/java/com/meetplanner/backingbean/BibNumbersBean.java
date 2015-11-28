@@ -23,9 +23,21 @@ public class BibNumbersBean implements Serializable {
 	private String selectedAgeGroup = null;
 	private CommonService commonService;
 	private List<Athlete> athleteList = null;
+	private Integer lastBibNumber;
 
 	public BibNumbersBean() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
+		try{
+			String bib = commonService.getLastAssignBibNumber();
+			if(null==bib){
+				lastBibNumber= 1;
+			}else{
+				lastBibNumber= Integer.parseInt(bib)+1;
+			}			
+			System.out.println("lastBibNumber "+lastBibNumber);
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 	}
 
 	public void search(){
@@ -102,6 +114,31 @@ public class BibNumbersBean implements Serializable {
 		return res;
 	}
 	
+	public void assignBibNumbers(){
+		System.out.println("last bib "+lastBibNumber);
+		List<Athlete> temp = new ArrayList<Athlete>(0);
+		if(null!=athleteList && athleteList.size()>0){
+			Iterator<Athlete> ite = athleteList.iterator();
+			while(ite.hasNext()){
+				Athlete each = ite.next();
+				each.setBibNumber(String.valueOf(lastBibNumber));
+				temp.add(each);
+				lastBibNumber = lastBibNumber+1;
+			}
+			athleteList.clear();
+			athleteList.addAll(temp);
+			try{
+				int count = commonService.addBibNumbers(athleteList);
+				System.out.println("count "+count);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Updated."));
+			}catch(GenricSqlException e){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured."));
+			}catch(DuplicateValueException d){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Duplicate BIB Numbers."));
+			}
+		}
+	}
+	
 	public String getSelectedGroup() {
 		return selectedGroup;
 	}
@@ -132,6 +169,14 @@ public class BibNumbersBean implements Serializable {
 
 	public void setAthleteList(List<Athlete> athleteList) {
 		this.athleteList = athleteList;
+	}
+
+	public int getLastBibNumber() {
+		return lastBibNumber;
+	}
+
+	public void setLastBibNumber(int lastBibNumber) {
+		this.lastBibNumber = lastBibNumber;
 	}
 
 }

@@ -110,4 +110,10 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		return null;
 	}
 
+	@Override
+	public String getLastAssignBibNumber() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

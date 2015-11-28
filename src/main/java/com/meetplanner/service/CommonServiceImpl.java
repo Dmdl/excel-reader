@@ -88,4 +88,9 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		return commonDao.getEventsForAthletes(athleteId);
 	}
 
+	@Override
+	public String getLastAssignBibNumber() throws GenricSqlException {
+		return commonDao.getLastAssignBibNumber();
+	}
+
 }

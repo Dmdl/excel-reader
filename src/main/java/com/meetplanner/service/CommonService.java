@@ -34,4 +34,6 @@ public interface CommonService {
 	public List<Athlete> getAllAthletesForGroup(int groupid);
 	
 	public List<EventDTO> getEventsForAthletes(int athleteId) throws GenricSqlException;
+	
+	public String getLastAssignBibNumber() throws GenricSqlException;
 }

@@ -29,8 +29,8 @@
 							<p:commandButton value="Search" action="#{bibNumbers.search()}" update="addBib athleteTable" process="addTab"></p:commandButton>
 						</p:panelGrid>
 						<br/><br/><br/>
-						<p:panelGrid columns="1" columnClasses="ui-grid-col-12" style="width:80%;" styleClass="panelGridCenter">
-							<p:dataTable id="athleteTable" var="athlete" value="#{bibNumbers.athleteList}" editable="true">
+						<p:panelGrid columns="4" columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-1,ui-grid-col-1" style="width:90%;" styleClass="panelGridCenter">
+							<p:dataTable id="athleteTable" var="athlete" value="#{bibNumbers.athleteList}" editable="false">
 								
 								<f:facet name="header">
 						           Asign BIB Numbers
@@ -63,10 +63,13 @@
 						               <f:facet name="input"><p:inputText id="bibInput" value="#{athlete.bibNumber}" style="width:100%"/></f:facet>
 						           </p:cellEditor>
 						       	</p:column>
-						       	<p:column style="width:32px">
+						       	<!-- <p:column style="width:32px">
 						           <p:rowEditor />
-						        </p:column>
+						        </p:column> -->
 							</p:dataTable>
+							<p:outputLabel value="Starting BIB Number"></p:outputLabel>
+							<p:inputText value="#{bibNumbers.lastBibNumber}"></p:inputText>
+							<p:commandButton value="Add" action="#{bibNumbers.assignBibNumbers()}" update="athleteTable"></p:commandButton>
 						</p:panelGrid>
 					</p:tab>
 					

@@ -76,17 +76,14 @@ CREATE TABLE `athlete` (
   `bib` varchar(10) DEFAULT NULL,
   `age_group_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_bib` (`bib`),
   KEY `FK_athlete_age_group` (`age_group_id`),
   CONSTRAINT `FK_athlete_age_group` FOREIGN KEY (`age_group_id`) REFERENCES `age_groups` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COMMENT='athlete related details';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='athlete related details';
 
 
 
 /*Data for the table `athlete` */
-
-
-
-insert  into `athlete`(`id`,`name`,`date_of_birth`,`group_id`,`nic`,`employee_no`,`gender`,`bib`,`age_group_id`) values (2,'sample my','1991-04-01',1,'645757547547V','','M','500',3),(3,'saman darshana','1998-04-01',1,'234565455V','','M','600',1),(4,'kamal sampath','1984-03-04',1,'345673476V','','F','200',2),(5,'dasun munasinghe','1994-04-04',2,'2222322222V','','F','400',1);
 
 
 
@@ -107,10 +104,6 @@ CREATE TABLE `athlete_events` (
 
 
 /*Data for the table `athlete_events` */
-
-
-
-insert  into `athlete_events`(`athlete_id`,`event_id`,`performance`) values (2,1,20),(2,2,8.8),(3,1,15),(5,2,10);
 
 
 

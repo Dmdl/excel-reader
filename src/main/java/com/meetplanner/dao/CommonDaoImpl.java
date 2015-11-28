@@ -244,4 +244,17 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 		String sql="DELETE FROM athlete_events WHERE athlete_id=?";
 		getJdbcTemplate().update(sql, new Object[] {athleteId});
 	}
+
+	@Override
+	public String getLastAssignBibNumber() throws GenricSqlException{
+		String bib= null;
+		try{
+			String sql="SELECT bib FROM athlete WHERE bib IS NOT NULL ORDER BY id DESC LIMIT 1";
+			bib = (String)getJdbcTemplate().queryForObject(sql, String.class);
+		}catch(Exception e){
+			e.printStackTrace();
+			return bib;
+		}
+		return bib;
+	}
 }
