@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 
 import com.meetplanner.dao.mappers.UpdateAthleteRowMapper;
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.exception.GenricSqlException;
 
@@ -99,6 +100,12 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 
 	@Override
 	public List<Athlete> getAllAthletesForGroup(int groupid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<EventDTO> getEventsForAthletes(int athleteId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

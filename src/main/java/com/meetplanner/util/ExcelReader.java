@@ -132,7 +132,7 @@ public class ExcelReader implements Reader {
 					}
 					i++;
 				}
-				athlete.setEvents(athleteEvents);
+				//athlete.setEvents(athleteEvents);
 				athlete.setAgeGroup(ageGroup);
 				athletes.add(athlete);				
 			}

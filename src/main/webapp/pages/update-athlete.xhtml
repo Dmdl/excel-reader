@@ -47,7 +47,7 @@
 				    </p:column>			    				    	
 				</p:dataTable>
 				<br/><br/><br/>
-				<p:panelGrid id="editAthlete" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:60%;" styleClass="panelGridCenter">
+				<p:panelGrid id="editAthlete" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" style="width:60%;" styleClass="panelGridCenter">
 					<h:outputText value="School/Club Name" />
 					<p:selectOneMenu id="selectGroup" style="width:150px;" value="#{updateAthlete.athleteGroup}">									
 						<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
@@ -75,6 +75,11 @@
 					
 					<p:outputLabel value="NIC No (If Applicable)" />
 					<p:inputText value="#{updateAthlete.athleteNic}" />
+					
+					<p:outputLabel value="Event/s" />
+					<p:pickList id="eventList" value="#{updateAthlete.events}" var="event" itemLabel="#{event.eventName}" itemValue="#{event}" converter="entityConverter">
+					 	<p:ajax event="transfer" listener="#{updateAthlete.onTransferEvent}" update="addAthlete" />
+					</p:pickList>
 					
 					<p:commandButton value="Update" action="#{updateAthlete.updateAthlete()}" update="addAthlete serchResultTbl"></p:commandButton>
 					<p:commandButton value="Delete"></p:commandButton>

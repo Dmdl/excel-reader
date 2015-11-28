@@ -13,7 +13,7 @@ public class Athlete implements Serializable{
 	private String nic;
 	private String age;
 	private Date dateOfBirth;
-	private List<String> events;
+	private List<EventDTO> events;
 	private String ageGroup;
 	private String group;
 	private String gender;
@@ -59,14 +59,6 @@ public class Athlete implements Serializable{
 
 	public void setAge(String age) {
 		this.age = age;
-	}
-
-	public List<String> getEvents() {
-		return events;
-	}
-
-	public void setEvents(List<String> events) {
-		this.events = events;
 	}
 
 	public String getAgeGroup() {
@@ -123,6 +115,14 @@ public class Athlete implements Serializable{
 
 	public void setEventResult(ResultDTO eventResult) {
 		this.eventResult = eventResult;
+	}
+
+	public List<EventDTO> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<EventDTO> events) {
+		this.events = events;
 	}
 	
 }

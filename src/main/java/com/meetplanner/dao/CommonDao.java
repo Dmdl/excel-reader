@@ -3,6 +3,7 @@ package com.meetplanner.dao;
 import java.util.List;
 
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.exception.DuplicateValueException;
 import com.meetplanner.exception.GenricSqlException;
@@ -10,7 +11,7 @@ import com.meetplanner.exception.NoDataException;
 
 public interface CommonDao {
 
-	public boolean saveAthlete(Athlete athlete);
+	public boolean saveAthlete(Athlete athlete) throws GenricSqlException;
 
 	public List<Athlete> searchAthleteByGroupAndAge(int groupId, int ageGroupId);
 
@@ -24,11 +25,13 @@ public interface CommonDao {
 
 	public List<Athlete> serachAthleteByBibOrName(String bib, String name);
 
-	public boolean updateAthlete(Athlete athlete);
+	public boolean updateAthlete(Athlete athlete) throws GenricSqlException;
 	
 	public Athlete getAthleteFromBibNumber(String bib,int ageGroupId,int eventId,String gender) throws GenricSqlException,NoDataException;
 	
 	public boolean updatePerformanceForEvent(int eventId,List<Athlete> athletes) throws GenricSqlException;
 	
 	public List<Athlete> getAllAthletesForGroup(int groupid);
+	
+	public List<EventDTO> getEventsForAthletes(int athleteId) throws GenricSqlException;
 }

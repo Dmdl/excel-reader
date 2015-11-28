@@ -1,12 +1,19 @@
 package com.meetplanner.backingbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.TransferEvent;
+import org.primefaces.model.DualListModel;
+
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventDTO;
+import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.service.CommonService;
 import com.meetplanner.service.FileUploadService;
 import com.meetplanner.util.SpringApplicationContex;
@@ -23,13 +30,31 @@ public class AddAthlete implements Serializable {
 	private String selectedEvent = null;
 	private Date dateOfBirth;
 	private CommonService commonService;
+	private DualListModel<EventDTO> events;
 
 	public AddAthlete() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
+		fileUploadService = (FileUploadService) SpringApplicationContex.getBean("fileUploadService");		
+		List<EventDTO> eventsSource = new ArrayList<EventDTO>();
+        List<EventDTO> eventsTarget = new ArrayList<EventDTO>();
+        eventsSource = fileUploadService.getAllEvents();
+        events = new DualListModel<EventDTO>(eventsSource, eventsTarget);
 	}
 
 	public void saveAthlete() {
-		System.out.println("gender " + gender + " age group " + selectedAgeGroup + " event " + selectedEvent + " group " + selectedGroup+" dateOfBirth "+dateOfBirth+" name "+athleteName+" nic "+nic);
+		System.out.println("gender " + gender + " age group " + selectedAgeGroup + "num of event " + selectedEvent + " group " + selectedGroup+" dateOfBirth "+dateOfBirth+" name "+athleteName+" nic "+nic);
+		List<EventDTO> athleteEvents = events.getTarget();
+		if(null==athleteEvents || athleteEvents.size()==0){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Select Events"));
+			return;
+		}
+		if(athleteEvents.size()>3){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Maximum Number of Events is 3"));
+			return;
+		}
+		for(EventDTO e:athleteEvents){
+			System.out.println("each "+e.getEventName());
+		}
 		Athlete athlete = new Athlete();
 		athlete.setDateOfBirth(dateOfBirth);
 		athlete.setGroup(selectedGroup.toString());
@@ -42,14 +67,26 @@ public class AddAthlete implements Serializable {
 			athlete.setGender("F");
 		}
 		athlete.setAgeGroup(selectedAgeGroup);
-		boolean ok = commonService.saveAthlete(athlete);
-		if(ok){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Saved."));
-		}else{
+		athlete.setEvents(athleteEvents);
+		try{
+			boolean ok = commonService.saveAthlete(athlete);
+			if(ok){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Saved."));
+			}
+		}catch(GenricSqlException e){
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured."));
-		}
+		}		
+		
 	}
 
+	public void onTransferEvent(TransferEvent event) {
+		/*@SuppressWarnings("unchecked")
+		List<EventDTO> eventsTrans = (List<EventDTO>)event.getItems();*/
+		if(events.getTarget().size()>3){			
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Maximum Number of Events is 3."));
+		}
+	}
+	
 	public String getAthleteName() {
 		return athleteName;
 	}
@@ -120,6 +157,14 @@ public class AddAthlete implements Serializable {
 
 	public void setCommonService(CommonService commonService) {
 		this.commonService = commonService;
+	}
+
+	public DualListModel<EventDTO> getEvents() {
+		return events;
+	}
+
+	public void setEvents(DualListModel<EventDTO> events) {
+		this.events = events;
 	}
 
 }

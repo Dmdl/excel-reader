@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.meetplanner.dao.CommonDao;
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.exception.DuplicateValueException;
 import com.meetplanner.exception.GenricSqlException;
@@ -23,8 +24,9 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	@Autowired
 	private CommonDao commonDao;
 	
+	@Transactional(rollbackFor=GenricSqlException.class)
 	@Override
-	public boolean saveAthlete(Athlete athlete) {
+	public boolean saveAthlete(Athlete athlete) throws GenricSqlException{
 		return commonDao.saveAthlete(athlete);
 	}
 
@@ -59,8 +61,9 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		return commonDao.serachAthleteByBibOrName(bib, name);
 	}
 
+	@Transactional(rollbackFor=GenricSqlException.class)
 	@Override
-	public boolean updateAthlete(Athlete athlete) {
+	public boolean updateAthlete(Athlete athlete) throws GenricSqlException{
 		return commonDao.updateAthlete(athlete);
 	}
 
@@ -78,6 +81,11 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	@Override
 	public List<Athlete> getAllAthletesForGroup(int groupid) {
 		return commonDao.getAllAthletesForGroup(groupid);
+	}
+
+	@Override
+	public List<EventDTO> getEventsForAthletes(int athleteId) throws GenricSqlException {
+		return commonDao.getEventsForAthletes(athleteId);
 	}
 
 }

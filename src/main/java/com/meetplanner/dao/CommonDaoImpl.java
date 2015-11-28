@@ -1,16 +1,24 @@
 package com.meetplanner.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import com.meetplanner.dao.mappers.AthleteRowMapper;
 import com.meetplanner.dao.mappers.EventResultMapper;
 import com.meetplanner.dao.mappers.EventResultRowMapper;
+import com.meetplanner.dao.mappers.EventRowMapper;
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.exception.DuplicateValueException;
 import com.meetplanner.exception.GenricSqlException;
@@ -19,18 +27,37 @@ import com.meetplanner.exception.NoDataException;
 public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 
 	@Override
-	public boolean saveAthlete(Athlete athlete) {
+	public boolean saveAthlete(final Athlete athlete) throws GenricSqlException{
 		boolean success = false;
 		try{
-			String sql = "INSERT INTO athlete " +
+			final String sql = "INSERT INTO athlete " +
 					"(name, date_of_birth, group_id,nic,employee_no,gender,age_group_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 						 
-			int count = getJdbcTemplate().update(sql, new Object[] { athlete.getName(),athlete.getDateOfBirth(),athlete.getGroup(),athlete.getNic(),athlete.getEmpNo(),athlete.getGender(),athlete.getAgeGroup()});
-			if(count>0){
+//			int count = getJdbcTemplate().update(sql, new Object[] { athlete.getName(),athlete.getDateOfBirth(),athlete.getGroup(),athlete.getNic(),athlete.getEmpNo(),athlete.getGender(),athlete.getAgeGroup()});
+			KeyHolder keyHolder = new GeneratedKeyHolder();
+			getJdbcTemplate().update(
+			    new PreparedStatementCreator() {
+			        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+			            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"name","date_of_birth","group_id","nic","employee_no","gender","age_group_id"});
+			            ps.setString(1, athlete.getName());
+			            ps.setDate(2, new java.sql.Date(athlete.getDateOfBirth().getTime()));
+			            ps.setString(3, athlete.getGroup());
+			            ps.setString(4, athlete.getNic());
+			            ps.setString(5, athlete.getEmpNo());
+			            ps.setString(6, athlete.getGender());
+			            ps.setString(7, athlete.getAgeGroup());
+			            return ps;
+			        }
+			    },keyHolder);
+			int key = keyHolder.getKey().intValue();
+			for(EventDTO each:athlete.getEvents()){
+				this.addAthletesEvents(key, each.getId());
+			}
+			if(key>0){
 				success = true;
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+			throw new GenricSqlException(e);
 		}
 		return success;
 	}
@@ -130,9 +157,13 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 	}
 
 	@Override
-	public boolean updateAthlete(Athlete athlete) {
+	public boolean updateAthlete(Athlete athlete) throws GenricSqlException{
 		boolean ok = false;
 		try{
+			this.deleteEventsForAthlete(Integer.parseInt(athlete.getId()));
+			for(EventDTO each:athlete.getEvents()){
+				this.addAthletesEvents(Integer.parseInt(athlete.getId()), each.getId());
+			}
 			String sql = "UPDATE athlete SET name=? ,date_of_birth=? ,group_id=? ,nic=? ,gender=? ,age_group_id=? WHERE id=?";
 			int rows = getJdbcTemplate().update(sql, athlete.getName(),athlete.getDateOfBirth(),athlete.getGroupId(),athlete.getNic(),athlete.getGender(),athlete.getAgeGroup(),athlete.getId());
 			if(rows>0){
@@ -140,6 +171,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 			}
 		}catch(Exception e){
 			e.printStackTrace();
+			throw new GenricSqlException(e);
 		}
 		return ok;
 	}
@@ -187,5 +219,29 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 		}
 		return athletes;
 	}
+	
+	private void addAthletesEvents(int athleteId,int eventId){
+		System.out.println("insert athlete event "+eventId +" for athlete "+athleteId);
+		String sql = "INSERT INTO athlete_events(athlete_id,event_id) VALUES(?,?)";
+		getJdbcTemplate().update(sql, new Object[] {athleteId,eventId});
+	}
 
+	@Override
+	public List<EventDTO> getEventsForAthletes(int athleteId) throws GenricSqlException{
+		List<EventDTO> events;
+		try{
+			String sql = "SELECT athlete_events.event_id AS id,events.event_name FROM athlete_events"+
+						" LEFT JOIN EVENTS ON athlete_events.event_id=events.id"+
+						" WHERE athlete_events.athlete_id=?";
+			events = getJdbcTemplate().query(sql, new Object[] {athleteId}, new EventRowMapper());
+		}catch(Exception e){
+			throw new GenricSqlException();
+		}
+		return events;
+	}
+
+	private void deleteEventsForAthlete(int athleteId){
+		String sql="DELETE FROM athlete_events WHERE athlete_id=?";
+		getJdbcTemplate().update(sql, new Object[] {athleteId});
+	}
 }

@@ -24,9 +24,9 @@ public class FileUploadServiceImpl implements FileUploadService {
 		for (List<Athlete> each : athletes) {
 			for (Athlete a : each) {
 				String name = a.getName();
-				List<String> eventList = a.getEvents();
+				/*List<String> eventList = a.getEvents();
 				System.out.println(name + " has " + eventList.size()
-						+ " events...");				
+						+ " events...");	*/		
 			}
 		}
 	}

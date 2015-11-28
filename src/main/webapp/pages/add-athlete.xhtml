@@ -32,11 +32,15 @@
 						<p:outputLabel value="Date of Birth" />
 						<p:calendar id="dobm" value="#{athlete.dateOfBirth}" showOn="button" pattern="dd-MM-yyyy" navigator="true" yearRange="c-50:c+1" required="true" requiredMessage="Date of Birth is required"/>
 						
-						<p:outputLabel value="Event" />
-						<p:selectOneMenu style="width:200px;" value="#{athlete.selectedEvent}" required="true" requiredMessage="Event is required">
+						<p:outputLabel value="Event/s" />
+						<!--<p:selectOneMenu style="width:200px;" value="#{athlete.selectedEvent}" required="true" requiredMessage="Event is required">
 							<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
 							<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
-						</p:selectOneMenu>
+						</p:selectOneMenu> -->
+						 <p:pickList id="eventList" value="#{athlete.events}" var="event" itemLabel="#{event.eventName}" itemValue="#{event}" converter="entityConverter">
+						 	<p:ajax event="transfer" listener="#{athlete.onTransferEvent}" update="addAthlete" />
+						 </p:pickList>
+						<!-- <p:commandButton value="Add Events"></p:commandButton> -->								
 						
 						<p:outputLabel value="NIC No (If Applicable)" />
 						<p:inputText value="#{athlete.nic}" />
@@ -67,11 +71,14 @@
 						<p:outputLabel value="Date of Birth" />
 						<p:calendar id="dobw" value="#{athlete.dateOfBirth}" showOn="button" pattern="dd-MM-yyyy" navigator="true" yearRange="c-50:c+1" required="true" requiredMessage="Date of Birth is required"/>
 						
-						<p:outputLabel value="Event" />
-						<p:selectOneMenu style="width:200px;" value="#{athlete.selectedEvent}" required="true" requiredMessage="Event is required">
+						<p:outputLabel value="Event/s" />
+						<!-- <p:selectOneMenu style="width:200px;" value="#{athlete.selectedEvent}" required="true" requiredMessage="Event is required">
 							<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />							
 							<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
-						</p:selectOneMenu>
+						</p:selectOneMenu> -->
+						<p:pickList id="eventListWomen" value="#{athlete.events}" var="event" itemLabel="#{event.eventName}" itemValue="#{event}" converter="entityConverter">
+						 	<p:ajax event="transfer" listener="#{athlete.onTransferEvent}" update="addAthlete" />
+						 </p:pickList>
 						
 						<p:outputLabel value="NIC No (If Applicable)" />
 						<p:inputText value="#{athlete.nic}" />
