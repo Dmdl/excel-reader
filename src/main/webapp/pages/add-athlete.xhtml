@@ -45,7 +45,7 @@
 						<p:outputLabel value="NIC No (If Applicable)" />
 						<p:inputText value="#{athlete.nic}" />
 						
-						<p:commandButton value="Submit" action="#{athlete.saveAthlete()}" ajax="true" process="menAthlete" update="addAthlete">
+						<p:commandButton value="Submit" action="#{athlete.saveAthlete()}" ajax="true" process="menAthlete" update="addAthlete menAthlete">
 							<f:setPropertyActionListener value="male" target="#{athlete.gender}" />
 						</p:commandButton>
 						<p:commandButton value="Clear" />
@@ -83,7 +83,7 @@
 						<p:outputLabel value="NIC No (If Applicable)" />
 						<p:inputText value="#{athlete.nic}" />
 						
-						<p:commandButton value="Submit" action="#{athlete.saveAthlete()}" process="womenAthlete" ajax="true" update="addAthlete">
+						<p:commandButton value="Submit" action="#{athlete.saveAthlete()}" process="womenAthlete" ajax="true" update="addAthlete womenAthlete">
 							<f:setPropertyActionListener value="female" target="#{athlete.gender}" />
 						</p:commandButton>
 						<p:commandButton value="Clear" />

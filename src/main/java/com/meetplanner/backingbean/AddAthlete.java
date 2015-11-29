@@ -71,6 +71,7 @@ public class AddAthlete implements Serializable {
 		try{
 			boolean ok = commonService.saveAthlete(athlete);
 			if(ok){
+				resetFeilds();
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Saved."));
 			}
 		}catch(GenricSqlException e){
@@ -85,6 +86,19 @@ public class AddAthlete implements Serializable {
 		if(events.getTarget().size()>3){			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Maximum Number of Events is 3."));
 		}
+	}
+	
+	public void resetFeilds(){
+		gender = null;
+		selectedGroup = null;
+		selectedAgeGroup = null;
+		dateOfBirth = null;
+		athleteName = null;
+		nic = null;
+		List<EventDTO> eventsSource = new ArrayList<EventDTO>();
+        List<EventDTO> eventsTarget = new ArrayList<EventDTO>();
+        eventsSource = fileUploadService.getAllEvents();
+        events = new DualListModel<EventDTO>(eventsSource, eventsTarget);
 	}
 	
 	public String getAthleteName() {
