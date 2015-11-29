@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.TabChangeEvent;
 
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.exception.DuplicateValueException;
@@ -121,9 +122,11 @@ public class BibNumbersBean implements Serializable {
 			Iterator<Athlete> ite = athleteList.iterator();
 			while(ite.hasNext()){
 				Athlete each = ite.next();
-				each.setBibNumber(String.valueOf(lastBibNumber));
-				temp.add(each);
-				lastBibNumber = lastBibNumber+1;
+				if(null==each.getBibNumber() || "".equals(each.getBibNumber())){
+					each.setBibNumber(String.valueOf(lastBibNumber));
+					lastBibNumber = lastBibNumber+1;
+				}				
+				temp.add(each);				
 			}
 			athleteList.clear();
 			athleteList.addAll(temp);
@@ -137,6 +140,22 @@ public class BibNumbersBean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Duplicate BIB Numbers."));
 			}
 		}
+	}
+	
+	public void onTabChange(TabChangeEvent event){
+		try{
+			String bib = commonService.getLastAssignBibNumber();
+			if(null==bib){
+				lastBibNumber= 1;
+			}else{
+				lastBibNumber= Integer.parseInt(bib)+1;
+			}			
+			if(null!=selectedAgeGroup && null!=selectedGroup){
+				athleteList = commonService.searchAthleteByGroupAndAge(Integer.parseInt(selectedGroup), Integer.parseInt(selectedAgeGroup));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}	
 	}
 	
 	public String getSelectedGroup() {

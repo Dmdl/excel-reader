@@ -249,10 +249,10 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 	public String getLastAssignBibNumber() throws GenricSqlException{
 		String bib= null;
 		try{
-			String sql="SELECT bib FROM athlete WHERE bib IS NOT NULL ORDER BY id DESC LIMIT 1";
+//			String sql="SELECT bib FROM athlete WHERE bib IS NOT NULL ORDER BY id DESC LIMIT 1";
+			String sql="SELECT bib FROM athlete ORDER BY bib DESC LIMIT 1";
 			bib = (String)getJdbcTemplate().queryForObject(sql, String.class);
 		}catch(Exception e){
-			e.printStackTrace();
 			return bib;
 		}
 		return bib;

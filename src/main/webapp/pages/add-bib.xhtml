@@ -12,6 +12,7 @@
 			<div class="ui-fluid">
 			<div align="center" class="headingColor"><h2>Add / Update BIB Numbers</h2></div>
 				<p:tabView dynamic="true" cache="true">
+				<p:ajax event="tabChange" listener="#{bibNumbers.onTabChange}" update="lastBibInput athleteTable"/>
 					<p:tab title="Add BIB Numbers" id="addTab">
 						<p:panelGrid columns="5" cellpadding="10" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-4" layout="grid" style="width:80%;" styleClass="panelGridCenter">
 							<h:outputText value="Age Group" />
@@ -68,8 +69,8 @@
 						        </p:column> -->
 							</p:dataTable>
 							<p:outputLabel value="Starting BIB Number"></p:outputLabel>
-							<p:inputText value="#{bibNumbers.lastBibNumber}"></p:inputText>
-							<p:commandButton value="Add" action="#{bibNumbers.assignBibNumbers()}" update="athleteTable"></p:commandButton>
+							<p:inputText id="lastBibInput" value="#{bibNumbers.lastBibNumber}"></p:inputText>
+							<p:commandButton value="Add" action="#{bibNumbers.assignBibNumbers()}" update="athleteTable lastBibInput"></p:commandButton>
 						</p:panelGrid>
 					</p:tab>
 					
