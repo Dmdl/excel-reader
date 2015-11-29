@@ -85,16 +85,24 @@
 					action="#{menuBean.goToFileUpload}" ajax="false"></p:menuitem> -->
 				<p:menuitem value="upload Excel" url="/faces/pages/fileUpload.xhtml" styleClass="menuitemStyle" icon="ui-icon-link"></p:menuitem>
 				
-				
+				<p:menuitem value="About" oncomplete="PF('dlg').show();" icon="ui-icon-info"/>
 
 				<f:facet name="options">
 					<!-- <p:inputText style="margin-right:10px" placeholder="Search" /> -->
 					<p:outputLabel value="Welcome #{loginBean.userName}    "></p:outputLabel>
 					<p:commandButton type="submit" action="#{loginBean.doLogout()}"
-						icon="ui-icon-extlink" value="Logout" ajax="false"/>
+						icon="ui-icon-power" value="Logout" ajax="false" style="width:45%;height:30px;"/>
 					<!-- <h:outputLink value="${pageContext.request.contextPath}/j_spring_security_logout">logout</h:outputLink> -->
 				</f:facet>
 			</p:menubar>
+			
+			<p:dialog header="Meet Planner" widgetVar="dlg" modal="true" height="70">
+				<div align="center">
+					<h:outputText value="Organize and Manage your Meets" /><br/>
+		            <h:outputText value="Version 1.0.0" /><br/>
+		            <h:outputText value="Contact Us 0112343234" />
+				</div>	            
+	        </p:dialog>
 		</h:form>
 
 	</ui:composition>
