@@ -38,6 +38,14 @@
 	 /* border: 1px solid #000;  */
 }
 
+.ui-menubar{
+	height: 40px;
+}
+
+.ui-menuitem-text{
+	font-size: 1.2em;
+}
+
 ul.ui-menu-child {
     font-size: 100px;
 }
@@ -49,7 +57,7 @@ ul li.ui-menuitem-active>a{
 
 li ul li.ui-menuitem-active>a{
     background-image: none !important;
-    background-color:#ffcc66 !important;   
+    background-color:#33ccff !important; 
 }
 
 .companyHeaderGrid.ui-panelgrid>*>tr,
