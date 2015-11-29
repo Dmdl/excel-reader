@@ -19,6 +19,7 @@ import com.meetplanner.dao.mappers.EventResultRowMapper;
 import com.meetplanner.dao.mappers.EventRowMapper;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
+import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.exception.DuplicateValueException;
 import com.meetplanner.exception.GenricSqlException;
@@ -256,5 +257,16 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
 			return bib;
 		}
 		return bib;
+	}
+
+	@Override
+	public boolean addEvent(EventsDTO event) {
+		boolean ok = false;
+		String sql = "INSERT INTO EVENTS(event_name,type,participants) VALUES (?,?,?)";
+		int count = getJdbcTemplate().update(sql, new Object[] {event.getEvent(),event.getType(),event.getParticipants()});
+		if(count>0){
+			ok = true;
+		}					
+		return ok;
 	}
 }

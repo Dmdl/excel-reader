@@ -14,23 +14,23 @@
 				<p:tab id="addEventTab" title="Add Event">
 					<p:panelGrid id="addEventGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
 						<h:outputText value="Event Name" />
-						<p:inputText style="width:70%;"></p:inputText>
+						<p:inputText style="width:70%;" value="#{eventBean.eventName}" required="true" requiredMessage="Event nane is Required"></p:inputText>
 						
 						<h:outputText value="Event Type" />
-						<p:selectOneMenu value="#{updateAthlete.athleteGender}" id="selectEventType" style="width:65%;">
+						<p:selectOneMenu value="#{eventBean.eventType}" id="selectEventType" style="width:65%;" required="true" requiredMessage="Select Event type">
 							<f:selectItem itemLabel="Select Event Type" itemValue="" noSelectionOption="true" />
 							<f:selectItem itemLabel="Feild Event" itemValue="F" />
 							<f:selectItem itemLabel="Track Event" itemValue="T" />
 						</p:selectOneMenu>
 						
 						<h:outputText value="Participants" />
-						<p:selectOneMenu value="#{updateAthlete.athleteGender}" id="selectGender" style="width:65%;">
+						<p:selectOneMenu value="#{eventBean.participants}" id="selectGender" style="width:65%;" required="true" requiredMessage="Select Participants">
 							<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
 							<f:selectItem itemLabel="Male" itemValue="M" />
 							<f:selectItem itemLabel="Female" itemValue="F" />
 						</p:selectOneMenu>
 						
-						<p:commandButton value="Add"></p:commandButton>
+						<p:commandButton value="Add" action="#{eventBean.addEvent()}" update="addEvent addEventGrid"></p:commandButton>
 						<p:commandButton value="Cancel"></p:commandButton>
 					</p:panelGrid>
 				</p:tab>

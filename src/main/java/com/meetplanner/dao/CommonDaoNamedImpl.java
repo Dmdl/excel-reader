@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import com.meetplanner.dao.mappers.UpdateAthleteRowMapper;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
+import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.exception.GenricSqlException;
 
@@ -114,6 +115,12 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 	public String getLastAssignBibNumber() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean addEvent(EventsDTO event) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

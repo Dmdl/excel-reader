@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.meetplanner.dao.CommonDao;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
+import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.exception.DuplicateValueException;
 import com.meetplanner.exception.GenricSqlException;
@@ -91,6 +92,11 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	@Override
 	public String getLastAssignBibNumber() throws GenricSqlException {
 		return commonDao.getLastAssignBibNumber();
+	}
+
+	@Override
+	public boolean addEvent(EventsDTO event) {
+		return commonDao.addEvent(event);
 	}
 
 }

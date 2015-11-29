@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
+import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.exception.DuplicateValueException;
 import com.meetplanner.exception.GenricSqlException;
@@ -36,4 +37,6 @@ public interface CommonService {
 	public List<EventDTO> getEventsForAthletes(int athleteId) throws GenricSqlException;
 	
 	public String getLastAssignBibNumber() throws GenricSqlException;
+	
+	public boolean addEvent(EventsDTO event);
 }

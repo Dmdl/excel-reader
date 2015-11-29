@@ -73,7 +73,7 @@ CREATE TABLE `athlete` (
   `nic` varchar(20) DEFAULT NULL,
   `employee_no` varchar(20) NOT NULL,
   `gender` char(1) NOT NULL,
-  `bib` varchar(10) DEFAULT NULL,
+  `bib` int(10) DEFAULT NULL,
   `age_group_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_bib` (`bib`),
@@ -118,10 +118,10 @@ DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `event_name` varchar(100) NOT NULL,
-  `type` varchar(5) DEFAULT NULL,
-  `participants` varchar(5) DEFAULT NULL,
+  `type` varchar(5) NOT NULL,
+  `participants` varchar(5) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 
 
@@ -129,7 +129,7 @@ CREATE TABLE `events` (
 
 
 
-insert  into `events`(`id`,`event_name`,`type`,`participants`) values (1,'Championship WOMEN','T','F'),(2,'NOVICES  WOMEN','F','F'),(3,'MEN CHAMPIONSHIPS','T','M'),(4,'NOVICES MEN','T','M'),(5,'over 30 women','T','F'),(6,'OVER 35 WOMEN','F','F'),(7,'OVER 40 WOMEN','T','F'),(8,'OVER 45 WOMEN','T','M'),(9,'OVER 50 WOMEN','T','M'),(10,'OVER 35 MEN','F','M'),(11,'OVER 40 MEN','T','M');
+insert  into `events`(`id`,`event_name`,`type`,`participants`) values (1,'Championship WOMEN','T','F'),(2,'NOVICES  WOMEN','F','F'),(3,'MEN CHAMPIONSHIPS','T','M'),(4,'NOVICES MEN','T','M'),(5,'over 30 women','T','F'),(6,'OVER 35 WOMEN','F','F'),(7,'OVER 40 WOMEN','T','F'),(8,'OVER 45 WOMEN','T','M'),(9,'OVER 50 WOMEN','T','M'),(10,'OVER 35 MEN','F','M'),(11,'OVER 40 MEN','T','M'),(12,'test event','F','M');
 
 
 
