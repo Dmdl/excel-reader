@@ -3,8 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="name" class="java.lang.String"/>
-	<parameter name="group" class="java.lang.String"/>
+	<parameter name="athletelist" class="java.util.List"/>
 	<variable name="name" class="java.lang.String"/>
 	<variable name="nic" class="java.lang.String"/>
 	<background>
@@ -30,14 +29,9 @@
 	<detail>
 		<band height="56" splitType="Stretch">
 			<textField>
-				<reportElement x="51" y="16" width="151" height="20"/>
+				<reportElement x="15" y="15" width="93" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$P{name}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="267" y="14" width="185" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$P{group}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[""+$P{athletelist}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

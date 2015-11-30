@@ -38,8 +38,7 @@ public class ReportPrinter {
 		JasperPrint jasperPrint=null;		
 		Map<String, Object> parameters = new HashMap<String, Object>();
 
-			parameters.put("name", athletes.get(0).getName());
-			parameters.put("group", athletes.get(0).getGroup());
+		parameters.put("athletelist", athletes);
 			
 		PrinterJob job = PrinterJob.getPrinterJob();
 		PrintService defaultPrintService = null;

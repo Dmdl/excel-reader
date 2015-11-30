@@ -1,5 +1,6 @@
 package com.meetplanner.dao;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -26,7 +27,9 @@ import com.meetplanner.exception.DuplicateValueException;
 import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.exception.NoDataException;
 
-public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao{
+public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public boolean saveAthlete(final Athlete athlete) throws GenricSqlException{

@@ -14,11 +14,11 @@
 				<p:panelGrid columns="2" style="width:60%;">
 					<p:outputLabel value="Report Type"></p:outputLabel>
 					<p:selectOneMenu value="#{reportBean.selectedReportType}" id="reportType" style="width:50%;">
-						<p:ajax listener="#{reportBean.onReportTypeChange()}"></p:ajax>
 						<f:selectItem itemLabel="Select Report Type" itemValue="" noSelectionOption="true" />
 						<f:selectItem itemLabel="Athlete" itemValue="At" />
 						<f:selectItem itemLabel="Events" itemValue="Ev" />
 					</p:selectOneMenu>
+					<h:commandButton value="Download Report" action="#{reportBean.onReportTypeChange()}"></h:commandButton>
 				</p:panelGrid>
 			</div>
 		</h:form>
