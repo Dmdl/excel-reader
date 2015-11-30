@@ -12,6 +12,7 @@ import com.meetplanner.dao.CommonDao;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
+import com.meetplanner.dto.GroupDTO;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.exception.DuplicateValueException;
 import com.meetplanner.exception.GenricSqlException;
@@ -97,6 +98,11 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	@Override
 	public boolean addEvent(EventsDTO event) {
 		return commonDao.addEvent(event);
+	}
+
+	@Override
+	public boolean addGroup(GroupDTO group) throws Exception {
+		return commonDao.addGroup(group);
 	}
 
 }

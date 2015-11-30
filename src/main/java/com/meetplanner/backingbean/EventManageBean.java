@@ -6,6 +6,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import com.meetplanner.dto.EventsDTO;
+import com.meetplanner.dto.GroupDTO;
 import com.meetplanner.service.CommonService;
 import com.meetplanner.util.SpringApplicationContex;
 
@@ -16,6 +17,7 @@ public class EventManageBean implements Serializable{
 	private String participants;
 	private String eventType;
 	private CommonService commonService;
+	private String groupName;
 	
 	public EventManageBean(){
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -35,6 +37,23 @@ public class EventManageBean implements Serializable{
 			}
 		}catch(Exception e){
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
+		}
+	}
+	
+	public void addGroup(){
+		if(null!=groupName){
+			GroupDTO group = new GroupDTO();
+			group.setName(groupName);
+			try{
+				boolean ok = commonService.addGroup(group);
+				if(ok){
+					resetFields();
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Saved."));
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
+			}			
 		}
 	}
 	
@@ -74,6 +93,14 @@ public class EventManageBean implements Serializable{
 
 	public void setCommonService(CommonService commonService) {
 		this.commonService = commonService;
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 	
 }

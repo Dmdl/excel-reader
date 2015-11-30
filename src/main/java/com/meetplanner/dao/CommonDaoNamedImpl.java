@@ -13,6 +13,7 @@ import com.meetplanner.dao.mappers.UpdateAthleteRowMapper;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
+import com.meetplanner.dto.GroupDTO;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.exception.GenricSqlException;
 
@@ -119,6 +120,12 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 
 	@Override
 	public boolean addEvent(EventsDTO event) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addGroup(GroupDTO group) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -10,35 +10,56 @@
 
 		<h:form id="addEventFrm">
 		<div align="center" class="headingColor"><h2>Add / Update Events</h2></div>
-			<p:tabView id="addEventTabview">
-				<p:tab id="addEventTab" title="Add Event">
-					<p:panelGrid id="addEventGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
-						<h:outputText value="Event Name" />
-						<p:inputText style="width:70%;" value="#{eventBean.eventName}" required="true" requiredMessage="Event nane is Required"></p:inputText>
-						
-						<h:outputText value="Event Type" />
-						<p:selectOneMenu value="#{eventBean.eventType}" id="selectEventType" style="width:65%;" required="true" requiredMessage="Select Event type">
-							<f:selectItem itemLabel="Select Event Type" itemValue="" noSelectionOption="true" />
-							<f:selectItem itemLabel="Feild Event" itemValue="F" />
-							<f:selectItem itemLabel="Track Event" itemValue="T" />
-						</p:selectOneMenu>
-						
-						<h:outputText value="Participants" />
-						<p:selectOneMenu value="#{eventBean.participants}" id="selectGender" style="width:65%;" required="true" requiredMessage="Select Participants">
-							<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
-							<f:selectItem itemLabel="Male" itemValue="M" />
-							<f:selectItem itemLabel="Female" itemValue="F" />
-						</p:selectOneMenu>
-						
-						<p:commandButton value="Add" action="#{eventBean.addEvent()}" update="addEvent addEventGrid"></p:commandButton>
-						<p:commandButton value="Cancel"></p:commandButton>
-					</p:panelGrid>
-				</p:tab>
-				
-				<p:tab id="updateEventTab" title="Update Event">
+		<p:accordionPanel>
+			<p:tab title="Events">
+				<p:tabView id="addEventTabview">
+					<p:tab id="addEventTab" title="Add Event">
+						<p:panelGrid id="addEventGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
+							<h:outputText value="Event Name" />
+							<p:inputText style="width:70%;" value="#{eventBean.eventName}" required="true" requiredMessage="Event nane is Required"></p:inputText>
+							
+							<h:outputText value="Event Type" />
+							<p:selectOneMenu value="#{eventBean.eventType}" id="selectEventType" style="width:65%;" required="true" requiredMessage="Select Event type">
+								<f:selectItem itemLabel="Select Event Type" itemValue="" noSelectionOption="true" />
+								<f:selectItem itemLabel="Feild Event" itemValue="F" />
+								<f:selectItem itemLabel="Track Event" itemValue="T" />
+							</p:selectOneMenu>
+							
+							<h:outputText value="Participants" />
+							<p:selectOneMenu value="#{eventBean.participants}" id="selectGender" style="width:65%;" required="true" requiredMessage="Select Participants">
+								<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
+								<f:selectItem itemLabel="Male" itemValue="M" />
+								<f:selectItem itemLabel="Female" itemValue="F" />
+							</p:selectOneMenu>
+							
+							<p:commandButton value="Add" action="#{eventBean.addEvent()}" update="addEvent addEventGrid" process="addEventGrid"></p:commandButton>
+							<p:commandButton value="Cancel"></p:commandButton>
+						</p:panelGrid>
+					</p:tab>
 					
-				</p:tab>
-			</p:tabView>
+					<p:tab id="updateEventTab" title="Update Event">
+						
+					</p:tab>
+				</p:tabView>
+			</p:tab>
+			<p:tab title="Groups">
+				<p:tabView id="addGroups">
+					<p:tab id="addGroupTab" title="Add Group">
+						<p:panelGrid id="addGroupGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
+							<h:outputText value="Group Name" />
+							<p:inputText value="#{eventBean.groupName}" style="width:70%;" required="true" requiredMessage="Group nane is Required"></p:inputText>
+							
+							<p:commandButton value="Add" action="#{eventBean.addGroup()}" update="addEvent addGroupGrid" process="addGroupGrid"></p:commandButton>
+							<p:commandButton value="Cancel"></p:commandButton>
+						</p:panelGrid>
+					</p:tab>
+					
+					<p:tab id="updateGroupTab" title="Update Group">
+						
+					</p:tab>					
+				</p:tabView>
+			</p:tab>
+		</p:accordionPanel>
 		</h:form>
 		
 	</ui:define>
