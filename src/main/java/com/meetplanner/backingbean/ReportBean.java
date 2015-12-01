@@ -49,7 +49,7 @@ public class ReportBean implements Serializable {
             document.open();
             Paragraph preface = new Paragraph();
             addEmptyLine(preface, 1);
-            preface.add(new Paragraph("Title of the document", catFont));
+            preface.add(new Paragraph("Group wise employe report", catFont));
             addEmptyLine(preface, 1);
             PdfPTable table = new PdfPTable(3);
             table.setWidthPercentage(90);

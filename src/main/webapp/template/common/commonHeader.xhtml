@@ -37,7 +37,8 @@
 						<p:menuitem value="Events" url="/faces/pages/add-event.xhtml"
 							icon="ui-icon-disk" />
 						<p:menuitem value="Users" url="/faces/pages/user-manage.xhtml"
-						icon="ui-icon-disk" />					
+						icon="ui-icon-disk" />
+						<p:menuitem value="Themes" url="/faces/pages/theme-selector.xhtml"/>					
 					</p:submenu>
 				</sec:authorize>
 				<p:submenu label="Reports" icon="ui-icon-print" styleClass="menuitemStyle">
@@ -55,7 +56,7 @@
 
 				<f:facet name="options">
 					<!-- <p:inputText style="margin-right:10px" placeholder="Search" /> -->
-					<p:outputLabel value="Welcome #{loginBean.userName}    "></p:outputLabel>
+					<p:outputLabel value="Welcome #{loginBean.userName}"></p:outputLabel>
 					<p:commandButton type="submit" action="#{loginBean.doLogout()}"
 						icon="ui-icon-power" value="Logout" ajax="false" style="width:44%;height:30px;"/>
 					<!-- <h:outputLink value="${pageContext.request.contextPath}/j_spring_security_logout">logout</h:outputLink> -->
