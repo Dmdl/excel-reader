@@ -57,7 +57,7 @@ ul li.ui-menuitem-active>a{
 
 li ul li.ui-menuitem-active>a{
     background-image: none !important;
-    background-color:#33ccff !important; 
+    background-color:#33ccff !important;
 }
 
 .companyHeaderGrid.ui-panelgrid>*>tr,
