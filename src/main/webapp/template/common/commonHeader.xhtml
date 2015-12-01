@@ -71,14 +71,14 @@
 					<p:menuitem value="Add/Update Results" url="/faces/pages/add-result.xhtml"
 						icon="ui-icon-disk" />					
 				</p:submenu>
-				
-				<p:submenu label="Manage" icon="ui-icon-wrench" styleClass="menuitemStyle">
-					<p:menuitem value="Events" url="/faces/pages/add-event.xhtml"
-						icon="ui-icon-disk" />
-					<p:menuitem value="Users" url="/faces/pages/user-manage.xhtml"
-					icon="ui-icon-disk" />					
-				</p:submenu>
-				
+				<sec:authorize ifAllGranted="ROLE_ADMIN">
+					<p:submenu label="Manage" icon="ui-icon-wrench" styleClass="menuitemStyle">
+						<p:menuitem value="Events" url="/faces/pages/add-event.xhtml"
+							icon="ui-icon-disk" />
+						<p:menuitem value="Users" url="/faces/pages/user-manage.xhtml"
+						icon="ui-icon-disk" />					
+					</p:submenu>
+				</sec:authorize>
 				<p:submenu label="Reports" icon="ui-icon-print" styleClass="menuitemStyle">
 					<p:menuitem value="Print Reports" url="/faces/pages/report-print.xhtml"
 						icon="ui-icon-bookmark" />					
