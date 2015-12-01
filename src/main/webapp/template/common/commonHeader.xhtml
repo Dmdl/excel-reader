@@ -5,7 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
 		
 <h:body>
 	<ui:composition>
@@ -85,7 +86,9 @@
 
 				<!-- <p:menuitem value="upload Excel"
 					action="#{menuBean.goToFileUpload}" ajax="false"></p:menuitem> -->
-				<p:menuitem value="upload Excel" url="/faces/pages/fileUpload.xhtml" styleClass="menuitemStyle" icon="ui-icon-link"></p:menuitem>
+				<sec:authorize ifAllGranted="ROLE_ADMIN">
+					<p:menuitem value="upload Excel" url="/faces/pages/fileUpload.xhtml" styleClass="menuitemStyle" icon="ui-icon-link"></p:menuitem>
+				</sec:authorize>				
 				
 				<p:menuitem value="About" oncomplete="PF('dlg').show();" icon="ui-icon-info"/>
 

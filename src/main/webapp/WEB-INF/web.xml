@@ -89,4 +89,8 @@
 	    <exception-type>javax.faces.application.ViewExpiredException</exception-type>
 	    <location>/login.xhtml</location>
 	</error-page>
+	<context-param>
+	    <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+	    <param-value>/WEB-INF/springsecurity.taglib.xml</param-value>
+	</context-param>
 </web-app>
