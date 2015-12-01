@@ -3,6 +3,7 @@ package com.meetplanner.backingbean;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.WebAttributes;
 
 /**
  * @author lakmal.d
@@ -42,6 +44,15 @@ public class LoginBean implements Serializable{
 			e.printStackTrace();
 			return null;
 		}			
+	}
+	
+	public void updateMessages(boolean update) throws Exception {
+		System.out.println("Start LoginBean.updateMessages");
+		Exception ex = (Exception) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(WebAttributes.AUTHENTICATION_EXCEPTION);
+
+		if (ex != null) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ex.getMessage()));
+		}
 	}
 	
 	public String getUserName() {

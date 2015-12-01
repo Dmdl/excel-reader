@@ -16,9 +16,10 @@
 		</style>
 	</head>
  
-
-		<h:form id="loginForm" prependId="false">
+		<f:event listener="#{loginBean.updateMessages(true)}" type="preRenderView" />
+		<h:form id="loginForm" prependId="false">		
 		<div id="login" align="center" style="font-size:150%;border:2px solid #3498db;width:30%;margin: 15% auto;border-radius: 25px;padding: 15px;">
+			<h:messages id="errorMessages" style="color:red;list-style-type: none;"/>
 			<label for="j_username"><h:outputText value="Username" style="color:green;"/><br />
 			</label>
 			<h:inputText id="j_username" required="true" value="#{loginBean.userName}">
