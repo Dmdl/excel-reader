@@ -1,0 +1,38 @@
+<ui:composition template="../template/common/commonLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<p:growl id="userManage" showDetail="true"></p:growl>
+
+		<h:form id="userFrm">
+		<div align="center" class="headingColor"><h2>User Management</h2></div>
+			<p:accordionPanel id="addUserPnl">
+				<p:tab id="addUserTab" title="Add User">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="User Name" />
+						<p:inputText value="#{userBean.userName}" required="true" requiredMessage="User name is required"/>
+						
+						<p:outputLabel value="Password" />
+						<p:password value="#{userBean.password}" required="true" requiredMessage="Password is required"/>
+						
+						<p:outputLabel value="User Roles" />
+						<p:pickList id="rolesList" value="#{userBean.roles}" var="role" itemLabel="#{role.name}" itemValue="#{role}" converter="entityConverter">
+						 	<p:ajax event="transfer" listener="#{userBean.onTransferEvent}" update="userManage" />
+						</p:pickList>
+						
+						<p:commandButton value="Save" action="#{userBean.saveUser()}" update="userManage" process="addUserTab"></p:commandButton>
+						<p:commandButton value="Cancel"></p:commandButton>
+					</p:panelGrid>
+				</p:tab>
+				<p:tab id="updateUserTab" title="Update User">
+					
+				</p:tab>
+			</p:accordionPanel>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

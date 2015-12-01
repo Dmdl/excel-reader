@@ -8,7 +8,9 @@ import java.util.Map;
 import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.GroupDTO;
+import com.meetplanner.dto.RoleDTO;
 import com.meetplanner.service.FileUploadService;
+import com.meetplanner.service.UserService;
 import com.meetplanner.util.SpringApplicationContex;
 
 public class CommonDataBean implements Serializable{
@@ -18,9 +20,12 @@ public class CommonDataBean implements Serializable{
 	private Map<Integer, String> allGroups = new HashMap<Integer, String>();
 	private HashMap<Integer, String> ageList = new HashMap<Integer, String>();
 	private HashMap<Integer, String> eventList = new HashMap<Integer, String>();
+	private HashMap<Integer, String> userRoles = new HashMap<Integer, String>();
+	private UserService userService;
 
 	public CommonDataBean() {
-		fileUploadService = (FileUploadService) SpringApplicationContex.getBean("fileUploadService");
+		fileUploadService = (FileUploadService) SpringApplicationContex.getBean("fileUploadService");		
+		userService = (UserService)SpringApplicationContex.getBean("userService");
 		List<GroupDTO> groups = fileUploadService.getAllGroups();
 		if (groups.size() > 0) {
 			for (GroupDTO e : groups) {
@@ -39,6 +44,13 @@ public class CommonDataBean implements Serializable{
 			for (EventDTO e : events) {
 				System.out.println("id " + e.getId() + " val " + e.getEventName());
 				eventList.put(e.getId(), e.getEventName());
+			}
+		}
+		List<RoleDTO> roles = userService.getUserRoles();
+		if (roles.size() > 0) {
+			for (RoleDTO e : roles) {
+				System.out.println("id " + e.getId() + " val " + e.getName());
+				eventList.put(e.getId(), e.getName());
 			}
 		}
 	}
@@ -73,6 +85,22 @@ public class CommonDataBean implements Serializable{
 
 	public void setEventList(HashMap<Integer, String> eventList) {
 		this.eventList = eventList;
+	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	public HashMap<Integer, String> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(HashMap<Integer, String> userRoles) {
+		this.userRoles = userRoles;
 	}
 
 }

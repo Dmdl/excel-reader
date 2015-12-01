@@ -48,7 +48,7 @@
 			<logout/>		
 	</http>
  
- <authentication-manager>
+ <!-- <authentication-manager>
 	<authentication-provider>
               <password-encoder
 			hash="md5" />
@@ -71,5 +71,17 @@
 				authorities="ROLE_USER" />
 		</user-service>
 		</authentication-provider>
-	 </authentication-manager>
+	 </authentication-manager> -->
+	 
+	 <authentication-manager>
+		<authentication-provider>
+
+			<password-encoder hash="bcrypt" />
+
+			<jdbc-user-service data-source-ref="dataSource"
+				authorities-by-username-query="SELECT users.user_name,roles.name FROM users JOIN user_roles ON users.id=user_roles.user_id
+												JOIN roles ON user_roles.role_id=roles.id WHERE users.user_name = ? "
+				users-by-username-query="SELECT user_name,password,enabled FROM users WHERE user_name = ?" />
+		</authentication-provider>
+	</authentication-manager>
 </beans:beans>

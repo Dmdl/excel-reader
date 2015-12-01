@@ -1,4 +1,4 @@
-package com.meetplanner.dao;
+package com.meetplanner.service;
 
 import java.util.List;
 
@@ -6,13 +6,13 @@ import com.meetplanner.dto.RoleDTO;
 import com.meetplanner.dto.UserDTO;
 import com.meetplanner.exception.GenricSqlException;
 
-public interface Userdao {
+public interface UserService {
 
-	public UserDTO findUser(String name);
+public UserDTO findUser(String name);
 	
 	public List<RoleDTO> getUserRoles();
 	
-	public int saveUser(UserDTO user) throws GenricSqlException;
+	public void saveUser(UserDTO user) throws GenricSqlException;
 	
 	public void addUserRoles(int userId,int roleId);
 }
