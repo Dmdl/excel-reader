@@ -14,8 +14,6 @@ import javax.servlet.ServletResponse;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.WebAttributes;
 
-import com.meetplanner.dto.Theme;
-
 /**
  * @author lakmal.d
  */
@@ -25,7 +23,6 @@ public class LoginBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String userName;
 	private String password;
-	private Theme theme = new Theme(30, "South-Street", "south-street");
 
 	public String doLogin() throws IOException, ServletException {
 		ExternalContext context = FacesContext.getCurrentInstance()
@@ -58,10 +55,6 @@ public class LoginBean implements Serializable{
 		}
 	}
 	
-	public void saveTheme(){
-		System.out.println("theme "+theme.getName());
-	}
-	
 	public String getUserName() {
 		return userName;
 	}
@@ -76,14 +69,6 @@ public class LoginBean implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Theme getTheme() {
-		return theme;
-	}
-
-	public void setTheme(Theme theme) {
-		this.theme = theme;
 	}
 
 }

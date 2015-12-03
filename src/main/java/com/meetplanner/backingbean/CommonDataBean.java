@@ -50,7 +50,7 @@ public class CommonDataBean implements Serializable{
 		if (roles.size() > 0) {
 			for (RoleDTO e : roles) {
 				System.out.println("id " + e.getId() + " val " + e.getName());
-				eventList.put(e.getId(), e.getName());
+				userRoles.put(e.getId(), e.getName());
 			}
 		}
 	}

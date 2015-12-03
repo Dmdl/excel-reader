@@ -32,20 +32,23 @@
 					<p:menuitem value="Add/Update Results" url="/faces/pages/add-result.xhtml"
 						icon="ui-icon-disk" />					
 				</p:submenu>
+				
+				<p:submenu label="Manage" icon="ui-icon-wrench" styleClass="menuitemStyle">
 				<sec:authorize ifAllGranted="ROLE_ADMIN">
-					<p:submenu label="Manage" icon="ui-icon-wrench" styleClass="menuitemStyle">
-						<p:menuitem value="Events" url="/faces/pages/add-event.xhtml"
-							icon="ui-icon-disk" />
-						<p:menuitem value="Users" url="/faces/pages/user-manage.xhtml"
-						icon="ui-icon-disk" />
-						<p:menuitem value="Themes" url="/faces/pages/theme-selector.xhtml"/>					
-					</p:submenu>
+					<p:menuitem value="Events" url="/faces/pages/add-event.xhtml"
+						icon="ui-icon-disk" />				
+					<p:menuitem value="Users" url="/faces/pages/user-manage.xhtml"
+					icon="ui-icon-disk" />
 				</sec:authorize>
+					<p:menuitem value="Themes" url="/faces/pages/theme-selector.xhtml" icon="ui-icon-cart"/>					
+				</p:submenu>
+				
+				<sec:authorize ifAllGranted="ROLE_ADMIN">
 				<p:submenu label="Reports" icon="ui-icon-print" styleClass="menuitemStyle">
 					<p:menuitem value="Print Reports" url="/faces/pages/report-print.xhtml"
 						icon="ui-icon-bookmark" />					
 				</p:submenu>
-
+				</sec:authorize>
 				<!-- <p:menuitem value="upload Excel"
 					action="#{menuBean.goToFileUpload}" ajax="false"></p:menuitem> -->
 				<sec:authorize ifAllGranted="ROLE_ADMIN">
@@ -57,6 +60,7 @@
 				<f:facet name="options">
 					<!-- <p:inputText style="margin-right:10px" placeholder="Search" /> -->
 					<p:outputLabel value="Welcome #{loginBean.userName}"></p:outputLabel>
+					<p:spacer width="5"></p:spacer>
 					<p:commandButton type="submit" action="#{loginBean.doLogout()}"
 						icon="ui-icon-power" value="Logout" ajax="false" style="width:44%;height:30px;"/>
 					<!-- <h:outputLink value="${pageContext.request.contextPath}/j_spring_security_logout">logout</h:outputLink> -->
