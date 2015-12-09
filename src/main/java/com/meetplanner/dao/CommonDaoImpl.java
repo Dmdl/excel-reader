@@ -306,4 +306,10 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 			return ok;
 		}
 	}
+
+	@Override
+	public void updateGroup(GroupDTO group) throws Exception {
+		String sql = "UPDATE groups SET name=? WHERE id=?";
+		getJdbcTemplate().update(sql, group.getName(),group.getId());
+	}
 }

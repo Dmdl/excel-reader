@@ -9,13 +9,9 @@
 	
 		<h:form id="themeFrm">
 		<div align="center" class="headingColor"><h2>Select Theme</h2></div>
+		<p:fieldset id="editFieldSet" legend="Look and Feel">
 			<h:panelGrid columns="2">
 			<p:outputLabel value="Select Theme"></p:outputLabel>
-			<!-- <p:themeSwitcher id="basic" style="width:165px" value="#{themeSwitcherView.theme}">
-	            <f:selectItem itemLabel="Choose Theme" itemValue="" />
-	            <f:selectItems value="#{themeSwitcherView.themes}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}"/>
-	            <p:ajax global="false" listener="#{loginBean.saveTheme}" />
-	        </p:themeSwitcher> -->
 	        
 	        <p:themeSwitcher effectSpeed="normal" effect="fade" style="width:165px" id="defaultSwitcher" value="#{themeSwitcherView.theme}">
               <f:selectItem itemLabel="Choose Theme" itemValue="" />
@@ -23,6 +19,7 @@
               <p:ajax global="false" listener="#{themeSwitcherView.saveTheme}" />
            </p:themeSwitcher>
 			</h:panelGrid>
+		</p:fieldset>			
 		</h:form>
 		
 	</ui:define>

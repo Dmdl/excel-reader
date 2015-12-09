@@ -142,4 +142,10 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		return false;
 	}
 
+	@Override
+	public void updateGroup(GroupDTO group) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -25,6 +25,7 @@ public class EventManageBean implements Serializable{
 	private List<EventDTO> events;
 	private List<GroupDTO> groups;
 	private int eventId;
+	private int groupId;
 	
 	public EventManageBean(){
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -112,6 +113,26 @@ public class EventManageBean implements Serializable{
 			}else{
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
 			}
+		}
+	}
+	
+	public void editGroup(GroupDTO group){
+		if(null!=group){
+			this.groupName = group.getName();
+			this.groupId = group.getId();
+		}
+	}
+	
+	public void updateGroup(){
+		try{
+			GroupDTO group = new GroupDTO();
+			group.setId(groupId);
+			group.setName(groupName);
+			commonService.updateGroup(group);
+			groups = fileUploadService.getAllGroups();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Updated."));
+		}catch(Exception e){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
 		}
 	}
 	

@@ -46,4 +46,6 @@ public interface CommonDao {
 	public void updateEvent(EventDTO event) throws Exception;
 	
 	public boolean deleteEvent(int eventId);
+	
+	public void updateGroup(GroupDTO group) throws Exception;
 }

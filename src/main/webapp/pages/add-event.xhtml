@@ -121,7 +121,27 @@
 					</p:tab>
 					
 					<p:tab id="updateGroupTab" title="Update Group">
-						
+						<p:dataTable id="groupTblUpdate" value="#{eventBean.groups}" var="group">
+							<p:column headerText="Id">
+						    	<h:outputText value="#{group.id}" />
+						    </p:column>
+						    <p:column headerText="Name">
+						    	<h:outputText value="#{group.name}" />
+						    </p:column>
+						    <p:column headerText="">
+						    	<div align="center"><p:commandButton value="Edit" action="#{eventBean.editGroup(group)}" update=":addEventFrm:mainAccPnl:addGroups:updateGroupGrid" process="groupTblUpdate"/></div>
+						    </p:column>
+						</p:dataTable>
+						<br/>
+						<p:panel id="updateGrpPanel">
+							<p:panelGrid id="updateGroupGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:60%;">
+								<h:outputText value="Group Name" />
+								<p:inputText value="#{eventBean.groupName}" style="width:70%;" required="true" requiredMessage="Group nane is Required"></p:inputText>
+								
+								<p:commandButton value="Update" action="#{eventBean.updateGroup()}" update="groupTblUpdate addEvent" process="updateGroupGrid"></p:commandButton>
+								<p:commandButton value="Cancel" />
+							</p:panelGrid>
+						</p:panel>
 					</p:tab>					
 				</p:tabView>
 			</p:tab>
