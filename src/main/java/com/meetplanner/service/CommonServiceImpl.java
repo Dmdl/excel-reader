@@ -120,4 +120,9 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		commonDao.updateGroup(group);
 	}
 
+	@Override
+	public boolean deleteGroup(int groupId) {
+		return commonDao.deleteGroup(groupId);
+	}
+
 }

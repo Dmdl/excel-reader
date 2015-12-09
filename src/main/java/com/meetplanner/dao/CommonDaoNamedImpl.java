@@ -148,4 +148,10 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		
 	}
 
+	@Override
+	public boolean deleteGroup(int groupId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

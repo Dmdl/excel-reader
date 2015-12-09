@@ -312,4 +312,20 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		String sql = "UPDATE groups SET name=? WHERE id=?";
 		getJdbcTemplate().update(sql, group.getName(),group.getId());
 	}
+
+	@Override
+	public boolean deleteGroup(int groupId) {
+		boolean ok = false;
+		try{
+			String sql = "DELETE FROM groups WHERE id=?";
+			int count = getJdbcTemplate().update(sql, new Object[] {groupId});
+			if(count>0){
+				ok = true;
+			}
+			return ok;
+		}catch(Exception e){
+			e.printStackTrace();
+			return ok;
+		}
+	}
 }

@@ -142,6 +142,16 @@ public class EventManageBean implements Serializable{
 		
 	}
 	
+	public void deleteGroup(GroupDTO group){
+		boolean ok = commonService.deleteGroup(group.getId());
+		if(ok){
+			groups = fileUploadService.getAllGroups();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Deleted."));
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
+		}
+	}
+	
 	public String getEventName() {
 		return eventName;
 	}

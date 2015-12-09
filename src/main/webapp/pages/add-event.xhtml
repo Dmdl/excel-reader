@@ -131,7 +131,8 @@
 						    	<h:outputText value="#{group.name}" />
 						    </p:column>
 						    <p:column headerText="">
-						    	<div align="center"><p:commandButton value="Edit" action="#{eventBean.editGroup(group)}" update=":addEventFrm:mainAccPnl:addGroups:updateGroupGrid" process="groupTblUpdate"/></div>
+						    	<div align="center"><p:commandButton value="Edit" action="#{eventBean.editGroup(group)}" update=":addEventFrm:mainAccPnl:addGroups:updateGroupGrid" process="groupTblUpdate"/>
+						    	<p:commandButton value="Delete" action="#{eventBean.deleteGroup(group)}" update="groupTblUpdate addEvent" process="groupTblUpdate"/> </div>
 						    </p:column>
 						</p:dataTable>
 						<br/>
