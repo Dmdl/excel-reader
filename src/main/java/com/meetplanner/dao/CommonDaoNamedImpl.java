@@ -130,4 +130,16 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		return false;
 	}
 
+	@Override
+	public void updateEvent(EventDTO event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean deleteEvent(int eventId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

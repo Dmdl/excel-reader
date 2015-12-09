@@ -42,4 +42,8 @@ public interface CommonDao {
 	public boolean addEvent(EventsDTO event);
 	
 	public boolean addGroup(GroupDTO group) throws Exception;
+	
+	public void updateEvent(EventDTO event) throws Exception;
+	
+	public boolean deleteEvent(int eventId);
 }

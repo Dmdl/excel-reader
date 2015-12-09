@@ -105,4 +105,14 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		return commonDao.addGroup(group);
 	}
 
+	@Override
+	public void updateEvent(EventDTO event) throws Exception {
+		commonDao.updateEvent(event);
+	}
+
+	@Override
+	public boolean deleteEvent(int eventId) {
+		return commonDao.deleteEvent(eventId);
+	}
+
 }
