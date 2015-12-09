@@ -6,6 +6,8 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.TabChangeEvent;
+
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.GroupDTO;
@@ -134,6 +136,10 @@ public class EventManageBean implements Serializable{
 		}catch(Exception e){
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
 		}
+	}
+	
+	public void onTabChange(TabChangeEvent event){
+		
 	}
 	
 	public String getEventName() {

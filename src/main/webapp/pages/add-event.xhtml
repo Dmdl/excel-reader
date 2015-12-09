@@ -13,6 +13,7 @@
 		<p:accordionPanel id="mainAccPnl">
 			<p:tab id="eventTab" title="Events">
 				<p:tabView id="addEventTabview">
+				<p:ajax event="tabChange" update="eventTbl eventTblUpdate"/>
 					<p:tab id="addEventTab" title="Add Event">
 					<p:panelGrid id="addEventMainGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6">
 						<p:panelGrid id="addEventGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:100%;">
@@ -98,6 +99,7 @@
 			</p:tab>
 			<p:tab title="Groups">
 				<p:tabView id="addGroups">
+				<p:ajax event="tabChange" update="groupTbl groupTblUpdate"/>
 					<p:tab id="addGroupTab" title="Add Group">
 						<p:panelGrid id="addGrpMainPnl" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6">
 							<p:panelGrid id="addGroupGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:100%;">
