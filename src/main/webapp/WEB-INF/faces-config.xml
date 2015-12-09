@@ -57,7 +57,7 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	<managed-bean>
 		<managed-bean-name>commonData</managed-bean-name>
 		<managed-bean-class>com.meetplanner.backingbean.CommonDataBean</managed-bean-class>
-		<managed-bean-scope>view</managed-bean-scope>
+		<managed-bean-scope>application</managed-bean-scope>
 		<managed-property>
 			<property-name>fileUploadService</property-name>
 			<value>#{fileUploadService}</value>
