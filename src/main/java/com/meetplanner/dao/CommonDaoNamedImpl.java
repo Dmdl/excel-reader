@@ -65,7 +65,7 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 	public List<Athlete> serachAthleteByBibOrName(String bib, String name) {
 		List<Athlete> results = null;
 		try{
-			String sql = "SELECT * FROM athlete WHERE athlete.name LIKE :pname";
+			String sql = "SELECT athlete.id AS athlete_id,athlete.name AS athlete_name,date_of_birth,group_id,nic,gender,age_group_id,bib,groups.name AS group_name FROM athlete LEFT JOIN groups ON athlete.group_id=groups.id WHERE athlete.name LIKE :pname";
 			String quName = "%" + name + "%";
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("pname", quName);
