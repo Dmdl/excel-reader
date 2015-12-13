@@ -10,11 +10,13 @@
 
 		<h:form id="addEventFrm">
 		<div align="center" class="headingColor"><h2>Add / Update Events</h2></div>
-		<p:accordionPanel>
-			<p:tab title="Events">
+		<p:accordionPanel id="mainAccPnl">
+			<p:tab id="eventTab" title="Events">
 				<p:tabView id="addEventTabview">
+				<p:ajax event="tabChange" update="eventTbl eventTblUpdate"/>
 					<p:tab id="addEventTab" title="Add Event">
-						<p:panelGrid id="addEventGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
+					<p:panelGrid id="addEventMainGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6">
+						<p:panelGrid id="addEventGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:100%;">
 							<h:outputText value="Event Name" />
 							<p:inputText style="width:70%;" value="#{eventBean.eventName}" required="true" requiredMessage="Event nane is Required"></p:inputText>
 							
@@ -32,30 +34,117 @@
 								<f:selectItem itemLabel="Female" itemValue="F" />
 							</p:selectOneMenu>
 							
-							<p:commandButton value="Add" action="#{eventBean.addEvent()}" update="addEvent addEventGrid" process="addEventGrid"></p:commandButton>
+							<p:commandButton value="Add" action="#{eventBean.addEvent()}" update="addEvent addEventGrid eventTbl" process="addEventGrid"></p:commandButton>
 							<p:commandButton value="Cancel"></p:commandButton>
 						</p:panelGrid>
+						<p:dataTable id="eventTbl" value="#{eventBean.events}" var="event">							
+						    <p:column headerText="Name">
+						    	<h:outputText value="#{event.eventName}" />
+						    </p:column>
+						    <p:column headerText="Type">
+						    	<h:outputText value="#{event.type eq 'T' ? 'Track' : 'Field'}" />
+						    </p:column>
+						    <p:column headerText="Participants">
+						    	<h:outputText value="#{event.participants eq 'F' ? 'Female' : 'Male'}" />
+						    </p:column>
+						</p:dataTable>
+					</p:panelGrid>						
 					</p:tab>
 					
 					<p:tab id="updateEventTab" title="Update Event">
 						
+							<p:dataTable id="eventTblUpdate" value="#{eventBean.events}" var="event">							
+							    <p:column headerText="Name">
+							    	<h:outputText value="#{event.eventName}" />
+							    </p:column>
+							    <p:column headerText="Type">
+							    	<h:outputText value="#{event.type eq 'T' ? 'Track' : 'Field'}" />
+							    </p:column>
+							    <p:column headerText="Participants">
+							    	<h:outputText value="#{event.participants eq 'F' ? 'Female' : 'Male'}" />
+							    </p:column>
+							    <p:column headerText="">
+							    	<div align="center">
+								    	<p:commandButton value="Edit" action="#{eventBean.editEvent(event)}" process="eventTblUpdate" update=":addEventFrm:mainAccPnl:addEventTabview:updateEventGrid"/>
+								    	<p:commandButton value="Delete" action="#{eventBean.deleteEvent(event)}" process="eventTblUpdate" update="addEvent eventTblUpdate"/>
+							    	</div>
+							    </p:column>
+							</p:dataTable>
+						<br/>
+						<p:panel id="updateEventPanel">
+							<p:panelGrid id="updateEventGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
+								<h:outputText value="Event Name" />
+								<p:inputText style="width:70%;" value="#{eventBean.eventName}" required="true" requiredMessage="Event nane is Required"></p:inputText>
+								
+								<h:outputText value="Event Type" />
+								<p:selectOneMenu value="#{eventBean.eventType}" id="selectEventTypeUpdate" style="width:65%;" required="true" requiredMessage="Select Event type">
+									<f:selectItem itemLabel="Select Event Type" itemValue="" noSelectionOption="true" />
+									<f:selectItem itemLabel="Feild Event" itemValue="F" />
+									<f:selectItem itemLabel="Track Event" itemValue="T" />
+								</p:selectOneMenu>
+								
+								<h:outputText value="Participants" />
+								<p:selectOneMenu value="#{eventBean.participants}" id="selectGenderUpdate" style="width:65%;" required="true" requiredMessage="Select Participants">
+									<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
+									<f:selectItem itemLabel="Male" itemValue="M" />
+									<f:selectItem itemLabel="Female" itemValue="F" />
+								</p:selectOneMenu>
+								
+								<p:commandButton value="Update" process="updateEventGrid" action="#{eventBean.updateEvent}" update="addEvent eventTblUpdate"/>
+								<p:commandButton value="Delete" />
+							</p:panelGrid>							
+						</p:panel>
 					</p:tab>
 				</p:tabView>
 			</p:tab>
 			<p:tab title="Groups">
 				<p:tabView id="addGroups">
+				<p:ajax event="tabChange" update="groupTbl groupTblUpdate"/>
 					<p:tab id="addGroupTab" title="Add Group">
-						<p:panelGrid id="addGroupGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
-							<h:outputText value="Group Name" />
-							<p:inputText value="#{eventBean.groupName}" style="width:70%;" required="true" requiredMessage="Group nane is Required"></p:inputText>
+						<p:panelGrid id="addGrpMainPnl" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6">
+							<p:panelGrid id="addGroupGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:100%;">
+								<h:outputText value="Group Name" />
+								<p:inputText value="#{eventBean.groupName}" style="width:70%;" required="true" requiredMessage="Group nane is Required"></p:inputText>
+								
+								<p:commandButton value="Add" action="#{eventBean.addGroup()}" update="addEvent addGroupGrid groupTbl" process="addGroupGrid"></p:commandButton>
+								<p:commandButton value="Cancel"></p:commandButton>
+							</p:panelGrid>
 							
-							<p:commandButton value="Add" action="#{eventBean.addGroup()}" update="addEvent addGroupGrid" process="addGroupGrid"></p:commandButton>
-							<p:commandButton value="Cancel"></p:commandButton>
+							<p:dataTable id="groupTbl" value="#{eventBean.groups}" var="group">
+								<p:column headerText="Id">
+							    	<h:outputText value="#{group.id}" />
+							    </p:column>
+							    <p:column headerText="Name">
+							    	<h:outputText value="#{group.name}" />
+							    </p:column>
+							</p:dataTable>
 						</p:panelGrid>
+						
 					</p:tab>
 					
 					<p:tab id="updateGroupTab" title="Update Group">
-						
+						<p:dataTable id="groupTblUpdate" value="#{eventBean.groups}" var="group">
+							<p:column headerText="Id">
+						    	<h:outputText value="#{group.id}" />
+						    </p:column>
+						    <p:column headerText="Name">
+						    	<h:outputText value="#{group.name}" />
+						    </p:column>
+						    <p:column headerText="">
+						    	<div align="center"><p:commandButton value="Edit" action="#{eventBean.editGroup(group)}" update=":addEventFrm:mainAccPnl:addGroups:updateGroupGrid" process="groupTblUpdate"/>
+						    	<p:commandButton value="Delete" action="#{eventBean.deleteGroup(group)}" update="groupTblUpdate addEvent" process="groupTblUpdate"/> </div>
+						    </p:column>
+						</p:dataTable>
+						<br/>
+						<p:panel id="updateGrpPanel">
+							<p:panelGrid id="updateGroupGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:60%;">
+								<h:outputText value="Group Name" />
+								<p:inputText value="#{eventBean.groupName}" style="width:70%;" required="true" requiredMessage="Group nane is Required"></p:inputText>
+								
+								<p:commandButton value="Update" action="#{eventBean.updateGroup()}" update="groupTblUpdate addEvent" process="updateGroupGrid"></p:commandButton>
+								<p:commandButton value="Cancel" />
+							</p:panelGrid>
+						</p:panel>
 					</p:tab>					
 				</p:tabView>
 			</p:tab>

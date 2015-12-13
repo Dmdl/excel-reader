@@ -42,4 +42,12 @@ public interface CommonService {
 	public boolean addEvent(EventsDTO event);
 	
 	public boolean addGroup(GroupDTO group) throws Exception;
+	
+	public void updateEvent(EventDTO event) throws Exception;
+	
+	public boolean deleteEvent(int eventId);
+	
+	public void updateGroup(GroupDTO group) throws Exception;
+	
+	public boolean deleteGroup(int groupId);
 }

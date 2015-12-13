@@ -41,7 +41,7 @@
 		<intercept-url pattern="/index.jsp*" access="ROLE_USER" />	
 		<intercept-url pattern="/faces/pages/**" access="ROLE_USER" /> 
 		<intercept-url pattern="/faces/faces/pages/**" access="ROLE_USER" />
-		<intercept-url pattern="/faces/default.xhtml*" access="ROLE_USER" /> 		
+		<intercept-url pattern="/faces/default.xhtml*" access="ROLE_USER" />		
 					
 			<form-login login-processing-url="/j_spring_security_check"
 				login-page="/faces/login.xhtml" default-target-url="/"

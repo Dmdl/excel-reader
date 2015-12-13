@@ -6,6 +6,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 public class EventDTO {
 	private int id;
 	private String eventName;
+	private String type;
+	private String participants;
 
 	public int getId() {
 		return id;
@@ -21,6 +23,22 @@ public class EventDTO {
 
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(String participants) {
+		this.participants = participants;
 	}
 
 	@Override

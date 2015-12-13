@@ -284,4 +284,48 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		}					
 		return res;
 	}
+
+	@Override
+	public void updateEvent(EventDTO event) throws Exception{
+		String sql = "UPDATE events SET event_name=?,type=?,participants=? WHERE id=?";
+		getJdbcTemplate().update(sql, event.getEventName(),event.getType(),event.getParticipants(),event.getId());
+	}
+
+	@Override
+	public boolean deleteEvent(int eventId) {
+		boolean ok = false;
+		try{
+			String sql = "DELETE FROM events WHERE id=?";
+			int count = getJdbcTemplate().update(sql, new Object[] {eventId});
+			if(count>0){
+				ok = true;
+			}
+			return ok;
+		}catch(Exception e){
+			e.printStackTrace();
+			return ok;
+		}
+	}
+
+	@Override
+	public void updateGroup(GroupDTO group) throws Exception {
+		String sql = "UPDATE groups SET name=? WHERE id=?";
+		getJdbcTemplate().update(sql, group.getName(),group.getId());
+	}
+
+	@Override
+	public boolean deleteGroup(int groupId) {
+		boolean ok = false;
+		try{
+			String sql = "DELETE FROM groups WHERE id=?";
+			int count = getJdbcTemplate().update(sql, new Object[] {groupId});
+			if(count>0){
+				ok = true;
+			}
+			return ok;
+		}catch(Exception e){
+			e.printStackTrace();
+			return ok;
+		}
+	}
 }
