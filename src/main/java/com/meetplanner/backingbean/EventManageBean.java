@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.TabChangeEvent;
 
+import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.GroupDTO;
@@ -28,12 +29,16 @@ public class EventManageBean implements Serializable{
 	private List<GroupDTO> groups;
 	private int eventId;
 	private int groupId;
+	private List<AgeGroupDTO> ageGroups;
+	private String ageGroup;
+	private int ageGroupId;
 	
 	public EventManageBean(){
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
 		fileUploadService = (FileUploadService) SpringApplicationContex.getBean("fileUploadService");
 		events = fileUploadService.getAllEvents();
 		groups = fileUploadService.getAllGroups();
+		ageGroups = fileUploadService.getAllAgeGroups();
 	}
 
 	public void addEvent(){
@@ -152,6 +157,49 @@ public class EventManageBean implements Serializable{
 		}
 	}
 	
+	public void addAgeGroup(){
+		if(null!=ageGroup){
+			AgeGroupDTO age = new AgeGroupDTO();
+			age.setAgeGroup(this.ageGroup);
+			boolean ok = commonService.addAgeGroup(age);
+			if(ok){
+				ageGroups = fileUploadService.getAllAgeGroups();
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Added."));
+			}else{
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
+			}
+		}		
+	}
+	
+	public void editAgeGroup(AgeGroupDTO age){
+		this.ageGroupId = age.getId();
+		this.ageGroup = age.getAgeGroup();
+	}
+	
+	public void updateAgeGroup(){
+		AgeGroupDTO age = new AgeGroupDTO();
+		age.setId(ageGroupId);
+		age.setAgeGroup(ageGroup);
+		boolean ok = commonService.updateAgeGroup(age);
+		if(ok){
+			ageGroups = fileUploadService.getAllAgeGroups();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Updated."));
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
+		}
+	}
+	
+	public void deleteAgeGroup(AgeGroupDTO age){
+		try{
+			commonService.deleteAgeGroup(age.getId());
+			ageGroups = fileUploadService.getAllAgeGroups();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Deleted."));
+		}catch(Exception e){
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
+		}
+	}
+	
 	public String getEventName() {
 		return eventName;
 	}
@@ -214,6 +262,22 @@ public class EventManageBean implements Serializable{
 
 	public void setGroups(List<GroupDTO> groups) {
 		this.groups = groups;
+	}
+
+	public List<AgeGroupDTO> getAgeGroups() {
+		return ageGroups;
+	}
+
+	public void setAgeGroups(List<AgeGroupDTO> ageGroups) {
+		this.ageGroups = ageGroups;
+	}
+
+	public String getAgeGroup() {
+		return ageGroup;
+	}
+
+	public void setAgeGroup(String ageGroup) {
+		this.ageGroup = ageGroup;
 	}
 	
 }

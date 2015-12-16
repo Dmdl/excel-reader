@@ -14,10 +14,12 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
+import com.meetplanner.dao.mappers.AgeGroupRowMapper;
 import com.meetplanner.dao.mappers.AthleteRowMapper;
 import com.meetplanner.dao.mappers.EventResultMapper;
 import com.meetplanner.dao.mappers.EventResultRowMapper;
 import com.meetplanner.dao.mappers.EventRowMapper;
+import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
@@ -327,5 +329,49 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 			e.printStackTrace();
 			return ok;
 		}
+	}
+
+	@Override
+	public List<AgeGroupDTO> getAgeGroups() throws Exception {
+		List<AgeGroupDTO> result = null;
+		String sql="SELECT * FROM age_groups";
+		result = getJdbcTemplate().query(sql, new AgeGroupRowMapper());
+		return result;
+	}
+
+	@Override
+	public boolean updateAgeGroup(AgeGroupDTO ageGroup) {
+		boolean ok = false;
+		try{
+			String sql = "UPDATE age_groups SET age_group=? WHERE id=?";
+			int count = getJdbcTemplate().update(sql, ageGroup.getAgeGroup(),ageGroup.getId());
+			if(count>0){
+				ok = true;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return ok;
+	}
+
+	@Override
+	public boolean addAgeGroup(AgeGroupDTO ageGroup) {
+		boolean ok = false;
+		try{
+			String sql = "INSERT INTO age_groups(age_group) VALUES (?)";
+			int count = getJdbcTemplate().update(sql, new Object[] {ageGroup.getAgeGroup()});
+			if(count>0){
+				ok = true;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return ok;
+	}
+
+	@Override
+	public void deleteAgeGroup(int id) throws Exception{
+		String sql = "DELETE FROM age_groups WHERE id=?";
+		getJdbcTemplate().update(sql, new Object[] {id});
 	}
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.meetplanner.dao.CommonDao;
+import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
@@ -123,6 +124,26 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	@Override
 	public boolean deleteGroup(int groupId) {
 		return commonDao.deleteGroup(groupId);
+	}
+
+	@Override
+	public boolean addAgeGroup(AgeGroupDTO ageGroup) {
+		return commonDao.addAgeGroup(ageGroup);
+	}
+
+	@Override
+	public boolean updateAgeGroup(AgeGroupDTO ageGroup) {
+		return commonDao.updateAgeGroup(ageGroup);
+	}
+
+	@Override
+	public List<AgeGroupDTO> getAgeGroups() throws Exception {
+		return commonDao.getAgeGroups();
+	}
+
+	@Override
+	public void deleteAgeGroup(int id) throws Exception {
+		commonDao.deleteAgeGroup(id);
 	}
 
 }

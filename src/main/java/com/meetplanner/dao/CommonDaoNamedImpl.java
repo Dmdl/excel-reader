@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 
 import com.meetplanner.dao.mappers.UpdateAthleteRowMapper;
+import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
@@ -152,6 +153,30 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 	public boolean deleteGroup(int groupId) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public List<AgeGroupDTO> getAgeGroups() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean updateAgeGroup(AgeGroupDTO ageGroup) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addAgeGroup(AgeGroupDTO ageGroup) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void deleteAgeGroup(int id) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
