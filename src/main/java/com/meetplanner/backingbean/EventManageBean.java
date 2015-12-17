@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
 
 import com.meetplanner.dto.AgeGroupDTO;
@@ -111,9 +112,14 @@ public class EventManageBean implements Serializable{
 		}
 	}
 	
-	public void deleteEvent(EventDTO event){
-		if(null!=event){
-			boolean ok = commonService.deleteEvent(event.getId());
+	public void showEventDeleteDialog(EventDTO event){
+		this.eventId = event.getId();
+		RequestContext.getCurrentInstance().execute("PF('confirmDialog').show();");
+	}
+	
+	public void deleteEvent(){
+		if(eventId!=0){
+			boolean ok = commonService.deleteEvent(eventId);
 			if(ok){
 				events = fileUploadService.getAllEvents();
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Deleted."));
@@ -147,8 +153,13 @@ public class EventManageBean implements Serializable{
 		
 	}
 	
-	public void deleteGroup(GroupDTO group){
-		boolean ok = commonService.deleteGroup(group.getId());
+	public void showGroupDeleteDialog(GroupDTO group){
+		this.groupId = group.getId();
+		RequestContext.getCurrentInstance().execute("PF('confirmGrpDialog').show();");
+	}
+	
+	public void deleteGroup(){
+		boolean ok = commonService.deleteGroup(groupId);
 		if(ok){
 			groups = fileUploadService.getAllGroups();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Deleted."));
@@ -189,11 +200,16 @@ public class EventManageBean implements Serializable{
 		}
 	}
 	
-	public void deleteAgeGroup(AgeGroupDTO age){
-		try{
-			commonService.deleteAgeGroup(age.getId());
+	public void showDeleteDialog(AgeGroupDTO age){
+		this.ageGroupId = age.getId();
+		RequestContext.getCurrentInstance().execute("PF('confirmDialog').show();");
+	}
+	
+	public void deleteAgeGroup(){
+		try{			
+			commonService.deleteAgeGroup(this.ageGroupId);
 			ageGroups = fileUploadService.getAllAgeGroups();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Deleted."));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Deleted."));			
 		}catch(Exception e){
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
