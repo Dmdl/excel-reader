@@ -1,5 +1,6 @@
 package com.meetplanner.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 
 import com.meetplanner.dao.mappers.UpdateAthleteRowMapper;
@@ -177,6 +179,34 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 	public void deleteAgeGroup(int id) throws Exception {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<EventDTO> getFilteredEventList(String gender, String eventType) {
+		List<EventDTO> result = new ArrayList<EventDTO>(0);
+		try{
+			String sql = "SELECT * FROM events";
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			if(null!=gender || null!=eventType){
+				sql+=" WHERE";
+			}
+			if(null!=eventType){
+				sql+=" TYPE=:type";
+				parameters.put("type", eventType);
+			}
+			if(null!=eventType){
+				sql +=" AND";
+			}
+			if(null!=gender){
+				sql +=" participants=:gender";
+				parameters.put("gender", gender);
+			}
+			System.out.println("sql -> "+sql);
+			result = getNamedParameterJdbcTemplate().query(sql,parameters,new BeanPropertyRowMapper<>(EventDTO.class));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

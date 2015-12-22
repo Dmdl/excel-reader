@@ -374,4 +374,10 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		String sql = "DELETE FROM age_groups WHERE id=?";
 		getJdbcTemplate().update(sql, new Object[] {id});
 	}
+
+	@Override
+	public List<EventDTO> getFilteredEventList(String gender, String eventType) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
