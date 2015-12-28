@@ -27,11 +27,11 @@
 								<f:selectItem itemLabel="Track Event" itemValue="T" />
 							</p:selectOneMenu>
 							
-							<h:outputText value="Participants" />
+							<h:outputText value="Gender" />
 							<p:selectOneMenu value="#{eventBean.participants}" id="selectGender" style="width:65%;" required="true" requiredMessage="Select Participants">
 								<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
-								<f:selectItem itemLabel="Male" itemValue="M" />
-								<f:selectItem itemLabel="Female" itemValue="F" />
+								<f:selectItem itemLabel="Men" itemValue="M" />
+								<f:selectItem itemLabel="Women" itemValue="F" />
 							</p:selectOneMenu>
 							
 							<p:commandButton value="Add" action="#{eventBean.addEvent()}" update="addEvent addEventGrid eventTbl" process="addEventGrid"></p:commandButton>
@@ -83,11 +83,11 @@
 									<f:selectItem itemLabel="Track Event" itemValue="T" />
 								</p:selectOneMenu>
 								
-								<h:outputText value="Participants" />
+								<h:outputText value="Gender" />
 								<p:selectOneMenu value="#{eventBean.participants}" id="selectGenderUpdate" style="width:65%;" required="true" requiredMessage="Select Participants">
 									<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
-									<f:selectItem itemLabel="Male" itemValue="M" />
-									<f:selectItem itemLabel="Female" itemValue="F" />
+									<f:selectItem itemLabel="Men" itemValue="M" />
+									<f:selectItem itemLabel="Women" itemValue="F" />
 								</p:selectOneMenu>
 								
 								<p:commandButton value="Update" process="updateEventGrid" action="#{eventBean.updateEvent}" update="addEvent eventTblUpdate"/>
