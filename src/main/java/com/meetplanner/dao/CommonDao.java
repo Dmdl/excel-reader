@@ -2,6 +2,7 @@ package com.meetplanner.dao;
 
 import java.util.List;
 
+import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
@@ -50,4 +51,14 @@ public interface CommonDao {
 	public void updateGroup(GroupDTO group) throws Exception;
 	
 	public boolean deleteGroup(int groupId);
+	
+	public List<AgeGroupDTO> getAgeGroups() throws Exception;
+	
+	public boolean updateAgeGroup(AgeGroupDTO ageGroup);
+	
+	public boolean addAgeGroup(AgeGroupDTO ageGroup);
+	
+	public void deleteAgeGroup(int id) throws Exception;
+	
+	public List<EventDTO> getFilteredEventList(String gender,String eventType);
 }

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificate" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dd6ea222-4d61-4014-af3e-9c70f984752a">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="13"/>
+	<property name="ireport.y" value="0"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="athleteName" class="java.lang.String"/>
+	<field name="dateOfBirth" class="java.util.Date"/>
+	<field name="nic" class="java.lang.String"/>
+	<field name="gender" class="java.lang.String"/>
+	<field name="bibNumber" class="java.lang.String"/>
+	<field name="performance" class="java.lang.Double"/>
+	<field name="ageGroup" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="36" uuid="e9f7f698-81fc-4806-88ca-f13290f49395"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Certificate]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="17" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="2" width="46" height="20" uuid="0854ad81-49b5-4010-b6b7-bdf3e7844f52"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="2" width="71" height="20" uuid="5a43a5ac-0e08-4a92-b8fd-8f9d03ff607a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[athleteName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="123" y="2" width="82" height="20" uuid="8a356220-d090-41b7-ba76-d9c47c911aa8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[dateOfBirth]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="205" y="2" width="78" height="20" uuid="093177ef-fcc2-4798-bd48-ff54a11ef0c9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[nic]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="283" y="2" width="38" height="20" uuid="dded384b-b151-4d2f-a733-e1c512260815"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[gender]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="2" width="61" height="20" uuid="b9fe922f-c17e-49a0-bba1-ae61257a76b9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[bibNumber]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="2" width="69" height="20" uuid="85d9db2d-fc92-4bdf-ae7d-84caf5614972"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[performance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="2" width="92" height="20" uuid="e066910d-620c-4ac7-b3d1-a02dd1363c3a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ageGroup]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="46" height="20" uuid="9cac90f9-7ac9-4ff5-8386-6e20252b225f"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="0" width="74" height="20" uuid="3c54f9d8-63f4-4e72-bb2a-de020c9b0685"/>
+				<textFieldExpression><![CDATA[$F{athleteName}]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy/MM/dd">
+				<reportElement x="124" y="0" width="81" height="20" uuid="ec80de8e-8f63-4296-81bd-e106049ba85a"/>
+				<textFieldExpression><![CDATA[$F{dateOfBirth}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="205" y="0" width="82" height="20" uuid="404ee115-1cbd-4aeb-90de-3726254addf6"/>
+				<textFieldExpression><![CDATA[$F{nic}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="287" y="0" width="38" height="20" uuid="da99eed3-2488-4cf1-927d-c8e6681ac701"/>
+				<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="325" y="0" width="61" height="20" uuid="75dfce7b-7f61-4141-83d0-ec311193bd8e"/>
+				<textFieldExpression><![CDATA[$F{bibNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="0" width="66" height="20" uuid="c75101c7-df1a-4c36-b654-9affa3d545a1"/>
+				<textFieldExpression><![CDATA[$F{performance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="66f3b569-1c2b-4ad2-813a-c40c9c9f582d"/>
+				<textFieldExpression><![CDATA[$F{ageGroup}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="17" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="12" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="12" splitType="Stretch"/>
+	</summary>
+</jasperReport>

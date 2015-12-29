@@ -1,0 +1,69 @@
+<ui:composition template="../template/common/commonLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<p:growl id="ageGroup" showDetail="true"></p:growl>
+
+		<h:form id="ageGrpFrm">
+			<div style="margin-left:10%;">
+			<div align="center" class="headingColor"><h2>Add Age Groups</h2></div>
+				<p:tabView id="ageGroupTab">
+				<p:ajax event="tabChange" update="ageGrpTbl ageGrpTblUpdate"/>
+					<p:tab id="addAgeGroupTab" title="Add Age group">
+						<p:panelGrid id="addAgegrpPnl" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6">
+							<p:panelGrid id="addAgegrpPnlLeft" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:100%;">
+								<p:outputLabel value="Age Group" />
+								<p:inputText value="#{eventBean.ageGroup}" required="true" requiredMessage="Age Group is Required"></p:inputText>
+								<p:commandButton value="Add" action="#{eventBean.addAgeGroup()}" update="ageGrpTbl ageGroup" process="addAgegrpPnlLeft"/>
+								<p:commandButton value="Cancel" />
+							</p:panelGrid>
+							<p:dataTable id="ageGrpTbl" value="#{eventBean.ageGroups}" var="age">
+								<p:column headerText="Id">
+							    	<h:outputText value="#{age.id}" />
+							    </p:column>
+							    <p:column headerText="Age Group">
+							    	<h:outputText value="#{age.ageGroup}" />
+							    </p:column>
+							</p:dataTable>
+						</p:panelGrid>
+					</p:tab>
+					
+					<p:tab id="updateAgeGroupTab" title="Update Age Group">
+						<p:dataTable id="ageGrpTblUpdate" value="#{eventBean.ageGroups}" var="age">
+							<p:column headerText="Id">
+						    	<h:outputText value="#{age.id}" />
+						    </p:column>
+						    <p:column headerText="Age Group">
+						    	<h:outputText value="#{age.ageGroup}" />
+						    </p:column>
+						    <p:column headerText="">
+						    	<div align="center">
+						    		<p:commandButton value="Update" action="#{eventBean.editAgeGroup(age)}" update=":ageGrpFrm:ageGroupTab:editAgeGrpPnl" process="ageGrpTblUpdate"/>
+						    		<p:commandButton value="Delete" action="#{eventBean.showDeleteDialog(age)}" process="ageGrpTblUpdate" />
+						    	</div>
+						    </p:column>
+						</p:dataTable>
+						<br/><br/>
+						<p:panelGrid id="editAgeGrpPnl" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:60%;">
+							<p:outputLabel value="Age Group"/>
+							<p:inputText value="#{eventBean.ageGroup}" required="true" requiredMessage="Age Group is Required"/>
+							
+							<p:commandButton value="update" action="#{eventBean.updateAgeGroup()}" update="ageGroup ageGrpTblUpdate" process="editAgeGrpPnl"/>
+							<p:commandButton value="Clear" />
+						</p:panelGrid>
+					</p:tab>
+				</p:tabView>					
+			</div>
+			<p:dialog id="confirmdlg" widgetVar="confirmDialog">
+				<p:outputLabel value="Are You Really Want to Delete the Age Group?"/><br/><br/>
+				<div align="center"><p:commandButton value="Yes" action="#{eventBean.deleteAgeGroup()}" process="confirmdlg" update="ageGroup :ageGrpFrm:ageGroupTab:ageGrpTblUpdate" oncomplete="PF('confirmDialog').hide();"/>
+				<p:commandButton value="No" onclick="PF('confirmDialog').hide();"/></div>
+			</p:dialog>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

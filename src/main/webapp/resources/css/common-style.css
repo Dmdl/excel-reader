@@ -87,3 +87,7 @@ li ul li.ui-menuitem-active>a{
 .panelGridCenter {
     margin: 0 auto;
 }
+.ui-panelgrid .ui-panelgrid-cell{
+	border-width : 0px !important;
+	font-size: 105%;
+}

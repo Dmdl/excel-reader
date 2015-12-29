@@ -10,8 +10,8 @@
 
 		<h:form>
 			<div style="margin-left:10%;">
-			<div align="center" class="headingColor"><h2>Print Reports</h2></div>
-				<p:panelGrid columns="2" style="width:60%;">
+			<div align="center" class="headingColor"><h2>Print Certificates</h2></div>
+				<!-- <p:panelGrid columns="2" style="width:60%;">
 					<p:outputLabel value="Report Type"></p:outputLabel>
 					<p:selectOneMenu value="#{reportBean.selectedReportType}" id="reportType" style="width:50%;">
 						<f:selectItem itemLabel="Select Report Type" itemValue="" noSelectionOption="true" />
@@ -19,6 +19,67 @@
 						<f:selectItem itemLabel="Events" itemValue="Ev" />
 					</p:selectOneMenu>
 					<h:commandButton value="Download Report" action="#{reportBean.onReportTypeChange()}"></h:commandButton>
+				</p:panelGrid> -->
+				
+				<p:panelGrid id="certificatePnl" columns="2" style="width:70%;">
+					<p:outputLabel value="Age Group" />
+					<p:selectOneMenu style="width:200px;" value="#{reportBean.selectedAgeGroup}" required="true" requiredMessage="Age is required">
+						<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
+						<f:selectItems value="#{reportBean.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Event"/>
+					<p:selectOneMenu style="width:200px;" value="#{reportBean.selectedEvent}" required="true" requiredMessage="Event is required">
+						<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
+						<f:selectItems value="#{reportBean.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Gender"/>
+					<p:selectOneMenu value="#{reportBean.gender}" id="selectGender" style="width:200px;" required="true" requiredMessage="Select Gender">
+						<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
+						<f:selectItem itemLabel="Men" itemValue="M" />
+						<f:selectItem itemLabel="Women" itemValue="F" />
+					</p:selectOneMenu>
+					
+					<p:commandButton style="display:none;"/>
+					<p:commandButton action="#{reportBean.showAthleteData()}" value="Show" update="printRepGr serchResultTbl" process="certificatePnl"/>
+				</p:panelGrid>
+				<br/><br/><br/>
+				<p:dataTable id="serchResultTbl" var="result" value="#{reportBean.result}">
+					<p:column headerText="Id">
+				    	<h:outputText value="#{result.id}" />
+				    </p:column>
+				    <p:column headerText="Name">
+				    	<h:outputText value="#{result.athleteName}" />
+				    </p:column>
+				    <p:column headerText="Date of Birth">
+				    	<h:outputText value="#{result.dateOfBirth}" />
+				    </p:column>
+				    <p:column headerText="NIC">
+				    	<h:outputText value="#{result.nic}" />
+				    </p:column>
+				    <p:column headerText="Gender">
+				    	<h:outputText value="#{result.gender}" />
+				    </p:column>
+				    <p:column headerText="BIB">
+				    	<h:outputText value="#{result.bibNumber}" />
+				    </p:column>
+				    <p:column headerText="Performance">
+				    	<h:outputText value="#{result.performance}" />
+				    </p:column>
+				    <p:column headerText="Age Group">
+				    	<h:outputText value="#{result.ageGroup}" />
+				    </p:column>
+				</p:dataTable>
+				<br/><br/><br/>
+				<p:panelGrid id="reportTypePnl" columns="2" style="width:50%;">
+					<p:outputLabel value="Report Type"/>
+					<p:selectOneRadio id="repType" value="#{reportBean.reportType}" required="true" requiredMessage="Select Report Type">
+			            <f:selectItem itemLabel="PDF" itemValue="pdf" />
+			            <f:selectItem itemLabel="Excel" itemValue="excel" />
+			        </p:selectOneRadio>
+			        <p:commandButton style="display:none;"/>
+			        <p:commandButton value="Genarate" process="reportTypePnl" action="#{reportBean.genarateReport()}" update="printRepGr" ajax="false"/>
 				</p:panelGrid>
 			</div>
 		</h:form>

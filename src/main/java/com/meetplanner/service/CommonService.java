@@ -2,6 +2,7 @@ package com.meetplanner.service;
 
 import java.util.List;
 
+import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
@@ -50,4 +51,12 @@ public interface CommonService {
 	public void updateGroup(GroupDTO group) throws Exception;
 	
 	public boolean deleteGroup(int groupId);
+	
+	public boolean addAgeGroup(AgeGroupDTO ageGroup);
+	
+	public boolean updateAgeGroup(AgeGroupDTO ageGroup);
+	
+	public List<AgeGroupDTO> getAgeGroups() throws Exception;
+	
+	public void deleteAgeGroup(int id) throws Exception;
 }

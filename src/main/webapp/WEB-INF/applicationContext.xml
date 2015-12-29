@@ -12,6 +12,10 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<task:annotation-driven />
 
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	  <property name="location" value="classpath:db.properties" />
+	</bean>
+
 	<bean id="testDAO" class="com.meetplanner.dto.TestDaoImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
@@ -21,6 +25,10 @@
 	</bean>
 	
 	<bean id="commondDao" class="com.meetplanner.dao.CommonDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="reportdao" class="com.meetplanner.dao.ReportDaoImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
@@ -46,11 +54,11 @@
 			value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
 		<property name="dataSourceProperties">
 			<props>
-				<prop key="portNumber">3306</prop>
-				<prop key="serverName">localhost</prop>
-				<prop key="user">root</prop>
-				<prop key="databaseName">meetplanner</prop>
-				<prop key="password">root</prop>
+				<prop key="portNumber">${portNumber}</prop>
+				<prop key="serverName">${serverName}</prop>
+				<prop key="user">${user}</prop>
+				<prop key="databaseName">${databaseName}</prop>
+				<prop key="password">${password}</prop>
 			</props>
 		</property>
 		<property name="poolName" value="springHikariCP" />

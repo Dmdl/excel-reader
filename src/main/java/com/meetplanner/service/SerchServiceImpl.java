@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.meetplanner.dao.CommonDao;
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventDTO;
 
 @Service("searchService")
 public class SerchServiceImpl implements SerchService {
@@ -19,6 +20,11 @@ public class SerchServiceImpl implements SerchService {
 	@Override
 	public List<Athlete> searchAthlete(String bib, String name) {
 		return commonDao.serachAthleteByBibOrName(bib, name);
+	}
+
+	@Override
+	public List<EventDTO> getFilteredEventList(String gender, String eventType) {
+		return commonDao.getFilteredEventList(gender, eventType);
 	}
 
 }

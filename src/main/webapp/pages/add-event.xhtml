@@ -66,7 +66,7 @@
 							    <p:column headerText="">
 							    	<div align="center">
 								    	<p:commandButton value="Edit" action="#{eventBean.editEvent(event)}" process="eventTblUpdate" update=":addEventFrm:mainAccPnl:addEventTabview:updateEventGrid"/>
-								    	<p:commandButton value="Delete" action="#{eventBean.deleteEvent(event)}" process="eventTblUpdate" update="addEvent eventTblUpdate"/>
+								    	<p:commandButton value="Delete" action="#{eventBean.showEventDeleteDialog(event)}" process="eventTblUpdate"/>
 							    	</div>
 							    </p:column>
 							</p:dataTable>
@@ -132,7 +132,7 @@
 						    </p:column>
 						    <p:column headerText="">
 						    	<div align="center"><p:commandButton value="Edit" action="#{eventBean.editGroup(group)}" update=":addEventFrm:mainAccPnl:addGroups:updateGroupGrid" process="groupTblUpdate"/>
-						    	<p:commandButton value="Delete" action="#{eventBean.deleteGroup(group)}" update="groupTblUpdate addEvent" process="groupTblUpdate"/> </div>
+						    	<p:commandButton value="Delete" action="#{eventBean.showGroupDeleteDialog(group)}" process="groupTblUpdate"/> </div>
 						    </p:column>
 						</p:dataTable>
 						<br/>
@@ -149,6 +149,19 @@
 				</p:tabView>
 			</p:tab>
 		</p:accordionPanel>
+		
+		<p:dialog id="confirmdlg" widgetVar="confirmDialog">
+			<p:outputLabel value="Are You Really Want to Delete the Event?"/><br/><br/>
+			<div align="center"><p:commandButton value="Yes" action="#{eventBean.deleteEvent()}" process="confirmdlg" update="addEvent :addEventFrm:mainAccPnl:addEventTabview:eventTblUpdate" oncomplete="PF('confirmDialog').hide();"/>
+			<p:commandButton value="No" onclick="PF('confirmDialog').hide();"/></div>
+		</p:dialog>
+		
+		<p:dialog id="confirmGrpdlg" widgetVar="confirmGrpDialog">
+			<p:outputLabel value="Are You Really Want to Delete the Group?"/><br/><br/>
+			<div align="center"><p:commandButton value="Yes" action="#{eventBean.deleteGroup()}" process="confirmGrpdlg" update="addEvent :addEventFrm:mainAccPnl:addGroups:groupTblUpdate" oncomplete="PF('confirmGrpDialog').hide();"/>
+			<p:commandButton value="No" onclick="PF('confirmGrpDialog').hide();"/></div>
+		</p:dialog>
+			
 		</h:form>
 		
 	</ui:define>
