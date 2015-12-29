@@ -28,6 +28,10 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
+	<bean id="reportdao" class="com.meetplanner.dao.ReportDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
 	<bean id="commondDaoNamed" class="com.meetplanner.dao.CommonDaoNamedImpl">
 		
 	</bean>
