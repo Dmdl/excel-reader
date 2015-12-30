@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="groupAthletes_subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e25f5b2c-d001-4fbe-93ae-cfbe63bc13ac">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="group" class="java.lang.String"/>
+	<field name="bibNumber" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="17" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="9" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="65" y="2" width="100" height="20" uuid="bf7f352d-6593-404a-af49-5f53c43c5429"/>
+				<text><![CDATA[name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="196" y="2" width="100" height="20" uuid="f33ad7f0-f5f8-41c3-aedf-70da8053a22f"/>
+				<text><![CDATA[group]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="337" y="2" width="100" height="20" uuid="3e5cf67c-f2cf-4ce7-b6bc-115e181a5346"/>
+				<text><![CDATA[bibNumber]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="65" y="3" width="100" height="20" uuid="8359a4d6-2870-495d-9722-f76a19c48891"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="196" y="3" width="100" height="20" uuid="b98da834-8764-4031-8810-d40b4ff80acc"/>
+				<textFieldExpression><![CDATA[$F{group}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="337" y="3" width="100" height="20" uuid="daaa2927-cc97-4f72-ac08-74f1c665332d"/>
+				<textFieldExpression><![CDATA[$F{bibNumber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="3" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="5" splitType="Stretch"/>
+	</summary>
+</jasperReport>

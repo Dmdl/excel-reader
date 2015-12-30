@@ -24,8 +24,10 @@ import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import com.meetplanner.dto.AgeGroupDTO;
+import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.GroupAthleteCountDTO;
+import com.meetplanner.dto.GroupAthleteDTO;
 import com.meetplanner.dto.ReportDTO;
 import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.service.CommonService;
@@ -48,6 +50,7 @@ public class ReportBean implements Serializable {
 	private List<ReportDTO> result;
 	private String reportType;
 	private List<GroupAthleteCountDTO> groupAthlete;
+	private List<GroupAthleteDTO> groupWiseAthletes;
 
 	public ReportBean() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -184,6 +187,58 @@ public class ReportBean implements Serializable {
         }
 	}
 	
+	public void printGroupAthleteReport() throws JRException, IOException{
+		InputStream in = null;
+        JasperDesign jasperDesign = null;
+        JasperReport report = null;
+        JasperPrint jasperPrint = null;
+        JRBeanCollectionDataSource beanCollectionDataSource = null;
+        try{       
+            in = this.getClass().getClassLoader().getResourceAsStream("/com/meetplanner/reports/groupAthletes.jrxml");
+            jasperDesign = JRXmlLoader.load(in);
+            report = JasperCompileManager.compileReport(jasperDesign);            
+            beanCollectionDataSource = new JRBeanCollectionDataSource(groupWiseAthletes);   
+            jasperPrint = JasperFillManager.fillReport(report, new HashMap<String,Object>(), beanCollectionDataSource);
+            
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            OutputStream output = ec.getResponseOutputStream();
+            ec.responseReset();
+        	ec.setResponseContentType("application/pdf");           
+            ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + "athlete.pdf" + "\"");
+            JasperExportManager.exportReportToPdfStream(jasperPrint, output);                     
+            fc.responseComplete();
+        }finally{
+            jasperPrint = null;
+            jasperDesign = null;
+            report = null;
+            beanCollectionDataSource = null;
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            jasperPrint = null;
+        }
+	}
+	
+	public void showAthleteTable(){
+		try{
+			groupWiseAthletes = reportService.getGroupAthletes();
+			for(GroupAthleteDTO each:groupWiseAthletes){
+				System.out.println("Group "+each.getGroupName());
+				List<Athlete> athletes = each.getAthletes();
+				for(Athlete e:athletes){
+					System.out.println("Name "+e.getName()+" dob "+e.getDateOfBirth());
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 	public String getSelectedReportType() {
 		return selectedReportType;
 	}
@@ -278,6 +333,14 @@ public class ReportBean implements Serializable {
 
 	public void setGroupAthlete(List<GroupAthleteCountDTO> groupAthlete) {
 		this.groupAthlete = groupAthlete;
+	}
+
+	public List<GroupAthleteDTO> getGroupWiseAthletes() {
+		return groupWiseAthletes;
+	}
+
+	public void setGroupWiseAthletes(List<GroupAthleteDTO> groupWiseAthletes) {
+		this.groupWiseAthletes = groupWiseAthletes;
 	}
 
 }

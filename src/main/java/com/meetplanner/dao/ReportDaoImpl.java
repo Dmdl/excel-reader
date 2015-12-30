@@ -5,9 +5,13 @@ import java.util.List;
 
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import com.meetplanner.dao.mappers.AthleteRowMapper;
+import com.meetplanner.dao.mappers.GroupRowMapper;
 import com.meetplanner.dao.mappers.GroupWiseAthleteCountMapper;
 import com.meetplanner.dao.mappers.ReportRowMapper;
+import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.GroupAthleteCountDTO;
+import com.meetplanner.dto.GroupDTO;
 import com.meetplanner.dto.ReportDTO;
 import com.meetplanner.exception.GenricSqlException;
 
@@ -45,6 +49,30 @@ public class ReportDaoImpl extends JdbcDaoSupport implements ReportDao,
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public List<GroupDTO> getUniqeAthleteGroups() throws GenricSqlException{
+		List<GroupDTO> ids = null;
+		try{
+			String sql = "SELECT DISTINCT(group_id),groups.name FROM athlete"+
+						" JOIN groups ON athlete.group_id=groups.id";
+			ids = getJdbcTemplate().query(sql,new GroupRowMapper());
+		}catch(Exception e){
+			throw new GenricSqlException(e);
+		}
+		return ids;
+	}
+	
+	public List<Athlete> searchAthleteByGroup(int groupId){
+		List<Athlete> resultList = null;
+		try{			
+			String sql = "SELECT athlete.id,athlete.name AS athlete_name,groups.name AS group_name,athlete.bib,athlete.group_id FROM athlete JOIN groups ON athlete.group_id=groups.id WHERE athlete.group_id=?";
+			resultList = getJdbcTemplate().query(sql, new Object[] {groupId }, new AthleteRowMapper());
+			return resultList;
+		}catch(Exception e){
+			e.printStackTrace();
+			return resultList;
+		}
 	}
 
 }

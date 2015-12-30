@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="groupAthletes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c359b13f-5bb0-46f1-8279-36ee83d06bb8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\lakmal.d\\Desktop\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="groupName" class="java.lang.String"/>
+	<field name="athletes" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="29" uuid="2d71063a-c417-4d8a-8d0d-2a79ae5faef5"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Group Athletes]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="19" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="2" width="100" height="20" uuid="8f85e920-4c64-43bc-a4c4-28c6c37bbd2e"/>
+				<text><![CDATA[groupName]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="13" y="5" width="100" height="20" uuid="dbb68464-d917-4938-8a9d-04f81609d50f"/>
+				<textFieldExpression><![CDATA[$F{groupName}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="113" y="25" width="442" height="100" uuid="3d80807d-57c9-4ab4-85be-c8bd621e6fd3"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{athletes})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "groupAthletes_subreport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="26" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="13" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="13" splitType="Stretch"/>
+	</summary>
+</jasperReport>
