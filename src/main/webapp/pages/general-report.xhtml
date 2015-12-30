@@ -1,0 +1,36 @@
+<ui:composition template="../template/common/commonLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<p:growl id="printRepGr" showDetail="true"></p:growl>
+
+		<h:form>
+			<div style="margin-left:10%;">
+			<div align="center" class="headingColor"><h2>General Reports</h2></div>
+				<p:accordionPanel id="generalRepPnl">
+					<p:tab id="grpWiseRepTab" title="Group Wise Athlete">
+						<p:panelGrid columns="2" columnClasses="ui-grid-col-10,ui-grid-col-2">
+							<p:dataTable id="athleteTbl" var="result" value="#{reportBean.groupAthlete}">
+								<p:column headerText="Group Name">
+							    	<h:outputText value="#{result.groupName}" />
+							    </p:column>
+							    <p:column headerText="Athlete Count">
+							    	<h:outputText value="#{result.athleteCount}" />
+							    </p:column>
+							</p:dataTable>
+							<p:commandButton value="Print" action="#{reportBean.printGrpWiseAthleteReport()}" ajax="false"/>
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="test" title="Test Tab">
+						
+					</p:tab>
+				</p:accordionPanel>						
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

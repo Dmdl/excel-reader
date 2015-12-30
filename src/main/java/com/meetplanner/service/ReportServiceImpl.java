@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.meetplanner.dao.ReportDao;
+import com.meetplanner.dto.GroupAthleteCountDTO;
 import com.meetplanner.dto.ReportDTO;
 import com.meetplanner.exception.GenricSqlException;
 
@@ -25,6 +26,11 @@ public class ReportServiceImpl implements ReportService,Serializable{
 	@Override
 	public List<ReportDTO> getAthleteData(String ageGroup, String event,String gender) throws GenricSqlException{
 		return reportDao.getAthleteData(ageGroup, event, gender);
+	}
+
+	@Override
+	public List<GroupAthleteCountDTO> getGroupWiseAthleteCount() throws GenricSqlException {
+		return reportDao.getGroupWiseAthleteCount();
 	}
 
 }

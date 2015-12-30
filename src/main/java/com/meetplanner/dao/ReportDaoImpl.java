@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import com.meetplanner.dao.mappers.GroupWiseAthleteCountMapper;
 import com.meetplanner.dao.mappers.ReportRowMapper;
+import com.meetplanner.dto.GroupAthleteCountDTO;
 import com.meetplanner.dto.ReportDTO;
 import com.meetplanner.exception.GenricSqlException;
 
@@ -27,6 +29,20 @@ public class ReportDaoImpl extends JdbcDaoSupport implements ReportDao,
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new GenricSqlException(e);
+		}
+		return result;
+	}
+
+	@Override
+	public List<GroupAthleteCountDTO> getGroupWiseAthleteCount() throws GenricSqlException {
+		List<GroupAthleteCountDTO> result = null;
+		try{
+			String sql = "SELECT groups.name,COUNT(athlete.group_id) AS total FROM athlete"+
+						" JOIN groups ON athlete.group_id=groups.id"+
+						" GROUP BY athlete.group_id";
+			result = getJdbcTemplate().query(sql,new GroupWiseAthleteCountMapper());
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		return result;
 	}

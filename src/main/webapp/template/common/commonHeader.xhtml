@@ -47,8 +47,10 @@
 				
 				<sec:authorize ifAllGranted="ROLE_ADMIN">
 				<p:submenu label="Reports" icon="ui-icon-print" styleClass="menuitemStyle">
-					<p:menuitem value="Print Reports" url="/faces/pages/report-print.xhtml"
-						icon="ui-icon-bookmark" />					
+					<p:menuitem value="Certificates" url="/faces/pages/report-print.xhtml"
+						icon="ui-icon-bookmark" />
+					<p:menuitem value="General" url="/faces/pages/general-report.xhtml"
+					icon="ui-icon-bookmark" />					
 				</p:submenu>
 				</sec:authorize>
 				<!-- <p:menuitem value="upload Excel"

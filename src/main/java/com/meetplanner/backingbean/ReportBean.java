@@ -25,6 +25,7 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.EventDTO;
+import com.meetplanner.dto.GroupAthleteCountDTO;
 import com.meetplanner.dto.ReportDTO;
 import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.service.CommonService;
@@ -46,6 +47,7 @@ public class ReportBean implements Serializable {
 	private ReportService reportService;
 	private List<ReportDTO> result;
 	private String reportType;
+	private List<GroupAthleteCountDTO> groupAthlete;
 
 	public ReportBean() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -62,6 +64,11 @@ public class ReportBean implements Serializable {
 			for (EventDTO e : events) {
 				eventList.put(e.getId(), e.getEventName());
 			}
+		}
+		try{
+			groupAthlete = reportService.getGroupWiseAthleteCount();
+		}catch(GenricSqlException e){
+			e.printStackTrace();
 		}
 	}
 
@@ -100,7 +107,7 @@ public class ReportBean implements Serializable {
 	            jasperDesign = JRXmlLoader.load(in);
 	            report = JasperCompileManager.compileReport(jasperDesign);            
 	            beanCollectionDataSource = new JRBeanCollectionDataSource(result);   
-	            jasperPrint = JasperFillManager.fillReport(report, new HashMap(), beanCollectionDataSource);
+	            jasperPrint = JasperFillManager.fillReport(report, new HashMap<String,Object>(), beanCollectionDataSource);
 	            
 	            FacesContext fc = FacesContext.getCurrentInstance();
 	            ExternalContext ec = fc.getExternalContext();
@@ -138,6 +145,43 @@ public class ReportBean implements Serializable {
 	            jasperPrint = null;
 	        }
 		}
+	}
+	
+	public void printGrpWiseAthleteReport() throws JRException, IOException{
+		InputStream in = null;
+        JasperDesign jasperDesign = null;
+        JasperReport report = null;
+        JasperPrint jasperPrint = null;
+        JRBeanCollectionDataSource beanCollectionDataSource = null;
+        try{       
+            in = this.getClass().getClassLoader().getResourceAsStream("/com/meetplanner/reports/groupWiseAthlete.jrxml");
+            jasperDesign = JRXmlLoader.load(in);
+            report = JasperCompileManager.compileReport(jasperDesign);            
+            beanCollectionDataSource = new JRBeanCollectionDataSource(groupAthlete);   
+            jasperPrint = JasperFillManager.fillReport(report, new HashMap<String,Object>(), beanCollectionDataSource);
+            
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            OutputStream output = ec.getResponseOutputStream();
+            ec.responseReset();
+        	ec.setResponseContentType("application/pdf");           
+            ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + "athlete.pdf" + "\"");
+            JasperExportManager.exportReportToPdfStream(jasperPrint, output);                     
+            fc.responseComplete();
+        }finally{
+            jasperPrint = null;
+            jasperDesign = null;
+            report = null;
+            beanCollectionDataSource = null;
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            jasperPrint = null;
+        }
 	}
 	
 	public String getSelectedReportType() {
@@ -226,6 +270,14 @@ public class ReportBean implements Serializable {
 
 	public void setReportType(String reportType) {
 		this.reportType = reportType;
+	}
+
+	public List<GroupAthleteCountDTO> getGroupAthlete() {
+		return groupAthlete;
+	}
+
+	public void setGroupAthlete(List<GroupAthleteCountDTO> groupAthlete) {
+		this.groupAthlete = groupAthlete;
 	}
 
 }
