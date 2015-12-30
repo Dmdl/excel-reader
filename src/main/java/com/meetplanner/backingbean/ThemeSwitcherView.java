@@ -19,7 +19,7 @@ public class ThemeSwitcherView implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private List<Theme> themes;
-	private String theme = "south-street";
+	private String theme = "cupertino";
 
 	@ManagedProperty("#{themeService}")
 	private ThemeService service;
