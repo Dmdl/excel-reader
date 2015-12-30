@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -197,8 +198,10 @@ public class ReportBean implements Serializable {
             in = this.getClass().getClassLoader().getResourceAsStream("/com/meetplanner/reports/groupAthletes.jrxml");
             jasperDesign = JRXmlLoader.load(in);
             report = JasperCompileManager.compileReport(jasperDesign);            
-            beanCollectionDataSource = new JRBeanCollectionDataSource(groupWiseAthletes);   
-            jasperPrint = JasperFillManager.fillReport(report, new HashMap<String,Object>(), beanCollectionDataSource);
+            beanCollectionDataSource = new JRBeanCollectionDataSource(groupWiseAthletes);
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("SUBREPORT_DIR", "/com/meetplanner/reports/");
+            jasperPrint = JasperFillManager.fillReport(report, params, beanCollectionDataSource);
             
             FacesContext fc = FacesContext.getCurrentInstance();
             ExternalContext ec = fc.getExternalContext();
