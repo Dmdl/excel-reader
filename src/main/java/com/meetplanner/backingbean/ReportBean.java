@@ -182,7 +182,7 @@ public class ReportBean implements Serializable {
             jasperDesign = JRXmlLoader.load(in);
             report = JasperCompileManager.compileReport(jasperDesign);            
             beanCollectionDataSource = new JRBeanCollectionDataSource(data);   
-            jasperPrint = JasperFillManager.fillReport(report, new HashMap<String,Object>(), beanCollectionDataSource);
+            jasperPrint = JasperFillManager.fillReport(report, params, beanCollectionDataSource);
             
             FacesContext fc = FacesContext.getCurrentInstance();
             ExternalContext ec = fc.getExternalContext();
