@@ -159,6 +159,14 @@ public class ReportBean implements Serializable {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param data data to be generated on pdf
+	 * @param path report path in class path
+	 * @param params parameter map
+	 * @throws JRException
+	 * @throws IOException
+	 */
 	private <T> void downloadPdf(List<T> data,String path,Map<String, Object> params) throws JRException, IOException{
 		InputStream in = null;
         JasperDesign jasperDesign = null;
