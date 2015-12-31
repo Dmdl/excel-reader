@@ -8,6 +8,8 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.component.tabview.TabView;
+import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
@@ -16,6 +18,7 @@ import com.meetplanner.dto.EventDTO;
 import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.service.CommonService;
 import com.meetplanner.service.FileUploadService;
+import com.meetplanner.service.SerchService;
 import com.meetplanner.util.SpringApplicationContex;
 
 public class AddAthlete implements Serializable {
@@ -31,13 +34,16 @@ public class AddAthlete implements Serializable {
 	private Date dateOfBirth;
 	private CommonService commonService;
 	private DualListModel<EventDTO> events;
+	private SerchService searchService;
+	private int activeIndex;
 
 	public AddAthlete() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
-		fileUploadService = (FileUploadService) SpringApplicationContex.getBean("fileUploadService");		
+		fileUploadService = (FileUploadService) SpringApplicationContex.getBean("fileUploadService");
+		searchService = (SerchService) SpringApplicationContex.getBean("searchService");
 		List<EventDTO> eventsSource = new ArrayList<EventDTO>();
         List<EventDTO> eventsTarget = new ArrayList<EventDTO>();
-        eventsSource = fileUploadService.getAllEvents();
+        eventsSource = searchService.getFilteredEventList("M", null);
         events = new DualListModel<EventDTO>(eventsSource, eventsTarget);
 	}
 
@@ -97,8 +103,26 @@ public class AddAthlete implements Serializable {
 		nic = null;
 		List<EventDTO> eventsSource = new ArrayList<EventDTO>();
         List<EventDTO> eventsTarget = new ArrayList<EventDTO>();
-        eventsSource = fileUploadService.getAllEvents();
+        if(activeIndex == 0){
+        	eventsSource = searchService.getFilteredEventList("M", null);
+        }else if(activeIndex == 1){
+        	searchService.getFilteredEventList("F", null);
+        }
         events = new DualListModel<EventDTO>(eventsSource, eventsTarget);
+	}
+	
+	public void onTabChange(TabChangeEvent event){
+		TabView tabView = (TabView) event.getComponent();
+		activeIndex = tabView.getActiveIndex();
+		List<EventDTO> eventsSource = new ArrayList<EventDTO>();
+		List<EventDTO> eventsTarget = new ArrayList<EventDTO>();
+		if(activeIndex == 0){	        
+	        eventsSource = searchService.getFilteredEventList("M", null);
+	        events = new DualListModel<EventDTO>(eventsSource, eventsTarget);
+		}else if(activeIndex == 1){
+			eventsSource = searchService.getFilteredEventList("F", null);
+	        events = new DualListModel<EventDTO>(eventsSource, eventsTarget);
+		}
 	}
 	
 	public String getAthleteName() {
@@ -179,6 +203,14 @@ public class AddAthlete implements Serializable {
 
 	public void setEvents(DualListModel<EventDTO> events) {
 		this.events = events;
+	}
+
+	public SerchService getSearchService() {
+		return searchService;
+	}
+
+	public void setSearchService(SerchService searchService) {
+		this.searchService = searchService;
 	}
 
 }

@@ -11,7 +11,8 @@
 		<h:form>
 		<div style="margin-left:10%;">
 		<div align="center" class="headingColor"><h2>Add Athletes</h2></div>
-			<p:accordionPanel>
+			<p:tabView>
+			<p:ajax event="tabChange" listener="#{athlete.onTabChange}" update="menAthlete womenAthlete"/>
 				<p:tab title="Men">
 					<h:panelGrid id="menAthlete" columns="2" cellpadding="10">
 						<p:outputLabel value="School/Club Name" />
@@ -89,7 +90,7 @@
 						<p:commandButton value="Clear" />
 					</h:panelGrid>						
 				</p:tab>
-			</p:accordionPanel>
+			</p:tabView>
 			</div>
 		</h:form>
 
