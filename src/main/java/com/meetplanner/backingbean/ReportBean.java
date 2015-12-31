@@ -24,7 +24,6 @@ import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import com.meetplanner.dto.AgeGroupDTO;
-import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.GroupAthleteCountDTO;
 import com.meetplanner.dto.GroupAthleteDTO;
@@ -72,15 +71,6 @@ public class ReportBean implements Serializable {
 			groupAthlete = reportService.getGroupWiseAthleteCount();
 		}catch(GenricSqlException e){
 			e.printStackTrace();
-		}
-	}
-
-	public void onReportTypeChange() {
-		System.out.println("selected " + selectedReportType);
-		if (null != selectedReportType) {
-			if (selectedReportType.equals("At")) {
-				//List<Athlete> athletes = commonService.getAllAthletesForGroup(1);
-			}
 		}
 	}
 
@@ -151,92 +141,56 @@ public class ReportBean implements Serializable {
 	}
 	
 	public void printGrpWiseAthleteReport() throws JRException, IOException{
-		InputStream in = null;
-        JasperDesign jasperDesign = null;
-        JasperReport report = null;
-        JasperPrint jasperPrint = null;
-        JRBeanCollectionDataSource beanCollectionDataSource = null;
-        try{       
-            in = this.getClass().getClassLoader().getResourceAsStream("/com/meetplanner/reports/groupWiseAthlete.jrxml");
-            jasperDesign = JRXmlLoader.load(in);
-            report = JasperCompileManager.compileReport(jasperDesign);            
-            beanCollectionDataSource = new JRBeanCollectionDataSource(groupAthlete);   
-            jasperPrint = JasperFillManager.fillReport(report, new HashMap<String,Object>(), beanCollectionDataSource);
-            
-            FacesContext fc = FacesContext.getCurrentInstance();
-            ExternalContext ec = fc.getExternalContext();
-            OutputStream output = ec.getResponseOutputStream();
-            ec.responseReset();
-        	ec.setResponseContentType("application/pdf");           
-            ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + "athlete.pdf" + "\"");
-            JasperExportManager.exportReportToPdfStream(jasperPrint, output);                     
-            fc.responseComplete();
-        }finally{
-            jasperPrint = null;
-            jasperDesign = null;
-            report = null;
-            beanCollectionDataSource = null;
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            jasperPrint = null;
-        }
+        downloadPdf(groupAthlete, "/com/meetplanner/reports/groupWiseAthlete.jrxml");
 	}
 	
 	public void printGroupAthleteReport() throws JRException, IOException{
-		InputStream in = null;
-        JasperDesign jasperDesign = null;
-        JasperReport report = null;
-        JasperPrint jasperPrint = null;
-        JRBeanCollectionDataSource beanCollectionDataSource = null;
-        try{       
-            in = this.getClass().getClassLoader().getResourceAsStream("/com/meetplanner/reports/groupAthletes.jrxml");
-            jasperDesign = JRXmlLoader.load(in);
-            report = JasperCompileManager.compileReport(jasperDesign);            
-            beanCollectionDataSource = new JRBeanCollectionDataSource(groupWiseAthletes);   
-            jasperPrint = JasperFillManager.fillReport(report, new HashMap<String,Object>(), beanCollectionDataSource);
-            
-            FacesContext fc = FacesContext.getCurrentInstance();
-            ExternalContext ec = fc.getExternalContext();
-            OutputStream output = ec.getResponseOutputStream();
-            ec.responseReset();
-        	ec.setResponseContentType("application/pdf");           
-            ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + "athlete.pdf" + "\"");
-            JasperExportManager.exportReportToPdfStream(jasperPrint, output);                     
-            fc.responseComplete();
-        }finally{
-            jasperPrint = null;
-            jasperDesign = null;
-            report = null;
-            beanCollectionDataSource = null;
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            jasperPrint = null;
-        }
+        downloadPdf(groupWiseAthletes, "/com/meetplanner/reports/groupAthletes.jrxml");
 	}
 	
 	public void showAthleteTable(){
 		try{
-			groupWiseAthletes = reportService.getGroupAthletes();
-			for(GroupAthleteDTO each:groupWiseAthletes){
-				System.out.println("Group "+each.getGroupName());
-				List<Athlete> athletes = each.getAthletes();
-				for(Athlete e:athletes){
-					System.out.println("Name "+e.getName()+" dob "+e.getDateOfBirth());
-				}
-			}
+			groupWiseAthletes = reportService.getGroupAthletes();			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	private <T> void downloadPdf(List<T> data,String path) throws JRException, IOException{
+		InputStream in = null;
+        JasperDesign jasperDesign = null;
+        JasperReport report = null;
+        JasperPrint jasperPrint = null;
+        JRBeanCollectionDataSource beanCollectionDataSource = null;
+        try{       
+            in = this.getClass().getClassLoader().getResourceAsStream(path);
+            jasperDesign = JRXmlLoader.load(in);
+            report = JasperCompileManager.compileReport(jasperDesign);            
+            beanCollectionDataSource = new JRBeanCollectionDataSource(data);   
+            jasperPrint = JasperFillManager.fillReport(report, new HashMap<String,Object>(), beanCollectionDataSource);
+            
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            OutputStream output = ec.getResponseOutputStream();
+            ec.responseReset();
+        	ec.setResponseContentType("application/pdf");           
+            ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + "athlete.pdf" + "\"");
+            JasperExportManager.exportReportToPdfStream(jasperPrint, output);                     
+            fc.responseComplete();
+        }finally{
+            jasperPrint = null;
+            jasperDesign = null;
+            report = null;
+            beanCollectionDataSource = null;
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            jasperPrint = null;
+        }
 	}
 	
 	public String getSelectedReportType() {
