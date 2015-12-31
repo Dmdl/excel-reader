@@ -15,44 +15,59 @@
 		<band height="35" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="29" uuid="2d71063a-c417-4d8a-8d0d-2a79ae5faef5"/>
+				<box bottomPadding="0">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid"/>
+				</box>
 				<textElement textAlignment="Center">
 					<font size="20"/>
 				</textElement>
-				<text><![CDATA[Group Athletes]]></text>
+				<text><![CDATA[Group wise Athletes]]></text>
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="19" splitType="Stretch"/>
+		<band height="8" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="29" splitType="Stretch">
+		<band height="22" splitType="Stretch">
 			<staticText>
 				<reportElement x="13" y="2" width="100" height="20" uuid="8f85e920-4c64-43bc-a4c4-28c6c37bbd2e"/>
-				<text><![CDATA[groupName]]></text>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Group Name]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="87" splitType="Stretch">
 			<textField>
-				<reportElement x="13" y="5" width="100" height="20" uuid="dbb68464-d917-4938-8a9d-04f81609d50f"/>
+				<reportElement x="13" y="3" width="100" height="20" uuid="dbb68464-d917-4938-8a9d-04f81609d50f"/>
 				<textFieldExpression><![CDATA[$F{groupName}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="113" y="25" width="442" height="100" uuid="3d80807d-57c9-4ab4-85be-c8bd621e6fd3"/>
+				<reportElement x="88" y="3" width="467" height="81" uuid="3d80807d-57c9-4ab4-85be-c8bd621e6fd3"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{athletes})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "groupAthletes_subreport.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="26" splitType="Stretch"/>
+		<band height="2" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="13" splitType="Stretch"/>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="505" y="3" width="50" height="20" uuid="1b884cb9-1d68-4042-8608-6d407a4b60a9"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="13" splitType="Stretch"/>
+		<band height="7" splitType="Stretch"/>
 	</summary>
 </jasperReport>
