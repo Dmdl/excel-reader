@@ -20,7 +20,7 @@
 					</p:selectOneMenu>
 					<h:commandButton value="Download Report" action="#{reportBean.onReportTypeChange()}"></h:commandButton>
 				</p:panelGrid> -->
-				
+				<p:fieldset id="printFieldSet" legend="Certificate Print">
 				<p:panelGrid id="certificatePnl" columns="2" style="width:70%;">
 					<p:outputLabel value="Age Group" />
 					<p:selectOneMenu style="width:200px;" value="#{reportBean.selectedAgeGroup}" required="true" requiredMessage="Age is required">
@@ -81,6 +81,7 @@
 			        <p:commandButton style="display:none;"/>
 			        <p:commandButton value="Genarate" process="reportTypePnl" action="#{reportBean.genarateReport()}" update="printRepGr" ajax="false"/>
 				</p:panelGrid>
+				</p:fieldset>
 			</div>
 		</h:form>
 
