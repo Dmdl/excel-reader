@@ -33,6 +33,7 @@ import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.service.CommonService;
 import com.meetplanner.service.FileUploadService;
 import com.meetplanner.service.ReportService;
+import com.meetplanner.util.ReportPrinter;
 import com.meetplanner.util.SpringApplicationContex;
 
 public class ReportBean implements Serializable {
@@ -51,6 +52,7 @@ public class ReportBean implements Serializable {
 	private String reportType;
 	private List<GroupAthleteCountDTO> groupAthlete;
 	private List<GroupAthleteDTO> groupWiseAthletes;
+	private ReportPrinter reportPrinter;
 
 	public ReportBean() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -73,6 +75,7 @@ public class ReportBean implements Serializable {
 		}catch(GenricSqlException e){
 			e.printStackTrace();
 		}
+		reportPrinter = new ReportPrinter();
 	}
 
 	public void showAthleteData(){
@@ -142,7 +145,8 @@ public class ReportBean implements Serializable {
 	}
 	
 	public void printGrpWiseAthleteReport() throws JRException, IOException{
-        downloadPdf(groupAthlete, "/com/meetplanner/reports/groupWiseAthlete.jrxml",new HashMap<String, Object>());
+        //downloadPdf(groupAthlete, "/com/meetplanner/reports/groupWiseAthlete.jrxml",new HashMap<String, Object>());
+        reportPrinter.printReport(groupAthlete, "/com/meetplanner/reports/groupWiseAthlete.jrxml", new HashMap<String, Object>(), 1);
 	}
 	
 	public void printGroupAthleteReport() throws JRException, IOException{
