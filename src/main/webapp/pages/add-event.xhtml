@@ -30,8 +30,8 @@
 							<h:outputText value="Participants" />
 							<p:selectOneMenu value="#{eventBean.participants}" id="selectGender" style="width:65%;" required="true" requiredMessage="Select Participants">
 								<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
-								<f:selectItem itemLabel="Male" itemValue="M" />
-								<f:selectItem itemLabel="Female" itemValue="F" />
+								<f:selectItem itemLabel="Men" itemValue="M" />
+								<f:selectItem itemLabel="Women" itemValue="F" />
 							</p:selectOneMenu>
 							
 							<p:commandButton value="Add" action="#{eventBean.addEvent()}" update="addEvent addEventGrid eventTbl" process="addEventGrid"></p:commandButton>
@@ -45,7 +45,7 @@
 						    	<h:outputText value="#{event.type eq 'T' ? 'Track' : 'Field'}" />
 						    </p:column>
 						    <p:column headerText="Participants">
-						    	<h:outputText value="#{event.participants eq 'F' ? 'Female' : 'Male'}" />
+						    	<h:outputText value="#{event.participants eq 'F' ? 'Women' : 'Men'}" />
 						    </p:column>
 						</p:dataTable>
 					</p:panelGrid>						
@@ -61,7 +61,7 @@
 							    	<h:outputText value="#{event.type eq 'T' ? 'Track' : 'Field'}" />
 							    </p:column>
 							    <p:column headerText="Participants">
-							    	<h:outputText value="#{event.participants eq 'F' ? 'Female' : 'Male'}" />
+							    	<h:outputText value="#{event.participants eq 'F' ? 'Women' : 'Men'}" />
 							    </p:column>
 							    <p:column headerText="">
 							    	<div align="center">
@@ -86,8 +86,8 @@
 								<h:outputText value="Participants" />
 								<p:selectOneMenu value="#{eventBean.participants}" id="selectGenderUpdate" style="width:65%;" required="true" requiredMessage="Select Participants">
 									<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
-									<f:selectItem itemLabel="Male" itemValue="M" />
-									<f:selectItem itemLabel="Female" itemValue="F" />
+									<f:selectItem itemLabel="Men" itemValue="M" />
+									<f:selectItem itemLabel="Women" itemValue="F" />
 								</p:selectOneMenu>
 								
 								<p:commandButton value="Update" process="updateEventGrid" action="#{eventBean.updateEvent}" update="addEvent eventTblUpdate"/>
