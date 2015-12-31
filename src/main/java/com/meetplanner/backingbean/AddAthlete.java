@@ -106,7 +106,7 @@ public class AddAthlete implements Serializable {
         if(activeIndex == 0){
         	eventsSource = searchService.getFilteredEventList("M", null);
         }else if(activeIndex == 1){
-        	searchService.getFilteredEventList("F", null);
+        	eventsSource = searchService.getFilteredEventList("F", null);
         }
         events = new DualListModel<EventDTO>(eventsSource, eventsTarget);
 	}
