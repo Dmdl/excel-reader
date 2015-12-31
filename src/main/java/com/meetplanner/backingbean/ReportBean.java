@@ -142,22 +142,24 @@ public class ReportBean implements Serializable {
 	}
 	
 	public void printGrpWiseAthleteReport() throws JRException, IOException{
-        downloadPdf(groupAthlete, "/com/meetplanner/reports/groupWiseAthlete.jrxml");
+        downloadPdf(groupAthlete, "/com/meetplanner/reports/groupWiseAthlete.jrxml",new HashMap<String, Object>());
 	}
 	
 	public void printGroupAthleteReport() throws JRException, IOException{
-        downloadPdf(groupWiseAthletes, "/com/meetplanner/reports/groupAthletes.jrxml");
+		Map<String, Object> params = new HashMap<String, Object>();
+        params.put("SUBREPORT_DIR", "/com/meetplanner/reports/");
+        downloadPdf(groupWiseAthletes, "/com/meetplanner/reports/groupAthletes.jrxml",params);
 	}
 	
 	public void showAthleteTable(){
 		try{
-			groupWiseAthletes = reportService.getGroupAthletes();			
+			groupWiseAthletes = reportService.getGroupAthletes();		
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
-	private <T> void downloadPdf(List<T> data,String path) throws JRException, IOException{
+	private <T> void downloadPdf(List<T> data,String path,Map<String, Object> params) throws JRException, IOException{
 		InputStream in = null;
         JasperDesign jasperDesign = null;
         JasperReport report = null;
