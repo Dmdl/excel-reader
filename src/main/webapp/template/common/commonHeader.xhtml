@@ -54,10 +54,10 @@
 				</p:submenu>
 				</sec:authorize>
 				<!-- <p:menuitem value="upload Excel"
-					action="#{menuBean.goToFileUpload}" ajax="false"></p:menuitem> -->
+					action="#{menuBean.goToFileUpload}" ajax="false"></p:menuitem> 
 				<sec:authorize ifAllGranted="ROLE_ADMIN">
 					<p:menuitem value="upload Excel" url="/faces/pages/fileUpload.xhtml" styleClass="menuitemStyle" icon="ui-icon-link"></p:menuitem>
-				</sec:authorize>				
+				</sec:authorize>	-->			
 				
 				<p:menuitem value="About" oncomplete="PF('dlg').show();" icon="ui-icon-info"/>
 
