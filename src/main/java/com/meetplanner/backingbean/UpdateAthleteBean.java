@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
@@ -135,7 +134,7 @@ public class UpdateAthleteBean implements Serializable {
 		}
 	}
 	
-	public void onValueChange(ValueChangeEvent e){
+	public void onValueChange(){
 		System.out.println("val "+athleteGender);
 	}
 	
