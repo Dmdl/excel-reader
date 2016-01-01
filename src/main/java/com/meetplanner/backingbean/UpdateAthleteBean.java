@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
@@ -73,7 +74,12 @@ public class UpdateAthleteBean implements Serializable {
 				this.athleteId = Integer.valueOf(athlete.getId());
 				List<EventDTO> eventsSource = new ArrayList<EventDTO>();
 		        List<EventDTO> eventsTarget = new ArrayList<EventDTO>();
-		        eventsSource = fileUploadService.getAllEvents();
+		        //eventsSource = fileUploadService.getAllEvents();
+		        if(athleteGender.equals("M")){
+		        	eventsSource = searchService.getFilteredEventList("M", null);
+		        }else if(athleteGender.equals("F")){
+		        	eventsSource = searchService.getFilteredEventList("F", null);
+		        }
 		        eventsTarget = commonService.getEventsForAthletes(Integer.parseInt(athlete.getId()));
 		        eventsSource.removeAll(eventsTarget);
 		        events = new DualListModel<EventDTO>(eventsSource, eventsTarget);
@@ -127,6 +133,10 @@ public class UpdateAthleteBean implements Serializable {
 		if(events.getTarget().size()>3){			
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Maximum Number of Events is 3."));
 		}
+	}
+	
+	public void onValueChange(ValueChangeEvent e){
+		System.out.println("val "+athleteGender);
 	}
 	
 	public String getSerachBib() {
