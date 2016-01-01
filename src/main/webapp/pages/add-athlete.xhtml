@@ -11,6 +11,7 @@
 		<h:form>
 		<div style="margin-left:10%;">
 		<div align="center" class="headingColor"><h2>Add Athletes</h2></div>
+		<p:fieldset id="addAthleteFieldSet" legend="Add Athlete">
 			<p:tabView>
 			<p:ajax event="tabChange" listener="#{athlete.onTabChange}" update="menAthlete womenAthlete"/>
 				<p:tab title="Men">
@@ -91,6 +92,7 @@
 					</h:panelGrid>						
 				</p:tab>
 			</p:tabView>
+			</p:fieldset>
 			</div>
 		</h:form>
 
