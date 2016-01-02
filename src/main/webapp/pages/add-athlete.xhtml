@@ -29,7 +29,7 @@
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="Full Name" />
-						<p:inputText value="#{athlete.athleteName}" required="true" requiredMessage="Name is required"/>
+						<p:inputText value="#{athlete.athleteName}" required="true" requiredMessage="Name is required" style="width:50%;"/>
 						
 						<p:outputLabel value="Date of Birth" />
 						<p:calendar id="dobm" value="#{athlete.dateOfBirth}" showOn="button" pattern="dd-MM-yyyy" navigator="true" yearRange="c-50:c+1" required="true" requiredMessage="Date of Birth is required"/>
@@ -68,7 +68,7 @@
 						</p:selectOneMenu>
 						
 						<p:outputLabel value="Full Name" />
-						<p:inputText value="#{athlete.athleteName}" required="true" requiredMessage="Name is a required feild"/>
+						<p:inputText value="#{athlete.athleteName}" required="true" requiredMessage="Name is a required feild" style="width:50%;"/>
 						
 						<p:outputLabel value="Date of Birth" />
 						<p:calendar id="dobw" value="#{athlete.dateOfBirth}" showOn="button" pattern="dd-MM-yyyy" navigator="true" yearRange="c-50:c+1" required="true" requiredMessage="Date of Birth is required"/>

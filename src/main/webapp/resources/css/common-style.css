@@ -91,3 +91,9 @@ li ul li.ui-menuitem-active>a{
 	border-width : 0px !important;
 	font-size: 105%;
 }
+.ui-inputfield{
+	box-shadow :0 0 0 #8f8f8f inset !important;	
+}
+.ui-inputtext{
+	border-radius: 0px;
+}
