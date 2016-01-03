@@ -45,7 +45,7 @@
 						<!-- <p:commandButton value="Add Events"></p:commandButton> -->								
 						
 						<p:outputLabel value="NIC No (If Applicable)" />
-						<p:inputText value="#{athlete.nic}" />
+						<p:inputText value="#{athlete.nic}" style="width:43%;"/>
 						
 						<p:commandButton value="Submit" action="#{athlete.saveAthlete()}" ajax="true" process="menAthlete" update="addAthlete menAthlete">
 							<f:setPropertyActionListener value="male" target="#{athlete.gender}" />
@@ -83,7 +83,7 @@
 						 </p:pickList>
 						
 						<p:outputLabel value="NIC No (If Applicable)" />
-						<p:inputText value="#{athlete.nic}" />
+						<p:inputText value="#{athlete.nic}" style="width:43%;"/>
 						
 						<p:commandButton value="Submit" action="#{athlete.saveAthlete()}" process="womenAthlete" ajax="true" update="addAthlete womenAthlete">
 							<f:setPropertyActionListener value="female" target="#{athlete.gender}" />

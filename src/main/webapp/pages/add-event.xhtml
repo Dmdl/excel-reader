@@ -27,7 +27,7 @@
 								<f:selectItem itemLabel="Track Event" itemValue="T" />
 							</p:selectOneMenu>
 							
-							<h:outputText value="Participants" />
+							<h:outputText value="Gender" />
 							<p:selectOneMenu value="#{eventBean.participants}" id="selectGender" style="width:65%;" required="true" requiredMessage="Select Participants">
 								<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
 								<f:selectItem itemLabel="Men" itemValue="M" />
@@ -44,7 +44,7 @@
 						    <p:column headerText="Type">
 						    	<h:outputText value="#{event.type eq 'T' ? 'Track' : 'Field'}" />
 						    </p:column>
-						    <p:column headerText="Participants">
+						    <p:column headerText="Gender">
 						    	<h:outputText value="#{event.participants eq 'F' ? 'Women' : 'Men'}" />
 						    </p:column>
 						</p:dataTable>
@@ -60,7 +60,7 @@
 							    <p:column headerText="Type">
 							    	<h:outputText value="#{event.type eq 'T' ? 'Track' : 'Field'}" />
 							    </p:column>
-							    <p:column headerText="Participants">
+							    <p:column headerText="Gender">
 							    	<h:outputText value="#{event.participants eq 'F' ? 'Women' : 'Men'}" />
 							    </p:column>
 							    <p:column headerText="">
@@ -83,7 +83,7 @@
 									<f:selectItem itemLabel="Track Event" itemValue="T" />
 								</p:selectOneMenu>
 								
-								<h:outputText value="Participants" />
+								<h:outputText value="Gender" />
 								<p:selectOneMenu value="#{eventBean.participants}" id="selectGenderUpdate" style="width:65%;" required="true" requiredMessage="Select Participants">
 									<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
 									<f:selectItem itemLabel="Men" itemValue="M" />
@@ -103,7 +103,7 @@
 					<p:tab id="addGroupTab" title="Add Group">
 						<p:panelGrid id="addGrpMainPnl" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6">
 							<p:panelGrid id="addGroupGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:100%;">
-								<h:outputText value="Group Name" />
+								<h:outputText value="Club/school" />
 								<p:inputText value="#{eventBean.groupName}" style="width:70%;" required="true" requiredMessage="Group nane is Required"></p:inputText>
 								
 								<p:commandButton value="Add" action="#{eventBean.addGroup()}" update="addEvent addGroupGrid groupTbl" process="addGroupGrid"></p:commandButton>
@@ -138,7 +138,7 @@
 						<br/>
 						<p:panel id="updateGrpPanel">
 							<p:panelGrid id="updateGroupGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:60%;">
-								<h:outputText value="Group Name" />
+								<h:outputText value="Club/School" />
 								<p:inputText value="#{eventBean.groupName}" style="width:70%;" required="true" requiredMessage="Group nane is Required"></p:inputText>
 								
 								<p:commandButton value="Update" action="#{eventBean.updateGroup()}" update="groupTblUpdate addEvent" process="updateGroupGrid"></p:commandButton>
