@@ -97,3 +97,6 @@ li ul li.ui-menuitem-active>a{
 .ui-inputtext{
 	border-radius: 0px;
 }
+.ui-button{
+	border-radius: 0px;
+}
