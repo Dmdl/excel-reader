@@ -61,20 +61,21 @@
 					</p:selectOneMenu>
 					
 					<h:outputText value="Gender" />
-					<p:selectOneMenu value="#{updateAthlete.athleteGender}" id="selectGender" style="width:150px;">
+					<p:selectOneMenu value="#{updateAthlete.athleteGender}" id="selectGender" style="width:150px;" disabled="true">
+						<p:ajax listener="#{updateAthlete.onValueChange}" />
 						<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
 						<f:selectItem itemLabel="Men" itemValue="M" />
 						<f:selectItem itemLabel="Women" itemValue="F" />
 					</p:selectOneMenu>
 					
 					<h:outputText value="Full Name" />
-					<p:inputText value="#{updateAthlete.athleteName}"></p:inputText>
+					<p:inputText value="#{updateAthlete.athleteName}" style="width:35%;"></p:inputText>
 					
 					<h:outputText value="Date of Birth" />
 					<p:calendar id="dobm" value="#{updateAthlete.athleteDoB}" showOn="button" pattern="dd-MM-yyyy" navigator="true" yearRange="c-50:c+20"/>
 					
 					<p:outputLabel value="NIC No (If Applicable)" />
-					<p:inputText value="#{updateAthlete.athleteNic}" />
+					<p:inputText value="#{updateAthlete.athleteNic}" style="width:35%;"/>
 					
 					<p:outputLabel value="Event/s" />
 					<p:pickList id="eventList" value="#{updateAthlete.events}" var="event" itemLabel="#{event.eventName}" itemValue="#{event}" converter="entityConverter">

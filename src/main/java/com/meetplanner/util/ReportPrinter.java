@@ -3,8 +3,6 @@ package com.meetplanner.util;
 import java.awt.print.PrinterJob;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,37 +23,35 @@ import net.sf.jasperreports.engine.export.JRPrintServiceExporter;
 import net.sf.jasperreports.engine.export.JRPrintServiceExporterParameter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
-import com.meetplanner.dto.Athlete;
-
 public class ReportPrinter {
 
-	public void printReport(List<Athlete> athletes){
+	/**
+	 * 
+	 * @param data List of data to print
+	 * @param reportPath jrxml path
+	 * @param params parameter map to report
+	 * @param copies number of copies
+	 */
+	public <T> void printReport(List<T> data,String reportPath,Map<String, Object> params,int copies){
 		InputStream in =null;
 		JasperDesign jasperDesign =null;
 		JasperReport report =null;
 		JRBeanCollectionDataSource beanCollectionDataSource=null;
-		ArrayList<Athlete> dataList=null;
-		JasperPrint jasperPrint=null;		
-		Map<String, Object> parameters = new HashMap<String, Object>();
-
-		parameters.put("athletelist", athletes);
-			
+		JasperPrint jasperPrint=null;					
 		PrinterJob job = PrinterJob.getPrinterJob();
 		PrintService defaultPrintService = null;
 		try{
-			in = this.getClass().getClassLoader().getResourceAsStream("/com/meetplanner/reports/athletesReport.jrxml");
+			in = this.getClass().getClassLoader().getResourceAsStream(reportPath);
 			jasperDesign = JRXmlLoader.load(in);
 			report = JasperCompileManager.compileReport(jasperDesign);
-			dataList = new ArrayList<Athlete>();
-			dataList.addAll(athletes);
-			beanCollectionDataSource = new JRBeanCollectionDataSource(dataList);
-			jasperPrint = JasperFillManager.fillReport(report, parameters, beanCollectionDataSource);
+			beanCollectionDataSource = new JRBeanCollectionDataSource(data);
+			jasperPrint = JasperFillManager.fillReport(report, params, beanCollectionDataSource);
 			defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
 			
 			if(null!=defaultPrintService){
 				job.setPrintService(defaultPrintService);
 				PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
-	               printRequestAttributeSet.add(new Copies(1));
+	               printRequestAttributeSet.add(new Copies(copies));
 	               JRPrintServiceExporter exporter;            
 	               exporter = new JRPrintServiceExporter();
 	               exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
@@ -70,7 +66,6 @@ public class ReportPrinter {
 		}finally{
 			job = null;
 			defaultPrintService = null;
-			dataList = null;
 			jasperPrint = null;
 			jasperDesign = null;
 			report = null;
@@ -83,7 +78,6 @@ public class ReportPrinter {
 				}
 			}
 			jasperPrint = null;
-			parameters = null;
 		}
 	}
 }

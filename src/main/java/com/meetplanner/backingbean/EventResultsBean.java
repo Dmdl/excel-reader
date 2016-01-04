@@ -2,18 +2,23 @@ package com.meetplanner.backingbean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.component.accordionpanel.AccordionPanel;
 import org.primefaces.component.tabview.TabView;
+import org.primefaces.event.TabChangeEvent;
 
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.ResultDTO;
 import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.exception.NoDataException;
 import com.meetplanner.service.CommonService;
+import com.meetplanner.service.SerchService;
 import com.meetplanner.util.SpringApplicationContex;
 
 public class EventResultsBean implements Serializable{
@@ -26,10 +31,22 @@ public class EventResultsBean implements Serializable{
 	private List<ResultDTO> results;
 	private List<Athlete> resultToFill;
 	private boolean disableSubmit = true;
+	private HashMap<Integer, String> eventList = new HashMap<Integer, String>();
+	private SerchService searchService;
+	private int activeIndexTrack;
+	private int activeIndexFeild;
 	
 	public EventResultsBean(){
 		resultToFill = new ArrayList<Athlete>(0);
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
+		searchService = (SerchService) SpringApplicationContex.getBean("searchService");
+		List<EventDTO> events = searchService.getFilteredEventList("M", null);
+		if (events.size() > 0) {
+			for (EventDTO e : events) {
+				System.out.println("id " + e.getId() + " val " + e.getEventName());
+				eventList.put(e.getId(), e.getEventName());
+			}
+		}
 	}
 
 	public void handleEventChange(String gender){
@@ -129,9 +146,75 @@ public class EventResultsBean implements Serializable{
 		}
 	}
 	
-	public void onTabChange(){
+	public void onTabChange(TabChangeEvent event){
 		if(null!=resultToFill){
 			resultToFill.clear();
+		}
+		if(null!=eventList){
+			eventList.clear();
+		}
+		AccordionPanel accPanel = (AccordionPanel) event.getComponent();
+		System.out.println("track "+activeIndexTrack+" feild "+activeIndexFeild+" main active in "+accPanel.getActiveIndex());
+		int accPanelActiveIndex = Integer.parseInt(accPanel.getActiveIndex());
+		List<EventDTO> events = new ArrayList<EventDTO>(0);
+		if(accPanelActiveIndex == 0){
+			if(activeIndexTrack == 0){
+				events = searchService.getFilteredEventList("M", null);
+			}else if(activeIndexTrack == 1){
+				events = searchService.getFilteredEventList("F", null);
+			}
+		}else if(accPanelActiveIndex == 1){
+			if(activeIndexFeild == 0){
+				events = searchService.getFilteredEventList("M", null);
+			}else if(activeIndexFeild == 1){
+				events = searchService.getFilteredEventList("F", null);
+			}
+		}
+		if (events.size() > 0) {
+			for (EventDTO e : events) {
+				System.out.println("id " + e.getId() + " val " + e.getEventName());
+				eventList.put(e.getId(), e.getEventName());
+			}
+		}
+	}
+	
+	public void onTrackTabViewChange(TabChangeEvent event){
+		TabView tabView = (TabView) event.getComponent();
+		activeIndexTrack = tabView.getActiveIndex();
+		List<EventDTO> events = new ArrayList<EventDTO>(0);
+		if(activeIndexTrack == 0){
+			events = searchService.getFilteredEventList("M", null);			
+		}else if(activeIndexTrack == 1){
+			events = searchService.getFilteredEventList("F", null);
+		}
+		if(null!=eventList){
+			eventList.clear();
+		}
+		if (events.size() > 0) {
+			for (EventDTO e : events) {
+				System.out.println("id " + e.getId() + " val " + e.getEventName());
+				eventList.put(e.getId(), e.getEventName());
+			}
+		}
+	}
+	
+	public void onFeildTabViewChange(TabChangeEvent event){
+		TabView tabView = (TabView) event.getComponent();
+		activeIndexFeild = tabView.getActiveIndex();
+		List<EventDTO> events = new ArrayList<EventDTO>(0);
+		if(activeIndexFeild == 0){
+			events = searchService.getFilteredEventList("M", null);			
+		}else if(activeIndexFeild == 1){
+			events = searchService.getFilteredEventList("F", null);
+		}
+		if(null!=eventList){
+			eventList.clear();
+		}
+		if (events.size() > 0) {
+			for (EventDTO e : events) {
+				System.out.println("id " + e.getId() + " val " + e.getEventName());
+				eventList.put(e.getId(), e.getEventName());
+			}
 		}
 	}
 	
@@ -189,6 +272,14 @@ public class EventResultsBean implements Serializable{
 
 	public void setDisableSubmit(boolean disableSubmit) {
 		this.disableSubmit = disableSubmit;
+	}
+
+	public HashMap<Integer, String> getEventList() {
+		return eventList;
+	}
+
+	public void setEventList(HashMap<Integer, String> eventList) {
+		this.eventList = eventList;
 	}
 	
 }

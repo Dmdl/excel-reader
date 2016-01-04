@@ -17,9 +17,9 @@
 			<p:menubar styleClass="verticalmenu">				
 
 				<p:submenu label="Athlete" icon="ui-icon-person" styleClass="menuitemStyle">
-					<p:menuitem value="Add Entry" url="/faces/pages/add-athlete.xhtml"
+					<p:menuitem value="Add Athlete" url="/faces/pages/add-athlete.xhtml"
 						icon="ui-icon-disk" />
-					<p:menuitem value="Update Entry" url="/faces/pages/update-athlete.xhtml"
+					<p:menuitem value="Update Athlete" url="/faces/pages/update-athlete.xhtml"
 						icon="ui-icon-pencil" />
 				</p:submenu>
 				
@@ -35,11 +35,13 @@
 				
 				<p:submenu label="Manage" icon="ui-icon-wrench" styleClass="menuitemStyle">
 				<sec:authorize ifAllGranted="ROLE_ADMIN">
-					<p:menuitem value="Events &amp; Groups" url="/faces/pages/add-event.xhtml"
-						icon="ui-icon-disk" />				
-					<p:menuitem value="Users" url="/faces/pages/user-manage.xhtml"
-					icon="ui-icon-disk" />
+					<p:menuitem value="Groups" url="/faces/pages/add-group.xhtml"
+						icon="ui-icon-disk" />
+					<p:menuitem value="Events" url="/faces/pages/add-event.xhtml"
+						icon="ui-icon-disk" />					
 					<p:menuitem value="Age Groups" url="/faces/pages/age-group.xhtml"
+					icon="ui-icon-disk" />
+					<p:menuitem value="Users" url="/faces/pages/user-manage.xhtml"
 					icon="ui-icon-disk" />
 				</sec:authorize>
 					<p:menuitem value="Themes" url="/faces/pages/theme-selector.xhtml" icon="ui-icon-cart"/>					
@@ -47,15 +49,17 @@
 				
 				<sec:authorize ifAllGranted="ROLE_ADMIN">
 				<p:submenu label="Reports" icon="ui-icon-print" styleClass="menuitemStyle">
-					<p:menuitem value="Print Reports" url="/faces/pages/report-print.xhtml"
-						icon="ui-icon-bookmark" />					
+					<p:menuitem value="Certificates" url="/faces/pages/report-print.xhtml"
+						icon="ui-icon-bookmark" />
+					<p:menuitem value="General" url="/faces/pages/general-report.xhtml"
+					icon="ui-icon-bookmark" />					
 				</p:submenu>
 				</sec:authorize>
 				<!-- <p:menuitem value="upload Excel"
-					action="#{menuBean.goToFileUpload}" ajax="false"></p:menuitem> -->
+					action="#{menuBean.goToFileUpload}" ajax="false"></p:menuitem> 
 				<sec:authorize ifAllGranted="ROLE_ADMIN">
 					<p:menuitem value="upload Excel" url="/faces/pages/fileUpload.xhtml" styleClass="menuitemStyle" icon="ui-icon-link"></p:menuitem>
-				</sec:authorize>				
+				</sec:authorize>	-->			
 				
 				<p:menuitem value="About" oncomplete="PF('dlg').show();" icon="ui-icon-info"/>
 

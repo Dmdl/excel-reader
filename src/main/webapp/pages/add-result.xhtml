@@ -12,10 +12,10 @@
 			<div>
 			<div align="center" class="headingColor"><h2>Add / Update Final Results</h2></div>
 				<p:accordionPanel id="resultPanel">
-				<p:ajax event="tabChange" listener="#{resultsBean.onTabChange}" />
+				<p:ajax event="tabChange" listener="#{resultsBean.onTabChange}" update=":addResultFrm:resultPanel:trackResultTabView:trackResultTableMan :addResultFrm:resultPanel:trackResultTabView:trackResultTableWomen :addResultFrm:resultPanel:fieldResultTabView:feildResultTableMan :addResultFrm:resultPanel:fieldResultTabView:feildResultTableWomen"/>
 					<p:tab id="trackResultTab" title="Track Events">
 						<p:tabView id="trackResultTabView" binding="#{resultsBean.trackResultTabView}">
-						<p:ajax event="tabChange" listener="#{resultsBean.onTabChange}" />
+						<p:ajax event="tabChange" listener="#{resultsBean.onTrackTabViewChange}" update="selectmenuEventMen selectmenuEventWomen"/>
 							<p:tab id="trackResultTabMan" title="Men">
 							<p:defaultCommand target="trackResultTabManVerify" />
 								<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
@@ -30,7 +30,7 @@
 									<p:selectOneMenu id="selectmenuEventMen" value="#{resultsBean.selectedEvent}" style="width:200px;">
 										<!-- <p:ajax listener="#{resultsBean.handleEventChange('M')}" update="trackResultTableMan addResult"></p:ajax> -->
 										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
-										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+										<f:selectItems value="#{resultsBean.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 									</p:selectOneMenu>
 								</p:panelGrid>
 								<br/><br/><br/>
@@ -79,7 +79,7 @@
 									<p:selectOneMenu id="selectmenuEventWomen" value="#{resultsBean.selectedEvent}" style="width:200px;">
 										<!-- <p:ajax listener="#{resultsBean.handleEventChange('F')}" update="trackResultTableWomen addResult"></p:ajax> -->
 										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
-										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+										<f:selectItems value="#{resultsBean.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 									</p:selectOneMenu>
 								</p:panelGrid>
 								<br/><br/><br/>
@@ -118,7 +118,7 @@
 					
 					<p:tab id="fieldResultTab" title="Field Events">
 						<p:tabView id="fieldResultTabView">
-						<p:ajax event="tabChange" listener="#{resultsBean.onTabChange}" />
+						<p:ajax event="tabChange" listener="#{resultsBean.onFeildTabViewChange}" update="selectmenuEventMenField selectmenuEventWomenField"/>
 							<p:tab id="fieldResultTabMen" title="Men">							
 								<p:panelGrid columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
 									<h:outputText value="Age Group" />
@@ -132,7 +132,7 @@
 									<p:selectOneMenu id="selectmenuEventMenField" value="#{resultsBean.selectedEvent}" style="width:200px;">
 										<!-- <p:ajax listener="#{resultsBean.handleEventChange('M')}" update="feildResultTableMan addResult"></p:ajax> -->
 										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
-										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+										<f:selectItems value="#{resultsBean.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 									</p:selectOneMenu>
 								</p:panelGrid>
 								<br/><br/><br/>
@@ -180,7 +180,7 @@
 									<p:selectOneMenu id="selectmenuEventWomenField" value="#{resultsBean.selectedEvent}" style="width:200px;">
 										<!-- <p:ajax listener="#{resultsBean.handleEventChange('F')}" update="feildResultTableWomen addResult"></p:ajax> -->
 										<f:selectItem itemLabel="Select the Event" itemValue="" noSelectionOption="true" />						
-										<f:selectItems value="#{commonData.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+										<f:selectItems value="#{resultsBean.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 									</p:selectOneMenu>
 								</p:panelGrid>
 								<br/><br/><br/>

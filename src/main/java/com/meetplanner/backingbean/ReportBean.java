@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -25,11 +26,14 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.EventDTO;
+import com.meetplanner.dto.GroupAthleteCountDTO;
+import com.meetplanner.dto.GroupAthleteDTO;
 import com.meetplanner.dto.ReportDTO;
 import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.service.CommonService;
 import com.meetplanner.service.FileUploadService;
 import com.meetplanner.service.ReportService;
+import com.meetplanner.util.ReportPrinter;
 import com.meetplanner.util.SpringApplicationContex;
 
 public class ReportBean implements Serializable {
@@ -46,6 +50,9 @@ public class ReportBean implements Serializable {
 	private ReportService reportService;
 	private List<ReportDTO> result;
 	private String reportType;
+	private List<GroupAthleteCountDTO> groupAthlete;
+	private List<GroupAthleteDTO> groupWiseAthletes;
+	private ReportPrinter reportPrinter;
 
 	public ReportBean() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -63,15 +70,12 @@ public class ReportBean implements Serializable {
 				eventList.put(e.getId(), e.getEventName());
 			}
 		}
-	}
-
-	public void onReportTypeChange() {
-		System.out.println("selected " + selectedReportType);
-		if (null != selectedReportType) {
-			if (selectedReportType.equals("At")) {
-				//List<Athlete> athletes = commonService.getAllAthletesForGroup(1);
-			}
+		try{
+			groupAthlete = reportService.getGroupWiseAthleteCount();
+		}catch(GenricSqlException e){
+			e.printStackTrace();
 		}
+		reportPrinter = new ReportPrinter();
 	}
 
 	public void showAthleteData(){
@@ -100,7 +104,7 @@ public class ReportBean implements Serializable {
 	            jasperDesign = JRXmlLoader.load(in);
 	            report = JasperCompileManager.compileReport(jasperDesign);            
 	            beanCollectionDataSource = new JRBeanCollectionDataSource(result);   
-	            jasperPrint = JasperFillManager.fillReport(report, new HashMap(), beanCollectionDataSource);
+	            jasperPrint = JasperFillManager.fillReport(report, new HashMap<String,Object>(), beanCollectionDataSource);
 	            
 	            FacesContext fc = FacesContext.getCurrentInstance();
 	            ExternalContext ec = fc.getExternalContext();
@@ -120,6 +124,7 @@ public class ReportBean implements Serializable {
 	                exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
 	                exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
 	                exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+	                exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, Boolean.TRUE);
 	                exporter.exportReport();
 	            }	            
 	            fc.responseComplete();
@@ -138,6 +143,70 @@ public class ReportBean implements Serializable {
 	            jasperPrint = null;
 	        }
 		}
+	}
+	
+	public void printGrpWiseAthleteReport() throws JRException, IOException{
+        //downloadPdf(groupAthlete, "/com/meetplanner/reports/groupWiseAthlete.jrxml",new HashMap<String, Object>());
+        reportPrinter.printReport(groupAthlete, "/com/meetplanner/reports/groupWiseAthlete.jrxml", new HashMap<String, Object>(), 1);
+	}
+	
+	public void printGroupAthleteReport() throws JRException, IOException{
+		Map<String, Object> params = new HashMap<String, Object>();
+        params.put("SUBREPORT_DIR", "/com/meetplanner/reports/");
+        downloadPdf(groupWiseAthletes, "/com/meetplanner/reports/groupAthletes.jrxml",params);
+	}
+	
+	public void showAthleteTable(){
+		try{
+			groupWiseAthletes = reportService.getGroupAthletes();		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param data data to be generated on pdf
+	 * @param path report path in class path
+	 * @param params parameter map
+	 * @throws JRException
+	 * @throws IOException
+	 */
+	private <T> void downloadPdf(List<T> data,String path,Map<String, Object> params) throws JRException, IOException{
+		InputStream in = null;
+        JasperDesign jasperDesign = null;
+        JasperReport report = null;
+        JasperPrint jasperPrint = null;
+        JRBeanCollectionDataSource beanCollectionDataSource = null;
+        try{       
+            in = this.getClass().getClassLoader().getResourceAsStream(path);
+            jasperDesign = JRXmlLoader.load(in);
+            report = JasperCompileManager.compileReport(jasperDesign);            
+            beanCollectionDataSource = new JRBeanCollectionDataSource(data);   
+            jasperPrint = JasperFillManager.fillReport(report, params, beanCollectionDataSource);
+            
+            FacesContext fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            OutputStream output = ec.getResponseOutputStream();
+            ec.responseReset();
+        	ec.setResponseContentType("application/pdf");           
+            ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + "athlete.pdf" + "\"");
+            JasperExportManager.exportReportToPdfStream(jasperPrint, output);                     
+            fc.responseComplete();
+        }finally{
+            jasperPrint = null;
+            jasperDesign = null;
+            report = null;
+            beanCollectionDataSource = null;
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            jasperPrint = null;
+        }
 	}
 	
 	public String getSelectedReportType() {
@@ -226,6 +295,22 @@ public class ReportBean implements Serializable {
 
 	public void setReportType(String reportType) {
 		this.reportType = reportType;
+	}
+
+	public List<GroupAthleteCountDTO> getGroupAthlete() {
+		return groupAthlete;
+	}
+
+	public void setGroupAthlete(List<GroupAthleteCountDTO> groupAthlete) {
+		this.groupAthlete = groupAthlete;
+	}
+
+	public List<GroupAthleteDTO> getGroupWiseAthletes() {
+		return groupWiseAthletes;
+	}
+
+	public void setGroupWiseAthletes(List<GroupAthleteDTO> groupWiseAthletes) {
+		this.groupWiseAthletes = groupWiseAthletes;
 	}
 
 }
