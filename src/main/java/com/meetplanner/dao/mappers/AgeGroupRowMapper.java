@@ -14,6 +14,10 @@ public class AgeGroupRowMapper implements RowMapper<AgeGroupDTO>{
 		AgeGroupDTO age = new AgeGroupDTO();
 		age.setId(rs.getInt("id"));
 		age.setAgeGroup(rs.getString("age_group"));
+		age.setFromAge(rs.getDate("from_date"));
+		age.setToAge(rs.getDate("to_date"));
+		age.setFromBibNumber(rs.getInt("bib_from"));
+		age.setToBibNumber(rs.getInt("bib_to"));
 		return age;
 	}
 

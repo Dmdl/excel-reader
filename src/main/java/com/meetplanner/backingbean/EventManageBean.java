@@ -1,6 +1,7 @@
 package com.meetplanner.backingbean;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -33,6 +34,10 @@ public class EventManageBean implements Serializable{
 	private List<AgeGroupDTO> ageGroups;
 	private String ageGroup;
 	private int ageGroupId;
+	private Date selectedFromAge;
+	private Date selectedToAge;
+	private int fromBibNumber;
+	private int toBibNumber;
 	
 	public EventManageBean(){
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -169,9 +174,13 @@ public class EventManageBean implements Serializable{
 	}
 	
 	public void addAgeGroup(){
-		if(null!=ageGroup){
+		if(null!=ageGroup && null!=selectedFromAge && null!=selectedToAge && 0!=fromBibNumber && 0!=toBibNumber){
 			AgeGroupDTO age = new AgeGroupDTO();
 			age.setAgeGroup(this.ageGroup);
+			age.setFromAge(selectedFromAge);
+			age.setToAge(selectedToAge);
+			age.setFromBibNumber(fromBibNumber);
+			age.setToBibNumber(toBibNumber);
 			boolean ok = commonService.addAgeGroup(age);
 			if(ok){
 				ageGroups = fileUploadService.getAllAgeGroups();
@@ -185,12 +194,20 @@ public class EventManageBean implements Serializable{
 	public void editAgeGroup(AgeGroupDTO age){
 		this.ageGroupId = age.getId();
 		this.ageGroup = age.getAgeGroup();
+		this.selectedFromAge = age.getFromAge();
+		this.selectedToAge = age.getToAge();
+		this.fromBibNumber = age.getFromBibNumber();
+		this.toBibNumber = age.getToBibNumber();
 	}
 	
 	public void updateAgeGroup(){
 		AgeGroupDTO age = new AgeGroupDTO();
 		age.setId(ageGroupId);
 		age.setAgeGroup(ageGroup);
+		age.setFromAge(selectedFromAge);
+		age.setToAge(selectedToAge);
+		age.setFromBibNumber(fromBibNumber);
+		age.setToBibNumber(toBibNumber);
 		boolean ok = commonService.updateAgeGroup(age);
 		if(ok){
 			ageGroups = fileUploadService.getAllAgeGroups();
@@ -294,6 +311,38 @@ public class EventManageBean implements Serializable{
 
 	public void setAgeGroup(String ageGroup) {
 		this.ageGroup = ageGroup;
+	}
+
+	public Date getSelectedFromAge() {
+		return selectedFromAge;
+	}
+
+	public void setSelectedFromAge(Date selectedFromAge) {
+		this.selectedFromAge = selectedFromAge;
+	}
+
+	public Date getSelectedToAge() {
+		return selectedToAge;
+	}
+
+	public void setSelectedToAge(Date selectedToAge) {
+		this.selectedToAge = selectedToAge;
+	}
+
+	public int getFromBibNumber() {
+		return fromBibNumber;
+	}
+
+	public void setFromBibNumber(int fromBibNumber) {
+		this.fromBibNumber = fromBibNumber;
+	}
+
+	public int getToBibNumber() {
+		return toBibNumber;
+	}
+
+	public void setToBibNumber(int toBibNumber) {
+		this.toBibNumber = toBibNumber;
 	}
 	
 }

@@ -343,8 +343,8 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 	public boolean updateAgeGroup(AgeGroupDTO ageGroup) {
 		boolean ok = false;
 		try{
-			String sql = "UPDATE age_groups SET age_group=? WHERE id=?";
-			int count = getJdbcTemplate().update(sql, ageGroup.getAgeGroup(),ageGroup.getId());
+			String sql = "UPDATE age_groups SET age_group=?,from_date=?,to_date=?,bib_from=?,bib_to=? WHERE id=?";
+			int count = getJdbcTemplate().update(sql, ageGroup.getAgeGroup(),ageGroup.getFromAge(),ageGroup.getToAge(),ageGroup.getFromBibNumber(),ageGroup.getToBibNumber(),ageGroup.getId());
 			if(count>0){
 				ok = true;
 			}
@@ -358,8 +358,8 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 	public boolean addAgeGroup(AgeGroupDTO ageGroup) {
 		boolean ok = false;
 		try{
-			String sql = "INSERT INTO age_groups(age_group) VALUES (?)";
-			int count = getJdbcTemplate().update(sql, new Object[] {ageGroup.getAgeGroup()});
+			String sql = "INSERT INTO age_groups(age_group,from_date,to_date,bib_from,bib_to) VALUES (?,?,?,?,?)";
+			int count = getJdbcTemplate().update(sql, new Object[] {ageGroup.getAgeGroup(),ageGroup.getFromAge(),ageGroup.getToAge(),ageGroup.getFromBibNumber(),ageGroup.getToBibNumber()});
 			if(count>0){
 				ok = true;
 			}

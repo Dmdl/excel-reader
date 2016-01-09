@@ -18,15 +18,40 @@
 							<p:panelGrid id="addAgegrpPnlLeft" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:100%;">
 								<p:outputLabel value="Age Group" />
 								<p:inputText value="#{eventBean.ageGroup}" required="true" requiredMessage="Age Group is Required"></p:inputText>
+								
+								<p:outputLabel value="From Date" />
+								<p:calendar id="fromDate" value="#{eventBean.selectedFromAge}" showOn="button" pattern="dd-MM-yyyy" navigator="true" required="true" requiredMessage="From Date Required"></p:calendar>
+								
+								<p:outputLabel value="To Date" />
+								<p:calendar id="toDate" value="#{eventBean.selectedToAge}" showOn="button" pattern="dd-MM-yyyy" navigator="true" required="true" requiredMessage="To Date Required"></p:calendar>
+								
+								<p:outputLabel value="From BIB Number" />
+								<p:inputText id="fromBib" value="#{eventBean.fromBibNumber}" required="true" requiredMessage="From BIB Number required"></p:inputText>
+								
+								<p:outputLabel value="To BIB Number" />
+								<p:inputText id="toBib" value="#{eventBean.toBibNumber}" required="true" requiredMessage="To BIB Number required"></p:inputText>
+								
 								<p:commandButton value="Add" action="#{eventBean.addAgeGroup()}" update="ageGrpTbl ageGroup" process="addAgegrpPnlLeft"/>
 								<p:commandButton value="Cancel" />
 							</p:panelGrid>
 							<p:dataTable id="ageGrpTbl" value="#{eventBean.ageGroups}" var="age">
-								<p:column headerText="Id">
+								<!-- <p:column headerText="Id">
 							    	<h:outputText value="#{age.id}" />
-							    </p:column>
+							    </p:column> -->
 							    <p:column headerText="Age Group">
 							    	<h:outputText value="#{age.ageGroup}" />
+							    </p:column>
+							    <p:column headerText="From Age">
+							    	<h:outputText value="#{age.fromAge}" />
+							    </p:column>
+							    <p:column headerText="To Age">
+							    	<h:outputText value="#{age.toAge}" />
+							    </p:column>
+							    <p:column headerText="From BIB">
+							    	<h:outputText value="#{age.fromBibNumber}" />
+							    </p:column>
+							    <p:column headerText="To BIB">
+							    	<h:outputText value="#{age.toBibNumber}" />
 							    </p:column>
 							</p:dataTable>
 						</p:panelGrid>
@@ -34,11 +59,23 @@
 					
 					<p:tab id="updateAgeGroupTab" title="Update Age Group">
 						<p:dataTable id="ageGrpTblUpdate" value="#{eventBean.ageGroups}" var="age">
-							<p:column headerText="Id">
+							<!-- <p:column headerText="Id">
 						    	<h:outputText value="#{age.id}" />
-						    </p:column>
+						    </p:column> -->
 						    <p:column headerText="Age Group">
 						    	<h:outputText value="#{age.ageGroup}" />
+						    </p:column>
+						    <p:column headerText="From Age">
+						    	<h:outputText value="#{age.fromAge}" />
+						    </p:column>
+						    <p:column headerText="To Age">
+						    	<h:outputText value="#{age.toAge}" />
+						    </p:column>
+						    <p:column headerText="From BIB">
+						    	<h:outputText value="#{age.fromBibNumber}" />
+						    </p:column>
+						    <p:column headerText="To BIB">
+						    	<h:outputText value="#{age.toBibNumber}" />
 						    </p:column>
 						    <p:column headerText="">
 						    	<div align="center">
@@ -51,6 +88,18 @@
 						<p:panelGrid id="editAgeGrpPnl" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:60%;">
 							<p:outputLabel value="Age Group"/>
 							<p:inputText value="#{eventBean.ageGroup}" required="true" requiredMessage="Age Group is Required"/>
+							
+							<p:outputLabel value="From Date" />
+							<p:calendar id="fromDateUpdate" value="#{eventBean.selectedFromAge}" showOn="button" pattern="dd-MM-yyyy" navigator="true" required="true" requiredMessage="From Date Required"></p:calendar>
+							
+							<p:outputLabel value="To Date" />
+							<p:calendar id="toDateUpdate" value="#{eventBean.selectedToAge}" showOn="button" pattern="dd-MM-yyyy" navigator="true" required="true" requiredMessage="To Date required"></p:calendar>
+							
+							<p:outputLabel value="From BIB Number"></p:outputLabel>
+							<p:inputText value="#{eventBean.fromBibNumber}" required="true" requiredMessage="From BIB Number required"></p:inputText>
+							
+							<p:outputLabel value="To BIB Number"></p:outputLabel>
+							<p:inputText value="#{eventBean.toBibNumber}" required="true" requiredMessage="To BIB Number required"></p:inputText>
 							
 							<p:commandButton value="update" action="#{eventBean.updateAgeGroup()}" update="ageGroup ageGrpTblUpdate" process="editAgeGrpPnl"/>
 							<p:commandButton value="Clear" />
