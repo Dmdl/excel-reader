@@ -146,4 +146,9 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		commonDao.deleteAgeGroup(id);
 	}
 
+	@Override
+	public AgeGroupDTO getAgeGroup(int id) {
+		return commonDao.getAgeGroup(id);
+	}
+
 }

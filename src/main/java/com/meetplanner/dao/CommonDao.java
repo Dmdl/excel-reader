@@ -61,4 +61,6 @@ public interface CommonDao {
 	public void deleteAgeGroup(int id) throws Exception;
 	
 	public List<EventDTO> getFilteredEventList(String gender,String eventType);
+	
+	public AgeGroupDTO getAgeGroup(int id);
 }

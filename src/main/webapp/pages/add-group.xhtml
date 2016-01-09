@@ -24,9 +24,9 @@
 							</p:panelGrid>
 							
 							<p:dataTable id="groupTbl" value="#{eventBean.groups}" var="group">
-								<p:column headerText="Id">
+								<!-- <p:column headerText="Id">
 							    	<h:outputText value="#{group.id}" />
-							    </p:column>
+							    </p:column> -->
 							    <p:column headerText="Name">
 							    	<h:outputText value="#{group.name}" />
 							    </p:column>
@@ -37,9 +37,9 @@
 					
 					<p:tab id="updateGroupTab" title="Update Group">
 						<p:dataTable id="groupTblUpdate" value="#{eventBean.groups}" var="group">
-							<p:column headerText="Id">
+							<!-- <p:column headerText="Id">
 						    	<h:outputText value="#{group.id}" />
-						    </p:column>
+						    </p:column> -->
 						    <p:column headerText="Name">
 						    	<h:outputText value="#{group.name}" />
 						    </p:column>

@@ -59,4 +59,6 @@ public interface CommonService {
 	public List<AgeGroupDTO> getAgeGroups() throws Exception;
 	
 	public void deleteAgeGroup(int id) throws Exception;
+	
+	public AgeGroupDTO getAgeGroup(int id);
 }

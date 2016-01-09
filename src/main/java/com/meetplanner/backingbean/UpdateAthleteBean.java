@@ -11,12 +11,14 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
+import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.service.CommonService;
 import com.meetplanner.service.FileUploadService;
 import com.meetplanner.service.SerchService;
+import com.meetplanner.util.CommonUtill;
 import com.meetplanner.util.SpringApplicationContex;
 
 public class UpdateAthleteBean implements Serializable {
@@ -92,6 +94,11 @@ public class UpdateAthleteBean implements Serializable {
 	public void updateAthlete(){
 		System.out.println("ath id "+athleteId+" athleteGroup "+athleteGroup+" athleteAgeGroup "+athleteAgeGroup+" athleteDoB "+athleteDoB+" athleteGender "+athleteGender+" athleteNic "+athleteNic+" athleteName "+athleteName);
 		System.out.println("list size "+events.getTarget().size());
+		AgeGroupDTO ageGroupSelect = commonService.getAgeGroup(Integer.parseInt(athleteAgeGroup));
+		if(!CommonUtill.isDateBetween(athleteDoB, ageGroupSelect.getFromAge(), ageGroupSelect.getToAge())){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Date of Birth Do not Match with Age Group"));
+			return;
+		}
 		if(events.getTarget().size()>0 && events.getTarget().size()<4){
 			Athlete athlete = new Athlete();
 			athlete.setId(String.valueOf(athleteId));

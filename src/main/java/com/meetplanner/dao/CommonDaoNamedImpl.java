@@ -209,4 +209,10 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		return result;
 	}
 
+	@Override
+	public AgeGroupDTO getAgeGroup(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

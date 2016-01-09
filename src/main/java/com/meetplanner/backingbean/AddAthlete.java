@@ -13,12 +13,14 @@ import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
+import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.service.CommonService;
 import com.meetplanner.service.FileUploadService;
 import com.meetplanner.service.SerchService;
+import com.meetplanner.util.CommonUtill;
 import com.meetplanner.util.SpringApplicationContex;
 
 public class AddAthlete implements Serializable {
@@ -58,8 +60,10 @@ public class AddAthlete implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Maximum Number of Events is 3"));
 			return;
 		}
-		for(EventDTO e:athleteEvents){
-			System.out.println("each "+e.getEventName());
+		AgeGroupDTO ageGroupSelect = commonService.getAgeGroup(Integer.parseInt(selectedAgeGroup));
+		if(!CommonUtill.isDateBetween(dateOfBirth, ageGroupSelect.getFromAge(), ageGroupSelect.getToAge())){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Date of Birth Do not Match with Age Group"));
+			return;
 		}
 		Athlete athlete = new Athlete();
 		athlete.setDateOfBirth(dateOfBirth);
@@ -96,8 +100,8 @@ public class AddAthlete implements Serializable {
 	
 	public void resetFeilds(){
 		gender = null;
-		selectedGroup = null;
-		selectedAgeGroup = null;
+		//selectedGroup = null;
+		//selectedAgeGroup = null;
 		dateOfBirth = null;
 		athleteName = null;
 		nic = null;

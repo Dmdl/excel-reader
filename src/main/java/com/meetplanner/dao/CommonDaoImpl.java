@@ -380,4 +380,16 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public AgeGroupDTO getAgeGroup(int id) {
+		try{
+			String sql = "SELECT * FROM age_groups WHERE id=?";
+			AgeGroupDTO ageGroup = getJdbcTemplate().queryForObject(sql, new Object[] {id},new AgeGroupRowMapper());
+			return ageGroup;
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
