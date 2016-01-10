@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.meetplanner.dto.AgeGroupDTO;
 
-public class AgeGroupRowMapper implements RowMapper<AgeGroupDTO>{
+public class EventAgeGroupRowMapper implements RowMapper<AgeGroupDTO>{
 
 	@Override
 	public AgeGroupDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.meetplanner.dao.CommonDao;
 import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventCategoryDTO;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.GroupDTO;
@@ -112,7 +113,8 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	}
 
 	@Override
-	public boolean deleteEvent(int eventId) {
+	@Transactional(rollbackFor=Throwable.class)
+	public boolean deleteEvent(int eventId) throws GenricSqlException{
 		return commonDao.deleteEvent(eventId);
 	}
 
@@ -144,6 +146,41 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	@Override
 	public void deleteAgeGroup(int id) throws Exception {
 		commonDao.deleteAgeGroup(id);
+	}
+
+	@Override
+	public AgeGroupDTO getAgeGroup(int id) {
+		return commonDao.getAgeGroup(id);
+	}
+
+	@Override
+	public void addEventCategory(EventCategoryDTO eventcategory) throws Exception {
+		commonDao.addEventCategory(eventcategory);
+	}
+
+	@Override
+	public List<EventCategoryDTO> getEventCategories() throws Exception {
+		return commonDao.getEventCategories();
+	}
+
+	@Override
+	public List<AgeGroupDTO> getAgeGroupsForEvent(int eventId) {
+		return commonDao.getAgeGroupsForEvent(eventId);
+	}
+
+	@Override
+	public List<Athlete> searchAthleteByGenderAndAge(String gender,int ageGroupId) {
+		return commonDao.searchAthleteByGenderAndAge(gender,ageGroupId);
+	}
+
+	@Override
+	public String getLastAssignBibNumberForAgeGroup(int ageGroup) throws GenricSqlException {
+		return commonDao.getLastAssignBibNumberForAgeGroup(ageGroup);
+	}
+
+	@Override
+	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException {
+		return commonDao.getStartBibForAgeGroup(ageGroupId);
 	}
 
 }

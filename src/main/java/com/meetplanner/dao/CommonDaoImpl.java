@@ -16,11 +16,14 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.meetplanner.dao.mappers.AgeGroupRowMapper;
 import com.meetplanner.dao.mappers.AthleteRowMapper;
+import com.meetplanner.dao.mappers.EventAgeGroupRowMapper;
+import com.meetplanner.dao.mappers.EventCategoryRowMapper;
 import com.meetplanner.dao.mappers.EventResultMapper;
 import com.meetplanner.dao.mappers.EventResultRowMapper;
 import com.meetplanner.dao.mappers.EventRowMapper;
 import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventCategoryDTO;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.GroupDTO;
@@ -266,13 +269,34 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 	}
 
 	@Override
-	public boolean addEvent(EventsDTO event) {
+	public boolean addEvent(final EventsDTO event) {
 		boolean ok = false;
-		String sql = "INSERT INTO EVENTS(event_name,type,participants) VALUES (?,?,?)";
-		int count = getJdbcTemplate().update(sql, new Object[] {event.getEvent(),event.getType(),event.getParticipants()});
-		if(count>0){
+		try{
+			final String sql = "INSERT INTO EVENTS(event_name,type,participants,event_category_id) VALUES (?,?,?,?)";
+//			int count = getJdbcTemplate().update(sql, new Object[] {event.getEvent(),event.getType(),event.getParticipants(),event.getEventCategoryId()});
+			
+			KeyHolder keyHolder = new GeneratedKeyHolder();
+			getJdbcTemplate().update(
+			    new PreparedStatementCreator() {
+			        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+			            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"event_name","type","participants","event_category_id"});
+			            ps.setString(1, event.getEvent());
+			            ps.setString(2, event.getType());
+			            ps.setString(3, event.getParticipants());
+			            ps.setInt(4, event.getEventCategoryId());	            
+			            return ps;
+			        }
+			    },keyHolder);
+			int key = keyHolder.getKey().intValue();
+			if(null!=event.getAgeGroups() && event.getAgeGroups().size()>0){
+				for(AgeGroupDTO e:event.getAgeGroups()){
+					addEventAgeGroups(key, e.getId());
+				}
+			}			
 			ok = true;
-		}					
+		}catch(Exception e){
+			e.printStackTrace();
+		}				
 		return ok;
 	}
 
@@ -289,23 +313,30 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 
 	@Override
 	public void updateEvent(EventDTO event) throws Exception{
-		String sql = "UPDATE events SET event_name=?,type=?,participants=? WHERE id=?";
-		getJdbcTemplate().update(sql, event.getEventName(),event.getType(),event.getParticipants(),event.getId());
+		String sql = "UPDATE events SET event_name=?,type=?,participants=?,event_category_id=? WHERE id=?";
+		getJdbcTemplate().update(sql, event.getEventName(),event.getType(),event.getParticipants(),event.getEventCategoryId(),event.getId());
+		
+		deleteEventAgeGroup(event.getId());
+		if(null!=event.getAgeGroups() && event.getAgeGroups().size()>0){
+			for(AgeGroupDTO e:event.getAgeGroups()){
+				addEventAgeGroups(event.getId(), e.getId());
+			}
+		}
 	}
 
 	@Override
-	public boolean deleteEvent(int eventId) {
+	public boolean deleteEvent(int eventId) throws GenricSqlException{
 		boolean ok = false;
 		try{
 			String sql = "DELETE FROM events WHERE id=?";
 			int count = getJdbcTemplate().update(sql, new Object[] {eventId});
+			deleteEventAgeGroup(eventId);
 			if(count>0){
 				ok = true;
 			}
 			return ok;
 		}catch(Exception e){
-			e.printStackTrace();
-			return ok;
+			throw new GenricSqlException();
 		}
 	}
 
@@ -343,8 +374,8 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 	public boolean updateAgeGroup(AgeGroupDTO ageGroup) {
 		boolean ok = false;
 		try{
-			String sql = "UPDATE age_groups SET age_group=? WHERE id=?";
-			int count = getJdbcTemplate().update(sql, ageGroup.getAgeGroup(),ageGroup.getId());
+			String sql = "UPDATE age_groups SET age_group=?,from_date=?,to_date=?,bib_from=?,bib_to=? WHERE id=?";
+			int count = getJdbcTemplate().update(sql, ageGroup.getAgeGroup(),ageGroup.getFromAge(),ageGroup.getToAge(),ageGroup.getFromBibNumber(),ageGroup.getToBibNumber(),ageGroup.getId());
 			if(count>0){
 				ok = true;
 			}
@@ -358,8 +389,8 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 	public boolean addAgeGroup(AgeGroupDTO ageGroup) {
 		boolean ok = false;
 		try{
-			String sql = "INSERT INTO age_groups(age_group) VALUES (?)";
-			int count = getJdbcTemplate().update(sql, new Object[] {ageGroup.getAgeGroup()});
+			String sql = "INSERT INTO age_groups(age_group,from_date,to_date,bib_from,bib_to) VALUES (?,?,?,?,?)";
+			int count = getJdbcTemplate().update(sql, new Object[] {ageGroup.getAgeGroup(),ageGroup.getFromAge(),ageGroup.getToAge(),ageGroup.getFromBibNumber(),ageGroup.getToBibNumber()});
 			if(count>0){
 				ok = true;
 			}
@@ -379,5 +410,83 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 	public List<EventDTO> getFilteredEventList(String gender, String eventType) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public AgeGroupDTO getAgeGroup(int id) {
+		try{
+			String sql = "SELECT * FROM age_groups WHERE id=?";
+			AgeGroupDTO ageGroup = getJdbcTemplate().queryForObject(sql, new Object[] {id},new AgeGroupRowMapper());
+			return ageGroup;
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public void addEventCategory(EventCategoryDTO eventcategory) throws Exception {
+		String sql = "INSERT INTO event_category(category_name,point_first,point_second,point_third) VALUES (?,?,?,?)";
+		getJdbcTemplate().update(sql,new Object[] {eventcategory.getCategoryName(),eventcategory.getPointFirst(),eventcategory.getPointSecond(),eventcategory.getPointThird()});
+	}
+
+	@Override
+	public List<EventCategoryDTO> getEventCategories() throws Exception {
+		String sql = "SELECT * FROM event_category";
+		return getJdbcTemplate().query(sql, new EventCategoryRowMapper());
+	}
+	
+	private void addEventAgeGroups(int eventId,int ageGroupId){
+		String sql = "INSERT INTO event_age_groups(event_id,age_group_id) VALUES (?,?)";
+		getJdbcTemplate().update(sql,new Object[] {eventId,ageGroupId});
+	}
+
+	@Override
+	public List<AgeGroupDTO> getAgeGroupsForEvent(int eventId) {
+		try{
+			String sql = "SELECT age_groups.id,age_groups.age_group,age_groups.from_date,age_groups.to_date,age_groups.bib_from,age_groups.bib_to FROM event_age_groups"+
+						" JOIN age_groups ON event_age_groups.age_group_id=age_groups.id"+
+						" WHERE event_age_groups.event_id=?";
+			return getJdbcTemplate().query(sql, new Object[]{eventId},new EventAgeGroupRowMapper());
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	private void deleteEventAgeGroup(int eventId){
+		String sql = "DELETE FROM event_age_groups WHERE event_id=?";
+		getJdbcTemplate().update(sql, new Object[] {eventId});
+	}
+
+	@Override
+	public List<Athlete> searchAthleteByGenderAndAge(String gender,int ageGroupId) {
+		List<Athlete> resultList = null;
+		try{			
+			String sql = "SELECT athlete.id,athlete.name AS athlete_name,groups.name AS group_name,athlete.bib,athlete.group_id FROM athlete JOIN groups ON athlete.group_id=groups.id WHERE athlete.age_group_id=? AND athlete.gender=?";
+			resultList = getJdbcTemplate().query(sql, new Object[] {ageGroupId ,gender}, new AthleteRowMapper());
+			return resultList;
+		}catch(Exception e){
+			e.printStackTrace();
+			return resultList;
+		}
+	}
+	
+	public String getLastAssignBibNumberForAgeGroup(int ageGroup) throws GenricSqlException{
+		String bib= null;
+		try{
+			String sql="SELECT bib FROM athlete WHERE age_group_id=? ORDER BY bib DESC LIMIT 1";
+			bib = (String)getJdbcTemplate().queryForObject(sql,new Object[]{ageGroup}, String.class);
+		}catch(Exception e){
+			return bib;
+		}
+		return bib;
+	}
+
+	@Override
+	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException {
+		String sql = "SELECT bib_from FROM age_groups WHERE id=?";
+		int fromBib = getJdbcTemplate().queryForObject(sql,new Object[]{ageGroupId}, Integer.class);
+		return fromBib;
 	}
 }

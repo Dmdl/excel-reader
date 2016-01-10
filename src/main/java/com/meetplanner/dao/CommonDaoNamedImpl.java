@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import com.meetplanner.dao.mappers.UpdateAthleteRowMapper;
 import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventCategoryDTO;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.GroupDTO;
@@ -207,6 +208,50 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Override
+	public AgeGroupDTO getAgeGroup(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addEventCategory(EventCategoryDTO eventcategory)
+			throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<EventCategoryDTO> getEventCategories() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<AgeGroupDTO> getAgeGroupsForEvent(int eventId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Athlete> searchAthleteByGenderAndAge(String gender,int ageGroupId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getLastAssignBibNumberForAgeGroup(int ageGroup)
+			throws GenricSqlException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

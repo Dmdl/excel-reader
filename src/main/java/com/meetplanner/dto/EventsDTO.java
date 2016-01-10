@@ -1,11 +1,15 @@
 package com.meetplanner.dto;
 
+import java.util.List;
+
 public class EventsDTO {
 
 	private int id;
 	private String event;
 	private String participants;
 	private String type;
+	private int eventCategoryId;
+	private List<AgeGroupDTO> ageGroups;
 
 	public int getId() {
 		return id;
@@ -37,6 +41,22 @@ public class EventsDTO {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public int getEventCategoryId() {
+		return eventCategoryId;
+	}
+
+	public void setEventCategoryId(int eventCategoryId) {
+		this.eventCategoryId = eventCategoryId;
+	}
+
+	public List<AgeGroupDTO> getAgeGroups() {
+		return ageGroups;
+	}
+
+	public void setAgeGroups(List<AgeGroupDTO> ageGroups) {
+		this.ageGroups = ageGroups;
 	}
 
 }

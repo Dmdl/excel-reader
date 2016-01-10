@@ -10,7 +10,7 @@
 	<context:component-scan base-package="com.meetplanner"></context:component-scan>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	<task:annotation-driven />
+	<tx:annotation-driven />
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	  <property name="location" value="classpath:db.properties" />

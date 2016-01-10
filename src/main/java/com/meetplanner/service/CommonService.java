@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventCategoryDTO;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.GroupDTO;
@@ -46,7 +47,7 @@ public interface CommonService {
 	
 	public void updateEvent(EventDTO event) throws Exception;
 	
-	public boolean deleteEvent(int eventId);
+	public boolean deleteEvent(int eventId) throws GenricSqlException;
 	
 	public void updateGroup(GroupDTO group) throws Exception;
 	
@@ -59,4 +60,18 @@ public interface CommonService {
 	public List<AgeGroupDTO> getAgeGroups() throws Exception;
 	
 	public void deleteAgeGroup(int id) throws Exception;
+	
+	public AgeGroupDTO getAgeGroup(int id);
+	
+	public void addEventCategory(EventCategoryDTO eventcategory) throws Exception;
+	
+	public List<EventCategoryDTO> getEventCategories() throws Exception;
+	
+	public List<AgeGroupDTO> getAgeGroupsForEvent(int eventId);
+	
+	public List<Athlete> searchAthleteByGenderAndAge(String gender, int ageGroupId);
+	
+	public String getLastAssignBibNumberForAgeGroup(int ageGroup) throws GenricSqlException;
+	
+	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException;
 }
