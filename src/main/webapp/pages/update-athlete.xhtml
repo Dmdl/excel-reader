@@ -21,7 +21,7 @@
 					<p:commandButton value="Search" action="#{updateAthlete.searchAthlete()}" update="addAthlete serchResultTbl :editAthleteFrm:editAthlete"></p:commandButton>
 				</p:panelGrid>
 				<br/><br/><br/>
-				<p:dataTable id="serchResultTbl" var="result" value="#{updateAthlete.searchResult}">
+				<p:dataTable id="serchResultTbl" var="result" value="#{updateAthlete.searchResult}" paginator="true" rows="10" rowsPerPageTemplate="5,10,15">
 					<p:column headerText="Name">
 				    	<h:outputText value="#{result.name}" />
 				    </p:column>
