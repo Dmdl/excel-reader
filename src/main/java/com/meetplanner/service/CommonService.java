@@ -68,4 +68,6 @@ public interface CommonService {
 	public List<EventCategoryDTO> getEventCategories() throws Exception;
 	
 	public List<AgeGroupDTO> getAgeGroupsForEvent(int eventId);
+	
+	public List<Athlete> searchAthleteByGenderAndAge(String gender, int ageGroupId);
 }

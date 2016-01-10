@@ -168,4 +168,9 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		return commonDao.getAgeGroupsForEvent(eventId);
 	}
 
+	@Override
+	public List<Athlete> searchAthleteByGenderAndAge(String gender,int ageGroupId) {
+		return commonDao.searchAthleteByGenderAndAge(gender,ageGroupId);
+	}
+
 }

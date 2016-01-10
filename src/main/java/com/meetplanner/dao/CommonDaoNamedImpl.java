@@ -235,4 +235,10 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		return null;
 	}
 
+	@Override
+	public List<Athlete> searchAthleteByGenderAndAge(String gender,int ageGroupId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

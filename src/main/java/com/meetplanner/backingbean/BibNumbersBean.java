@@ -25,6 +25,7 @@ public class BibNumbersBean implements Serializable {
 	private CommonService commonService;
 	private List<Athlete> athleteList = null;
 	private Integer lastBibNumber;
+	private String selectedGender;
 
 	public BibNumbersBean() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -42,8 +43,9 @@ public class BibNumbersBean implements Serializable {
 	}
 
 	public void search(){
-		System.out.println("in search....selectedGroup "+selectedGroup+" selectedAgeGroup "+selectedAgeGroup);
-		athleteList = commonService.searchAthleteByGroupAndAge(Integer.parseInt(selectedGroup), Integer.parseInt(selectedAgeGroup));
+		System.out.println("in search....selectedGroup "+selectedGroup+" selectedAgeGroup "+selectedAgeGroup+" gender "+selectedGender);
+		//athleteList = commonService.searchAthleteByGroupAndAge(Integer.parseInt(selectedGroup), Integer.parseInt(selectedAgeGroup));
+		athleteList = commonService.searchAthleteByGenderAndAge(selectedGender,Integer.parseInt(selectedAgeGroup));
 		if(null!=athleteList && athleteList.size()>0){
 			System.out.println("result list size "+athleteList.size());
 		}else if(null!=athleteList && athleteList.size()==0){
@@ -196,6 +198,14 @@ public class BibNumbersBean implements Serializable {
 
 	public void setLastBibNumber(int lastBibNumber) {
 		this.lastBibNumber = lastBibNumber;
+	}
+
+	public String getSelectedGender() {
+		return selectedGender;
+	}
+
+	public void setSelectedGender(String selectedGender) {
+		this.selectedGender = selectedGender;
 	}
 
 }
