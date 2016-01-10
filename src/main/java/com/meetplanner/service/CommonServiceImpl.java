@@ -173,4 +173,14 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		return commonDao.searchAthleteByGenderAndAge(gender,ageGroupId);
 	}
 
+	@Override
+	public String getLastAssignBibNumberForAgeGroup(int ageGroup) throws GenricSqlException {
+		return commonDao.getLastAssignBibNumberForAgeGroup(ageGroup);
+	}
+
+	@Override
+	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException {
+		return commonDao.getStartBibForAgeGroup(ageGroupId);
+	}
+
 }

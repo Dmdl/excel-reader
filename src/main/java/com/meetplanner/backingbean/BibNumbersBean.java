@@ -35,8 +35,7 @@ public class BibNumbersBean implements Serializable {
 				lastBibNumber= 1;
 			}else{
 				lastBibNumber= Integer.parseInt(bib)+1;
-			}			
-			System.out.println("lastBibNumber "+lastBibNumber);
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}		
@@ -146,18 +145,40 @@ public class BibNumbersBean implements Serializable {
 	
 	public void onTabChange(TabChangeEvent event){
 		try{
-			String bib = commonService.getLastAssignBibNumber();
+			/*String bib = commonService.getLastAssignBibNumber();
 			if(null==bib){
 				lastBibNumber= 1;
 			}else{
 				lastBibNumber= Integer.parseInt(bib)+1;
-			}			
+			}*/
+			String lastBib = commonService.getLastAssignBibNumberForAgeGroup(Integer.parseInt(selectedAgeGroup));
+			if(null!=lastBib){
+				lastBibNumber = Integer.parseInt(lastBib)+1;
+			}else{
+				lastBibNumber = commonService.getStartBibForAgeGroup(Integer.parseInt(selectedAgeGroup));
+			}
 			if(null!=selectedAgeGroup && null!=selectedGroup){
 				athleteList = commonService.searchAthleteByGroupAndAge(Integer.parseInt(selectedGroup), Integer.parseInt(selectedAgeGroup));
 			}
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}	
+	}
+	
+	public void onAgeGroupChange(){
+		System.out.println("age group select "+selectedAgeGroup);
+		try{
+			String lastBib = commonService.getLastAssignBibNumberForAgeGroup(Integer.parseInt(selectedAgeGroup));
+			System.out.println("lastBib::::::::::: "+lastBib);
+			if(null!=lastBib){
+				lastBibNumber = Integer.parseInt(lastBib)+1;
+			}else{
+				lastBibNumber = commonService.getStartBibForAgeGroup(Integer.parseInt(selectedAgeGroup));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 	}
 	
 	public String getSelectedGroup() {

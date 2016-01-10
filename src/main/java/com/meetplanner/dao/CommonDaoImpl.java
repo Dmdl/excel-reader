@@ -471,4 +471,22 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 			return resultList;
 		}
 	}
+	
+	public String getLastAssignBibNumberForAgeGroup(int ageGroup) throws GenricSqlException{
+		String bib= null;
+		try{
+			String sql="SELECT bib FROM athlete WHERE age_group_id=? ORDER BY bib DESC LIMIT 1";
+			bib = (String)getJdbcTemplate().queryForObject(sql,new Object[]{ageGroup}, String.class);
+		}catch(Exception e){
+			return bib;
+		}
+		return bib;
+	}
+
+	@Override
+	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException {
+		String sql = "SELECT bib_from FROM age_groups WHERE id=?";
+		int fromBib = getJdbcTemplate().queryForObject(sql,new Object[]{ageGroupId}, Integer.class);
+		return fromBib;
+	}
 }

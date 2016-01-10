@@ -241,4 +241,17 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		return null;
 	}
 
+	@Override
+	public String getLastAssignBibNumberForAgeGroup(int ageGroup)
+			throws GenricSqlException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

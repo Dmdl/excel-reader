@@ -70,4 +70,8 @@ public interface CommonService {
 	public List<AgeGroupDTO> getAgeGroupsForEvent(int eventId);
 	
 	public List<Athlete> searchAthleteByGenderAndAge(String gender, int ageGroupId);
+	
+	public String getLastAssignBibNumberForAgeGroup(int ageGroup) throws GenricSqlException;
+	
+	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException;
 }
