@@ -1,0 +1,39 @@
+<ui:composition template="../template/common/commonLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="content">
+		<p:growl id="eventCategory" showDetail="true"></p:growl>
+
+		<h:form id="eventCatFrm">
+			<div align="center" class="headingColor"><h2>Event Category</h2></div>
+			<p:tabView id="eventcatTabView">
+				<p:tab id="addEventCatTab" title="Add Event Category">
+					<p:panelGrid id="addEventCatPanel" columns="2" style="width:50%;">
+						<p:outputLabel value="Event Category Name" />
+						<p:inputText value="#{eventCategory.eventCategoryName}"/>
+						
+						<p:outputLabel value="First Place Point" />
+						<p:inputText value="#{eventCategory.pointFirst}"/>
+						
+						<p:outputLabel value="Second Place Point" />
+						<p:inputText value="#{eventCategory.pointSecond}"/>
+						
+						<p:outputLabel value="Third Place Point" />
+						<p:inputText value="#{eventCategory.pointThird}"/>
+						
+						<p:commandButton value="Add" action="#{eventCategory.addEventCategory()}" process="addEventCatPanel" update="eventCategory" />
+						<p:commandButton value="Cancel"/>
+					</p:panelGrid>
+				</p:tab>
+				<p:tab id="updateEventCatTab" title="Update Event Category">
+					
+				</p:tab>
+			</p:tabView>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

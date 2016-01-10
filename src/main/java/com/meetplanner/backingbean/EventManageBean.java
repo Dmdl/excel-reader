@@ -1,7 +1,9 @@
 package com.meetplanner.backingbean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -9,11 +11,14 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
+import org.primefaces.model.DualListModel;
 
 import com.meetplanner.dto.AgeGroupDTO;
+import com.meetplanner.dto.EventCategoryDTO;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.GroupDTO;
+import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.service.CommonService;
 import com.meetplanner.service.FileUploadService;
 import com.meetplanner.util.SpringApplicationContex;
@@ -38,6 +43,9 @@ public class EventManageBean implements Serializable{
 	private Date selectedToAge;
 	private int fromBibNumber;
 	private int toBibNumber;
+	private HashMap<Integer, String> eventCategoryMap = new HashMap<Integer, String>();
+	private int selectedEventCategory;
+	private DualListModel<AgeGroupDTO> ageGroupsPickList;
 	
 	public EventManageBean(){
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -45,15 +53,28 @@ public class EventManageBean implements Serializable{
 		events = fileUploadService.getAllEvents();
 		groups = fileUploadService.getAllGroups();
 		ageGroups = fileUploadService.getAllAgeGroups();
+		try{
+			List<EventCategoryDTO> eventCat = commonService.getEventCategories();
+			for (EventCategoryDTO e : eventCat) {
+				eventCategoryMap.put(e.getId(), e.getCategoryName());
+			}
+			List<AgeGroupDTO> ageGroupSource = commonService.getAgeGroups();
+			List<AgeGroupDTO> ageGroupTarget = new ArrayList<AgeGroupDTO>();
+			ageGroupsPickList = new DualListModel<AgeGroupDTO>(ageGroupSource, ageGroupTarget);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public void addEvent(){
-		System.out.println("eventName "+eventName+" participants "+participants+" eventType "+eventType);
+		System.out.println("eventName "+eventName+" participants "+participants+" eventType "+eventType+" event cat "+selectedEventCategory+" age gru "+ageGroupsPickList.getTarget().size());
 		try{
 			EventsDTO event = new EventsDTO();
 			event.setEvent(eventName);
 			event.setParticipants(participants);
 			event.setType(eventType);
+			event.setEventCategoryId(selectedEventCategory);
+			event.setAgeGroups(ageGroupsPickList.getTarget());
 			boolean ok = commonService.addEvent(event);
 			if(ok){
 				resetFields();
@@ -89,12 +110,17 @@ public class EventManageBean implements Serializable{
 		eventType = null;
 	}
 	
-	public void editEvent(EventDTO event){
+	public void editEvent(EventDTO event) throws Exception{
 		if(event !=null){
 			this.eventName = event.getEventName();
 			this.eventType = event.getType();
 			this.participants = event.getParticipants();
 			this.eventId = event.getId();
+			this.selectedEventCategory = event.getEventCategoryId();
+			List<AgeGroupDTO> ageGroupTarget = commonService.getAgeGroupsForEvent(eventId);
+			List<AgeGroupDTO> ageGroupSource = commonService.getAgeGroups();
+			ageGroupSource.removeAll(ageGroupTarget);
+			ageGroupsPickList = new DualListModel<AgeGroupDTO>(ageGroupSource, ageGroupTarget);
 		}
 	}
 	
@@ -107,6 +133,8 @@ public class EventManageBean implements Serializable{
 				event.setEventName(eventName);
 				event.setType(eventType);
 				event.setParticipants(participants);
+				event.setEventCategoryId(selectedEventCategory);
+				event.setAgeGroups(ageGroupsPickList.getTarget());
 				commonService.updateEvent(event);
 				events = fileUploadService.getAllEvents();
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Updated."));
@@ -124,13 +152,21 @@ public class EventManageBean implements Serializable{
 	
 	public void deleteEvent(){
 		if(eventId!=0){
-			boolean ok = commonService.deleteEvent(eventId);
-			if(ok){
+//			boolean ok = false;
+			try{
+				commonService.deleteEvent(eventId);
+				events = fileUploadService.getAllEvents();
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Deleted."));
+			}catch(GenricSqlException e){
+				e.printStackTrace();
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
+			}
+			/*if(ok){
 				events = fileUploadService.getAllEvents();
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Deleted."));
 			}else{
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
-			}
+			}*/
 		}
 	}
 	
@@ -343,6 +379,30 @@ public class EventManageBean implements Serializable{
 
 	public void setToBibNumber(int toBibNumber) {
 		this.toBibNumber = toBibNumber;
+	}
+
+	public HashMap<Integer, String> getEventCategoryMap() {
+		return eventCategoryMap;
+	}
+
+	public void setEventCategoryMap(HashMap<Integer, String> eventCategoryMap) {
+		this.eventCategoryMap = eventCategoryMap;
+	}
+
+	public int getSelectedEventCategory() {
+		return selectedEventCategory;
+	}
+
+	public void setSelectedEventCategory(int selectedEventCategory) {
+		this.selectedEventCategory = selectedEventCategory;
+	}
+
+	public DualListModel<AgeGroupDTO> getAgeGroupsPickList() {
+		return ageGroupsPickList;
+	}
+
+	public void setAgeGroupsPickList(DualListModel<AgeGroupDTO> ageGroupsPickList) {
+		this.ageGroupsPickList = ageGroupsPickList;
 	}
 	
 }

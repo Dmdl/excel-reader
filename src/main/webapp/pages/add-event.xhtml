@@ -16,7 +16,7 @@
 				<p:ajax event="tabChange" update="eventTbl eventTblUpdate"/>
 					<p:tab id="addEventTab" title="Add Event">
 					<p:panelGrid id="addEventMainGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6">
-						<p:panelGrid id="addEventGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:100%;">
+						<p:panelGrid id="addEventGrid" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-8" style="width:100%;">
 							<h:outputText value="Event Name" />
 							<p:inputText style="width:70%;" value="#{eventBean.eventName}" required="true" requiredMessage="Event nane is Required"></p:inputText>
 							
@@ -33,6 +33,15 @@
 								<f:selectItem itemLabel="Men" itemValue="M" />
 								<f:selectItem itemLabel="Women" itemValue="F" />
 							</p:selectOneMenu>
+							
+							<h:outputText value="Event Category" />
+							<p:selectOneMenu style="width:65%;" value="#{eventBean.selectedEventCategory}" required="true" requiredMessage="Event Category is required">
+								<f:selectItem itemLabel="Select Event category" itemValue="" noSelectionOption="true" />							
+								<f:selectItems value="#{eventBean.eventCategoryMap.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+							</p:selectOneMenu>
+							
+							<h:outputText value="Age Groups" />
+							<p:pickList id="ageGroupList" value="#{eventBean.ageGroupsPickList}" var="ageGroup" itemLabel="#{ageGroup.ageGroup}" itemValue="#{ageGroup}" converter="entityConverter"></p:pickList>
 							
 							<p:commandButton value="Add" action="#{eventBean.addEvent()}" update="addEvent addEventGrid eventTbl" process="addEventGrid"></p:commandButton>
 							<p:commandButton value="Cancel"></p:commandButton>
@@ -72,7 +81,7 @@
 							</p:dataTable>
 						<br/>
 						<p:panel id="updateEventPanel">
-							<p:panelGrid id="updateEventGrid" columns="2" columnClasses="ui-grid-col-6,ui-grid-col-6" style="width:50%;">
+							<p:panelGrid id="updateEventGrid" columns="2" columnClasses="ui-grid-col-4,ui-grid-col-6" style="width:80%;">
 								<h:outputText value="Event Name" />
 								<p:inputText style="width:70%;" value="#{eventBean.eventName}" required="true" requiredMessage="Event nane is Required"></p:inputText>
 								
@@ -89,6 +98,15 @@
 									<f:selectItem itemLabel="Men" itemValue="M" />
 									<f:selectItem itemLabel="Women" itemValue="F" />
 								</p:selectOneMenu>
+								
+								<h:outputText value="Event Category" />
+								<p:selectOneMenu style="width:65%;" value="#{eventBean.selectedEventCategory}" required="true" requiredMessage="Event Category is required">
+									<f:selectItem itemLabel="Select Event category" itemValue="" noSelectionOption="true" />							
+									<f:selectItems value="#{eventBean.eventCategoryMap.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
+								</p:selectOneMenu>
+								
+								<h:outputText value="Age Groups" />
+								<p:pickList id="ageGroupListUpdate" value="#{eventBean.ageGroupsPickList}" var="ageGroup" itemLabel="#{ageGroup.ageGroup}" itemValue="#{ageGroup}" converter="entityConverter" />
 								
 								<p:commandButton value="Update" process="updateEventGrid" action="#{eventBean.updateEvent}" update="addEvent eventTblUpdate"/>
 								<p:commandButton value="Delete" />

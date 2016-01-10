@@ -1,5 +1,7 @@
 package com.meetplanner.dto;
 
+import java.util.List;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -8,6 +10,8 @@ public class EventDTO {
 	private String eventName;
 	private String type;
 	private String participants;
+	private int eventCategoryId;
+	private List<AgeGroupDTO> ageGroups;
 
 	public int getId() {
 		return id;
@@ -39,6 +43,22 @@ public class EventDTO {
 
 	public void setParticipants(String participants) {
 		this.participants = participants;
+	}
+
+	public int getEventCategoryId() {
+		return eventCategoryId;
+	}
+
+	public void setEventCategoryId(int eventCategoryId) {
+		this.eventCategoryId = eventCategoryId;
+	}
+
+	public List<AgeGroupDTO> getAgeGroups() {
+		return ageGroups;
+	}
+
+	public void setAgeGroups(List<AgeGroupDTO> ageGroups) {
+		this.ageGroups = ageGroups;
 	}
 
 	@Override

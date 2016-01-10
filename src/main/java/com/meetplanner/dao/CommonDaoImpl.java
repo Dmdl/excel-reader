@@ -16,11 +16,14 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import com.meetplanner.dao.mappers.AgeGroupRowMapper;
 import com.meetplanner.dao.mappers.AthleteRowMapper;
+import com.meetplanner.dao.mappers.EventAgeGroupRowMapper;
+import com.meetplanner.dao.mappers.EventCategoryRowMapper;
 import com.meetplanner.dao.mappers.EventResultMapper;
 import com.meetplanner.dao.mappers.EventResultRowMapper;
 import com.meetplanner.dao.mappers.EventRowMapper;
 import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventCategoryDTO;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.EventsDTO;
 import com.meetplanner.dto.GroupDTO;
@@ -266,13 +269,34 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 	}
 
 	@Override
-	public boolean addEvent(EventsDTO event) {
+	public boolean addEvent(final EventsDTO event) {
 		boolean ok = false;
-		String sql = "INSERT INTO EVENTS(event_name,type,participants) VALUES (?,?,?)";
-		int count = getJdbcTemplate().update(sql, new Object[] {event.getEvent(),event.getType(),event.getParticipants()});
-		if(count>0){
+		try{
+			final String sql = "INSERT INTO EVENTS(event_name,type,participants,event_category_id) VALUES (?,?,?,?)";
+//			int count = getJdbcTemplate().update(sql, new Object[] {event.getEvent(),event.getType(),event.getParticipants(),event.getEventCategoryId()});
+			
+			KeyHolder keyHolder = new GeneratedKeyHolder();
+			getJdbcTemplate().update(
+			    new PreparedStatementCreator() {
+			        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+			            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"event_name","type","participants","event_category_id"});
+			            ps.setString(1, event.getEvent());
+			            ps.setString(2, event.getType());
+			            ps.setString(3, event.getParticipants());
+			            ps.setInt(4, event.getEventCategoryId());	            
+			            return ps;
+			        }
+			    },keyHolder);
+			int key = keyHolder.getKey().intValue();
+			if(null!=event.getAgeGroups() && event.getAgeGroups().size()>0){
+				for(AgeGroupDTO e:event.getAgeGroups()){
+					addEventAgeGroups(key, e.getId());
+				}
+			}			
 			ok = true;
-		}					
+		}catch(Exception e){
+			e.printStackTrace();
+		}				
 		return ok;
 	}
 
@@ -289,23 +313,30 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 
 	@Override
 	public void updateEvent(EventDTO event) throws Exception{
-		String sql = "UPDATE events SET event_name=?,type=?,participants=? WHERE id=?";
-		getJdbcTemplate().update(sql, event.getEventName(),event.getType(),event.getParticipants(),event.getId());
+		String sql = "UPDATE events SET event_name=?,type=?,participants=?,event_category_id=? WHERE id=?";
+		getJdbcTemplate().update(sql, event.getEventName(),event.getType(),event.getParticipants(),event.getEventCategoryId(),event.getId());
+		
+		deleteEventAgeGroup(event.getId());
+		if(null!=event.getAgeGroups() && event.getAgeGroups().size()>0){
+			for(AgeGroupDTO e:event.getAgeGroups()){
+				addEventAgeGroups(event.getId(), e.getId());
+			}
+		}
 	}
 
 	@Override
-	public boolean deleteEvent(int eventId) {
+	public boolean deleteEvent(int eventId) throws GenricSqlException{
 		boolean ok = false;
 		try{
 			String sql = "DELETE FROM events WHERE id=?";
 			int count = getJdbcTemplate().update(sql, new Object[] {eventId});
+			deleteEventAgeGroup(eventId);
 			if(count>0){
 				ok = true;
 			}
 			return ok;
 		}catch(Exception e){
-			e.printStackTrace();
-			return ok;
+			throw new GenricSqlException();
 		}
 	}
 
@@ -391,5 +422,40 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public void addEventCategory(EventCategoryDTO eventcategory) throws Exception {
+		String sql = "INSERT INTO event_category(category_name,point_first,point_second,point_third) VALUES (?,?,?,?)";
+		getJdbcTemplate().update(sql,new Object[] {eventcategory.getCategoryName(),eventcategory.getPointFirst(),eventcategory.getPointSecond(),eventcategory.getPointThird()});
+	}
+
+	@Override
+	public List<EventCategoryDTO> getEventCategories() throws Exception {
+		String sql = "SELECT * FROM event_category";
+		return getJdbcTemplate().query(sql, new EventCategoryRowMapper());
+	}
+	
+	private void addEventAgeGroups(int eventId,int ageGroupId){
+		String sql = "INSERT INTO event_age_groups(event_id,age_group_id) VALUES (?,?)";
+		getJdbcTemplate().update(sql,new Object[] {eventId,ageGroupId});
+	}
+
+	@Override
+	public List<AgeGroupDTO> getAgeGroupsForEvent(int eventId) {
+		try{
+			String sql = "SELECT age_groups.id,age_groups.age_group,age_groups.from_date,age_groups.to_date,age_groups.bib_from,age_groups.bib_to FROM event_age_groups"+
+						" JOIN age_groups ON event_age_groups.age_group_id=age_groups.id"+
+						" WHERE event_age_groups.event_id=?";
+			return getJdbcTemplate().query(sql, new Object[]{eventId},new EventAgeGroupRowMapper());
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	private void deleteEventAgeGroup(int eventId){
+		String sql = "DELETE FROM event_age_groups WHERE event_id=?";
+		getJdbcTemplate().update(sql, new Object[] {eventId});
 	}
 }
