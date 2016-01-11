@@ -76,4 +76,8 @@ public interface CommonDao {
 	public String getLastAssignBibNumberForAgeGroup(int ageGroup) throws GenricSqlException;
 	
 	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException;
+
+	public int getLstBibForAgeGroup(int ageGroupId);
+	
+	public List<Integer> checkForExistingBibNumbers(List<Integer> bib);
 }

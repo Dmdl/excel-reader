@@ -74,4 +74,6 @@ public interface CommonService {
 	public String getLastAssignBibNumberForAgeGroup(int ageGroup) throws GenricSqlException;
 	
 	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException;
+	
+	public int getLstBibForAgeGroup(int ageGroupId);
 }

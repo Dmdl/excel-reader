@@ -489,4 +489,17 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		int fromBib = getJdbcTemplate().queryForObject(sql,new Object[]{ageGroupId}, Integer.class);
 		return fromBib;
 	}
+
+	@Override
+	public int getLstBibForAgeGroup(int ageGroupId) {
+		String sql = "SELECT bib_to FROM age_groups WHERE id=?";
+		int fromBib = getJdbcTemplate().queryForObject(sql,new Object[]{ageGroupId}, Integer.class);
+		return fromBib;
+	}
+
+	@Override
+	public List<Integer> checkForExistingBibNumbers(List<Integer> bib) {
+		return null;
+	}
+		
 }

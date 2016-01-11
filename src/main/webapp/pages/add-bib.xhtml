@@ -17,7 +17,7 @@
 						<p:panelGrid columns="5" cellpadding="10" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-4" layout="grid" style="width:80%;" styleClass="panelGridCenter">
 							<h:outputText value="Age Group" />
 							<p:selectOneMenu id="selectAgeGroup" style="width:150px;" value="#{bibNumbers.selectedAgeGroup}" required="true" requiredMessage="Select Age Group">
-								<p:ajax listener="#{bibNumbers.onAgeGroupChange()}" update="lastBibInput"/>
+								<p:ajax listener="#{bibNumbers.onAgeGroupChange()}" update="lastBibInput athleteTable"/>
 								<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
 								<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 							</p:selectOneMenu>
@@ -30,6 +30,7 @@
 							
 							<h:outputText value="Gender" />
 							<p:selectOneMenu value="#{bibNumbers.selectedGender}" id="selectGender" style="width:150px;" required="true" requiredMessage="Select Gender">
+								<p:ajax listener="#{bibNumbers.onGenderChange()}" update="athleteTable"/>
 								<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
 								<f:selectItem itemLabel="Men" itemValue="M" />
 								<f:selectItem itemLabel="Women" itemValue="F" />
@@ -78,7 +79,7 @@
 							</p:dataTable>
 							<p:outputLabel value="Starting BIB Number"></p:outputLabel>
 							<p:inputText id="lastBibInput" value="#{bibNumbers.lastBibNumber}"></p:inputText>
-							<p:commandButton value="Add" action="#{bibNumbers.assignBibNumbers()}" update="athleteTable lastBibInput"></p:commandButton>
+							<p:commandButton value="Add" action="#{bibNumbers.assignBibNumbers()}" update="addBib athleteTable lastBibInput"></p:commandButton>
 						</p:panelGrid>
 					</p:tab>
 					

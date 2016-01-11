@@ -27,4 +27,9 @@ public class SerchServiceImpl implements SerchService {
 		return commonDao.getFilteredEventList(gender, eventType);
 	}
 
+	@Override
+	public List<Integer> checkForExistingBibNumbers(List<Integer> bib) {
+		return commonDao.checkForExistingBibNumbers(bib);
+	}
+
 }
