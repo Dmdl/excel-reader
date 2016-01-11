@@ -511,7 +511,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 						" FROM event_age_groups"+
 						" JOIN EVENTS ON events.id=event_age_groups.event_id"+
 						" WHERE age_group_id=? AND events.participants=?"+
-						" ORDER BY event_age_groups.event_id";
+						" ORDER BY events.id";
 			events = getJdbcTemplate().query(sql, new Object[]{ageGroup,gender},new AgeGroupEventRowMapper());
 			return events;
 		}catch(Exception e){
