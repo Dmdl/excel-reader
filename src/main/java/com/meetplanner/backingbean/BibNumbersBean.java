@@ -122,6 +122,7 @@ public class BibNumbersBean implements Serializable {
 	
 	public void assignBibNumbers(){
 		System.out.println("last bib "+lastBibNumber);
+		int tempBibNumber = lastBibNumber;
 		List<Athlete> temp = new ArrayList<Athlete>(0);
 		if(null!=athleteList && athleteList.size()>0 && null!=selectedAgeGroup){
 			List<Integer> bibBefore = new ArrayList<Integer>(0);
@@ -148,6 +149,7 @@ public class BibNumbersBean implements Serializable {
 			int max = CommonUtill.findMax(idList);
 			int lastBib = commonService.getLstBibForAgeGroup(Integer.parseInt(selectedAgeGroup));
 			if(max>lastBib){
+				lastBibNumber = tempBibNumber;
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "BIB Number Range Exceeded."));
 				athleteList = commonService.searchAthleteByGenderAndAge(selectedGender,Integer.parseInt(selectedAgeGroup));
 				return;
@@ -155,6 +157,7 @@ public class BibNumbersBean implements Serializable {
 			idList.removeAll(bibBefore);
 			List<Integer> duplicateBib = searchService.checkForExistingBibNumbers(idList);
 			if(duplicateBib!=null && duplicateBib.size()>0){
+				lastBibNumber = tempBibNumber;
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Duplicate BIB numbers "+duplicateBib.toString()));
 				athleteList = commonService.searchAthleteByGenderAndAge(selectedGender,Integer.parseInt(selectedAgeGroup));
 				return;
@@ -206,9 +209,22 @@ public class BibNumbersBean implements Serializable {
 			}else{
 				lastBibNumber = commonService.getStartBibForAgeGroup(Integer.parseInt(selectedAgeGroup));
 			}
+			if(null!=selectedGender){
+				athleteList = commonService.searchAthleteByGenderAndAge(selectedGender,Integer.parseInt(selectedAgeGroup));
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}		
+	}
+	
+	public void onGenderChange(){
+		if(null!=selectedAgeGroup){
+			try{
+				athleteList = commonService.searchAthleteByGenderAndAge(selectedGender,Integer.parseInt(selectedAgeGroup));
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public String getSelectedGroup() {
