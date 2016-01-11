@@ -15,6 +15,8 @@ import com.meetplanner.dto.Athlete;
 import com.meetplanner.exception.DuplicateValueException;
 import com.meetplanner.exception.GenricSqlException;
 import com.meetplanner.service.CommonService;
+import com.meetplanner.service.SerchService;
+import com.meetplanner.util.CommonUtill;
 import com.meetplanner.util.SpringApplicationContex;
 
 public class BibNumbersBean implements Serializable {
@@ -26,9 +28,11 @@ public class BibNumbersBean implements Serializable {
 	private List<Athlete> athleteList = null;
 	private Integer lastBibNumber;
 	private String selectedGender;
+	private SerchService searchService;
 
 	public BibNumbersBean() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
+		searchService = (SerchService) SpringApplicationContex.getBean("searchService");
 		try{
 			String bib = commonService.getLastAssignBibNumber();
 			if(null==bib){
@@ -119,7 +123,13 @@ public class BibNumbersBean implements Serializable {
 	public void assignBibNumbers(){
 		System.out.println("last bib "+lastBibNumber);
 		List<Athlete> temp = new ArrayList<Athlete>(0);
-		if(null!=athleteList && athleteList.size()>0){
+		if(null!=athleteList && athleteList.size()>0 && null!=selectedAgeGroup){
+			List<Integer> bibBefore = new ArrayList<Integer>(0);
+			for(Athlete e:athleteList){
+				if(null!=e.getBibNumber() || !"".equals(e.getBibNumber())){
+					bibBefore.add(Integer.parseInt(e.getBibNumber()));
+				}
+			}
 			Iterator<Athlete> ite = athleteList.iterator();
 			while(ite.hasNext()){
 				Athlete each = ite.next();
@@ -131,10 +141,29 @@ public class BibNumbersBean implements Serializable {
 			}
 			athleteList.clear();
 			athleteList.addAll(temp);
+			List<Integer> idList = new ArrayList<Integer>(0);
+			for(Athlete each:athleteList){
+				idList.add(Integer.parseInt(each.getBibNumber()));
+			}
+			int max = CommonUtill.findMax(idList);
+			int lastBib = commonService.getLstBibForAgeGroup(Integer.parseInt(selectedAgeGroup));
+			if(max>lastBib){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "BIB Number Range Exceeded."));
+				athleteList = commonService.searchAthleteByGenderAndAge(selectedGender,Integer.parseInt(selectedAgeGroup));
+				return;
+			}
+			idList.removeAll(bibBefore);
+			List<Integer> duplicateBib = searchService.checkForExistingBibNumbers(idList);
+			if(duplicateBib!=null && duplicateBib.size()>0){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Duplicate BIB numbers "+duplicateBib.toString()));
+				athleteList = commonService.searchAthleteByGenderAndAge(selectedGender,Integer.parseInt(selectedAgeGroup));
+				return;
+			}
 			try{
 				int count = commonService.addBibNumbers(athleteList);
-				System.out.println("count "+count);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Updated."));
+				if(count>0){
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Updated."));
+				}				
 			}catch(GenricSqlException e){
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured."));
 			}catch(DuplicateValueException d){
@@ -151,16 +180,17 @@ public class BibNumbersBean implements Serializable {
 			}else{
 				lastBibNumber= Integer.parseInt(bib)+1;
 			}*/
-			String lastBib = commonService.getLastAssignBibNumberForAgeGroup(Integer.parseInt(selectedAgeGroup));
-			if(null!=lastBib){
-				lastBibNumber = Integer.parseInt(lastBib)+1;
-			}else{
-				lastBibNumber = commonService.getStartBibForAgeGroup(Integer.parseInt(selectedAgeGroup));
+			if(null!=selectedAgeGroup){
+				String lastBib = commonService.getLastAssignBibNumberForAgeGroup(Integer.parseInt(selectedAgeGroup));
+				if(null!=lastBib){
+					lastBibNumber = Integer.parseInt(lastBib)+1;
+				}else{
+					lastBibNumber = commonService.getStartBibForAgeGroup(Integer.parseInt(selectedAgeGroup));
+				}
+				if(null!=selectedAgeGroup && null!=selectedGroup){
+					athleteList = commonService.searchAthleteByGroupAndAge(Integer.parseInt(selectedGroup), Integer.parseInt(selectedAgeGroup));
+				}
 			}
-			if(null!=selectedAgeGroup && null!=selectedGroup){
-				athleteList = commonService.searchAthleteByGroupAndAge(Integer.parseInt(selectedGroup), Integer.parseInt(selectedAgeGroup));
-			}
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}	

@@ -10,4 +10,6 @@ public interface SerchService {
 	public List<Athlete> searchAthlete(String bib, String name);
 	
 	public List<EventDTO> getFilteredEventList(String gender, String eventType);
+	
+	public List<Integer> checkForExistingBibNumbers(List<Integer> bib);
 }

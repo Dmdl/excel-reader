@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 
 import com.meetplanner.dao.mappers.UpdateAthleteRowMapper;
@@ -252,6 +253,35 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int getLstBibForAgeGroup(int ageGroupId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Integer> checkForExistingBibNumbers(List<Integer> bib) {
+		try{
+			List<Integer> finalList = new ArrayList<Integer>(0);
+			String sql = "SELECT athlete.bib FROM athlete WHERE athlete.bib IN (:ids)";
+			//List<String> ids = getJdbcTemplate().queryForList(sql, new Object[]{bib},String.class);
+			
+			MapSqlParameterSource parameters = new MapSqlParameterSource();
+			parameters.addValue("ids", bib);
+			List<String> ids = getNamedParameterJdbcTemplate().queryForList(sql, parameters,String.class);			
+			
+			if(null!=ids && ids.size()>0){
+				for(String e:ids){
+					finalList.add(Integer.parseInt(e));
+				}				
+			}
+			return finalList;
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}		
 	}
 
 }
