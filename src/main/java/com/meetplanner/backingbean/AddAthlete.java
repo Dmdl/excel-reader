@@ -129,6 +129,17 @@ public class AddAthlete implements Serializable {
 		}
 	}
 	
+	public void onAgeGroupChange(){
+		List<EventDTO> eventsSource = new ArrayList<EventDTO>();
+        List<EventDTO> eventsTarget = new ArrayList<EventDTO>();
+        if(activeIndex == 0){
+        	eventsSource = commonService.getEventsForAgeGroupAndGender(Integer.parseInt(selectedAgeGroup),"M");
+        }else if(activeIndex == 1){
+        	eventsSource = commonService.getEventsForAgeGroupAndGender(Integer.parseInt(selectedAgeGroup),"F");
+        }        
+        events = new DualListModel<EventDTO>(eventsSource, eventsTarget);
+	}
+	
 	public String getAthleteName() {
 		return athleteName;
 	}

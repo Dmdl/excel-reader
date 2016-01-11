@@ -76,4 +76,6 @@ public interface CommonService {
 	public int getStartBibForAgeGroup(int ageGroupId) throws GenricSqlException;
 	
 	public int getLstBibForAgeGroup(int ageGroupId);
+	
+	public List<EventDTO> getEventsForAgeGroupAndGender(int ageGroup,String gender);
 }

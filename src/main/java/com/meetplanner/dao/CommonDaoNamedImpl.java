@@ -284,4 +284,11 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		}		
 	}
 
+	@Override
+	public List<EventDTO> getEventsForAgeGroupAndGender(int ageGroup,
+			String gender) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -188,4 +188,9 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		return commonDao.getLstBibForAgeGroup(ageGroupId);
 	}
 
+	@Override
+	public List<EventDTO> getEventsForAgeGroupAndGender(int ageGroup,String gender) {
+		return commonDao.getEventsForAgeGroupAndGender(ageGroup, gender);
+	}
+
 }
