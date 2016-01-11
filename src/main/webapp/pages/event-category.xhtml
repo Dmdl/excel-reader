@@ -25,9 +25,24 @@
 						<p:outputLabel value="Third Place Point" />
 						<p:inputText value="#{eventCategory.pointThird}"/>
 						
-						<p:commandButton value="Add" action="#{eventCategory.addEventCategory()}" process="addEventCatPanel" update="eventCategory" />
+						<p:commandButton value="Add" action="#{eventCategory.addEventCategory()}" process="addEventCatPanel" update="eventCategory eventCategoryTbl" />
 						<p:commandButton value="Cancel"/>
 					</p:panelGrid>
+					<br/><br/>
+					<p:dataTable id="eventCategoryTbl" value="#{eventCategory.eventCategories}" var="event">
+						<p:column headerText="Category Name">
+					    	<h:outputText value="#{event.categoryName}" />
+					    </p:column>
+					    <p:column headerText="Point 1st">
+					    	<h:outputText value="#{event.pointFirst}" />
+					    </p:column>
+					    <p:column headerText="Point 2nd">
+					    	<h:outputText value="#{event.pointSecond}" />
+					    </p:column>
+					    <p:column headerText="Point 3rd">
+					    	<h:outputText value="#{event.pointThird}" />
+					    </p:column>
+					</p:dataTable>
 				</p:tab>
 				<p:tab id="updateEventCatTab" title="Update Event Category">
 					

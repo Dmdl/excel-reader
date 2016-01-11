@@ -1,6 +1,7 @@
 package com.meetplanner.backingbean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -16,10 +17,16 @@ public class EventCategoryBean implements Serializable {
 	private double pointFirst;
 	private double pointSecond;
 	private double pointThird;
-	private CommonService commonService;	
+	private CommonService commonService;
+	private List<EventCategoryDTO> eventCategories;
 
 	public EventCategoryBean() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
+		try{
+			eventCategories = commonService.getEventCategories();
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 	}
 
 	public void addEventCategory(){
@@ -31,6 +38,7 @@ public class EventCategoryBean implements Serializable {
 			event.setPointThird(pointThird);
 			try{
 				commonService.addEventCategory(event);
+				eventCategories = commonService.getEventCategories();
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "Added succsesfully"));
 			}catch(Exception e){
 				e.printStackTrace();
@@ -69,6 +77,14 @@ public class EventCategoryBean implements Serializable {
 
 	public void setPointThird(double pointThird) {
 		this.pointThird = pointThird;
+	}
+
+	public List<EventCategoryDTO> getEventCategories() {
+		return eventCategories;
+	}
+
+	public void setEventCategories(List<EventCategoryDTO> eventCategories) {
+		this.eventCategories = eventCategories;
 	}
 
 }
