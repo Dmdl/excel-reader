@@ -126,7 +126,7 @@ public class BibNumbersBean implements Serializable {
 		if(null!=athleteList && athleteList.size()>0 && null!=selectedAgeGroup){
 			List<Integer> bibBefore = new ArrayList<Integer>(0);
 			for(Athlete e:athleteList){
-				if(null!=e.getBibNumber() || !"".equals(e.getBibNumber())){
+				if(null!=e.getBibNumber() && !"".equals(e.getBibNumber())){
 					bibBefore.add(Integer.parseInt(e.getBibNumber()));
 				}
 			}
