@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
+import com.meetplanner.dao.mappers.AgeGroupEventRowMapper;
 import com.meetplanner.dao.mappers.AgeGroupRowMapper;
 import com.meetplanner.dao.mappers.AthleteRowMapper;
 import com.meetplanner.dao.mappers.EventAgeGroupRowMapper;
@@ -500,6 +501,22 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 	@Override
 	public List<Integer> checkForExistingBibNumbers(List<Integer> bib) {
 		return null;
+	}
+
+	@Override
+	public List<EventDTO> getEventsForAgeGroupAndGender(int ageGroup,String gender) {
+		List<EventDTO> events = new ArrayList<EventDTO>(0);
+		try{
+			String sql = "SELECT DISTINCT(event_age_groups.event_id),events.event_name,events.type,events.participants"+
+						" FROM event_age_groups"+
+						" JOIN EVENTS ON events.id=event_age_groups.event_id"+
+						" WHERE age_group_id=? AND events.participants=?";
+			events = getJdbcTemplate().query(sql, new Object[]{ageGroup,gender},new AgeGroupEventRowMapper());
+			return events;
+		}catch(Exception e){
+			e.printStackTrace();
+			return events;
+		}
 	}
 		
 }

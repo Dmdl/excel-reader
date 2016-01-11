@@ -24,6 +24,7 @@
 						
 						<p:outputLabel value="Age Group" />
 						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedAgeGroup}" required="true" requiredMessage="Age is required">
+							<p:ajax listener="#{athlete.onAgeGroupChange()}" update="eventList"/>
 							<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />							
 							<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 						</p:selectOneMenu>
@@ -63,6 +64,7 @@
 						
 						<p:outputLabel value="Age Group" />
 						<p:selectOneMenu style="width:150px;" value="#{athlete.selectedAgeGroup}" required="true" requiredMessage="Age is required">	
+							<p:ajax listener="#{athlete.onAgeGroupChange()}" update="eventListWomen"/>
 							<f:selectItem itemLabel="Select Age Group" itemValue="" noSelectionOption="true" />						
 							<f:selectItems value="#{commonData.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}" />							
 						</p:selectOneMenu>

@@ -80,4 +80,6 @@ public interface CommonDao {
 	public int getLstBibForAgeGroup(int ageGroupId);
 	
 	public List<Integer> checkForExistingBibNumbers(List<Integer> bib);
+	
+	public List<EventDTO> getEventsForAgeGroupAndGender(int ageGroup,String gender);
 }
