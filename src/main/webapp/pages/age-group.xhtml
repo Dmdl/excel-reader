@@ -20,10 +20,10 @@
 								<p:inputText value="#{eventBean.ageGroup}" required="true" requiredMessage="Age Group is Required"></p:inputText>
 								
 								<p:outputLabel value="From Date" />
-								<p:calendar id="fromDate" value="#{eventBean.selectedFromAge}" showOn="button" pattern="dd-MM-yyyy" navigator="true" required="true" requiredMessage="From Date Required"></p:calendar>
+								<p:calendar id="fromDate" value="#{eventBean.selectedFromAge}" showOn="button" pattern="MM/dd/yyyy" yearRange="c-50:c+1" navigator="true" required="true" requiredMessage="From Date Required"></p:calendar>
 								
 								<p:outputLabel value="To Date" />
-								<p:calendar id="toDate" value="#{eventBean.selectedToAge}" showOn="button" pattern="dd-MM-yyyy" navigator="true" required="true" requiredMessage="To Date Required"></p:calendar>
+								<p:calendar id="toDate" value="#{eventBean.selectedToAge}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-50:c+1" required="true" requiredMessage="To Date Required"></p:calendar>
 								
 								<p:outputLabel value="From BIB Number" />
 								<p:inputText id="fromBib" value="#{eventBean.fromBibNumber}" required="true" requiredMessage="From BIB Number required"></p:inputText>
@@ -90,10 +90,10 @@
 							<p:inputText value="#{eventBean.ageGroup}" required="true" requiredMessage="Age Group is Required"/>
 							
 							<p:outputLabel value="From Date" />
-							<p:calendar id="fromDateUpdate" value="#{eventBean.selectedFromAge}" showOn="button" pattern="dd-MM-yyyy" navigator="true" required="true" requiredMessage="From Date Required"></p:calendar>
+							<p:calendar id="fromDateUpdate" value="#{eventBean.selectedFromAge}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-50:c+1" required="true" requiredMessage="From Date Required"></p:calendar>
 							
 							<p:outputLabel value="To Date" />
-							<p:calendar id="toDateUpdate" value="#{eventBean.selectedToAge}" showOn="button" pattern="dd-MM-yyyy" navigator="true" required="true" requiredMessage="To Date required"></p:calendar>
+							<p:calendar id="toDateUpdate" value="#{eventBean.selectedToAge}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-50:c+1" required="true" requiredMessage="To Date required"></p:calendar>
 							
 							<p:outputLabel value="From BIB Number"></p:outputLabel>
 							<p:inputText value="#{eventBean.fromBibNumber}" required="true" requiredMessage="From BIB Number required"></p:inputText>
