@@ -27,7 +27,7 @@ public interface CommonService {
 
 	public boolean saveAthletesPerformances(List<ResultDTO> results);
 
-	public List<Athlete> serachAthleteByBibOrName(String bib, String name);
+	public List<Athlete> serachAthleteByBibOrName(String bib, String name,int group);
 
 	public boolean updateAthlete(Athlete athlete) throws GenricSqlException;
 	

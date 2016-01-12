@@ -163,7 +163,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 	}
 
 	@Override
-	public List<Athlete> serachAthleteByBibOrName(String bib, String name) {
+	public List<Athlete> serachAthleteByBibOrName(String bib, String name,int group) {
 		return null;
 	}
 

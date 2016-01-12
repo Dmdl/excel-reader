@@ -11,12 +11,18 @@
 		<h:form id="editAthleteFrm">
 		<div align="center" class="headingColor"><h2>Update Athletes</h2></div>
 			<p:fieldset id="editFieldSet" legend="update Athlete">
-				<p:panelGrid id="editSearch" columns="5" columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-2,ui-grid-col-3,ui-grid-col-2" style="width:60%;" styleClass="panelGridCenter">
+				<p:panelGrid id="editSearch" columns="7" columnClasses="ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2" style="width:100%;" styleClass="panelGridCenter">
 					<p:outputLabel value="BIB Number" />
 					<p:inputText value="#{updateAthlete.serachBib}"/>
 					
 					<p:outputLabel value="Name" />
 					<p:inputText value="#{updateAthlete.searchname}"/>
+					
+					<h:outputText value="School/Club Name" />
+					<p:selectOneMenu id="selectGroupSearch" style="width:150px;" value="#{updateAthlete.searchGroup}">								
+						<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
+		                <f:selectItems value="#{commonData.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
+					</p:selectOneMenu>
 					
 					<p:commandButton value="Search" action="#{updateAthlete.searchAthlete()}" update="addAthlete serchResultTbl :editAthleteFrm:editAthlete"></p:commandButton>
 				</p:panelGrid>

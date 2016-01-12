@@ -61,8 +61,8 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	}
 
 	@Override
-	public List<Athlete> serachAthleteByBibOrName(String bib, String name) {
-		return commonDao.serachAthleteByBibOrName(bib, name);
+	public List<Athlete> serachAthleteByBibOrName(String bib, String name,int group) {
+		return commonDao.serachAthleteByBibOrName(bib, name,group);
 	}
 
 	@Transactional(rollbackFor=GenricSqlException.class)

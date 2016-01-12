@@ -38,6 +38,7 @@ public class UpdateAthleteBean implements Serializable {
 	private int athleteId;
 	private DualListModel<EventDTO> events;
 	private FileUploadService fileUploadService;
+	private int searchGroup;
 
 	public UpdateAthleteBean() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -49,10 +50,10 @@ public class UpdateAthleteBean implements Serializable {
 	}
 
 	public void searchAthlete(){
-		System.out.println("serachBib "+serachBib+" searchname "+searchname);
-		if((null!=serachBib && !"".equals(serachBib)) || (null!=searchname && !"".equals(searchname))){
+		System.out.println("serachBib "+serachBib+" searchname "+searchname+" searchGroup "+searchGroup);
+		if((null!=serachBib && !"".equals(serachBib)) || (null!=searchname && !"".equals(searchname)) || searchGroup!=0){
 			resetFeilds();
-			searchResult = searchService.searchAthlete(serachBib, searchname);
+			searchResult = searchService.searchAthlete(serachBib, searchname,searchGroup);
 			if(null==searchResult){
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured."));
 			}else if(searchResult.size()==0){
@@ -99,7 +100,8 @@ public class UpdateAthleteBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Date of Birth Do not Match with Age Group"));
 			return;
 		}
-		if(events.getTarget().size()>0 && events.getTarget().size()<4){
+		/*if(events.getTarget().size()>0 && events.getTarget().size()<4){*/
+		if(events.getTarget().size()>0){
 			Athlete athlete = new Athlete();
 			athlete.setId(String.valueOf(athleteId));
 			athlete.setName(athleteName);
@@ -112,7 +114,7 @@ public class UpdateAthleteBean implements Serializable {
 			try{
 				boolean ok = commonService.updateAthlete(athlete);
 				if(ok){
-					searchResult = searchService.searchAthlete(serachBib, searchname);
+					searchResult = searchService.searchAthlete(serachBib, searchname,searchGroup);
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "Updated Successfully."));
 				}
 			}catch(GenricSqlException e){
@@ -255,6 +257,14 @@ public class UpdateAthleteBean implements Serializable {
 
 	public void setFileUploadService(FileUploadService fileUploadService) {
 		this.fileUploadService = fileUploadService;
+	}
+
+	public int getSearchGroup() {
+		return searchGroup;
+	}
+
+	public void setSearchGroup(int searchGroup) {
+		this.searchGroup = searchGroup;
 	}	
 
 }
