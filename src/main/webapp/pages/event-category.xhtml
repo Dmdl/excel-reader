@@ -11,10 +11,11 @@
 		<h:form id="eventCatFrm">
 			<div align="center" class="headingColor"><h2>Event Category</h2></div>
 			<p:tabView id="eventcatTabView">
+			<p:ajax event="tabChange" update="eventCategoryTbl eventCatUpdate"/>
 				<p:tab id="addEventCatTab" title="Add Event Category">
 					<p:panelGrid id="addEventCatPanel" columns="2" style="width:50%;">
 						<p:outputLabel value="Event Category Name" />
-						<p:inputText value="#{eventCategory.eventCategoryName}"/>
+						<p:inputText value="#{eventCategory.eventCategoryName}" required="true" requiredMessage="Event Category Name is Required"/>
 						
 						<p:outputLabel value="First Place Point" />
 						<p:inputText value="#{eventCategory.pointFirst}"/>
@@ -24,6 +25,15 @@
 						
 						<p:outputLabel value="Third Place Point" />
 						<p:inputText value="#{eventCategory.pointThird}"/>
+						
+						<p:outputLabel value="Forth Place Point" />
+						<p:inputText value="#{eventCategory.pointForth}"/>
+						
+						<p:outputLabel value="Fifth Place Point" />
+						<p:inputText value="#{eventCategory.pointFifth}"/>
+						
+						<p:outputLabel value="Sixth Place Point" />
+						<p:inputText value="#{eventCategory.pointSixth}"/>
 						
 						<p:commandButton value="Add" action="#{eventCategory.addEventCategory()}" process="addEventCatPanel" update="eventCategory eventCategoryTbl" />
 						<p:commandButton value="Cancel"/>
@@ -42,12 +52,78 @@
 					    <p:column headerText="Point 3rd">
 					    	<h:outputText value="#{event.pointThird}" />
 					    </p:column>
+					    <p:column headerText="Point 4th">
+					    	<h:outputText value="#{event.pointForth}" />
+					    </p:column>
+					    <p:column headerText="Point 5th">
+					    	<h:outputText value="#{event.pointFifth}" />
+					    </p:column>
+					    <p:column headerText="Point 6th">
+					    	<h:outputText value="#{event.pointSixth}" />
+					    </p:column>
 					</p:dataTable>
 				</p:tab>
 				<p:tab id="updateEventCatTab" title="Update Event Category">
-					
+					<p:dataTable id="eventCatUpdate" value="#{eventCategory.eventCategories}" var="event">
+						<p:column headerText="Category Name">
+					    	<h:outputText value="#{event.categoryName}" />
+					    </p:column>
+					    <p:column headerText="Point 1st">
+					    	<h:outputText value="#{event.pointFirst}" />
+					    </p:column>
+					    <p:column headerText="Point 2nd">
+					    	<h:outputText value="#{event.pointSecond}" />
+					    </p:column>
+					    <p:column headerText="Point 3rd">
+					    	<h:outputText value="#{event.pointThird}" />
+					    </p:column>
+					    <p:column headerText="Point 4th">
+					    	<h:outputText value="#{event.pointForth}" />
+					    </p:column>
+					    <p:column headerText="Point 5th">
+					    	<h:outputText value="#{event.pointFifth}" />
+					    </p:column>
+					    <p:column headerText="Point 6th">
+					    	<h:outputText value="#{event.pointSixth}" />
+					    </p:column>
+					    <p:column>
+					    	<p:commandButton value="Update" action="#{eventCategory.populateToEdit(event)}" update=":eventCatFrm:eventcatTabView:pangridUpdate" process="eventCatUpdate"/>
+					    	<p:commandButton value="Delete" action="#{eventCategory.showConfirmDialog(event)}" process="eventCatUpdate"/>
+					    </p:column>
+					</p:dataTable>
+					<br/><br/>
+					<p:panelGrid id="pangridUpdate" columns="2" style="width:50%;">
+						<p:outputLabel value="Event Category Name" />
+						<p:inputText value="#{eventCategory.eventCategoryName}" required="true" requiredMessage="Event Category Name is Required"/>
+						
+						<p:outputLabel value="First Place Point" />
+						<p:inputText value="#{eventCategory.pointFirst}"/>
+						
+						<p:outputLabel value="Second Place Point" />
+						<p:inputText value="#{eventCategory.pointSecond}"/>
+						
+						<p:outputLabel value="Third Place Point" />
+						<p:inputText value="#{eventCategory.pointThird}"/>
+						
+						<p:outputLabel value="Forth Place Point" />
+						<p:inputText value="#{eventCategory.pointForth}"/>
+						
+						<p:outputLabel value="Fifth Place Point" />
+						<p:inputText value="#{eventCategory.pointFifth}"/>
+						
+						<p:outputLabel value="Sixth Place Point" />
+						<p:inputText value="#{eventCategory.pointSixth}"/>
+						
+						<p:commandButton value="Update" action="#{eventCategory.update()}" update="eventCategory :eventCatFrm:eventcatTabView:eventCatUpdate" process=":eventCatFrm:eventcatTabView:pangridUpdate" />
+						<p:commandButton value="Cancel"/>
+					</p:panelGrid>
 				</p:tab>
 			</p:tabView>
+			<p:dialog id="confirmdlg" widgetVar="confirmDialog">
+				<p:outputLabel value="Are You Really Want to Delete the event Category?"/><br/><br/>
+				<div align="center"><p:commandButton value="Yes" action="#{eventCategory.deleteEventcategory()}" process="confirmdlg" update="eventCategory :eventCatFrm:eventcatTabView:eventCatUpdate" oncomplete="PF('confirmDialog').hide();"/>
+				<p:commandButton value="No" onclick="PF('confirmDialog').hide();"/></div>
+			</p:dialog>
 		</h:form>
 
 	</ui:define>

@@ -193,4 +193,14 @@ public class CommonServiceImpl implements CommonService,Serializable{
 		return commonDao.getEventsForAgeGroupAndGender(ageGroup, gender);
 	}
 
+	@Override
+	public void updateEventCategory(EventCategoryDTO update) throws Exception{
+		commonDao.updateEventCategory(update);
+	}
+
+	@Override
+	public void deleteEventCategory(int eventCatId) throws Exception {
+		commonDao.deleteEventCategory(eventCatId);
+	}
+
 }

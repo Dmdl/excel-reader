@@ -82,4 +82,8 @@ public interface CommonDao {
 	public List<Integer> checkForExistingBibNumbers(List<Integer> bib);
 	
 	public List<EventDTO> getEventsForAgeGroupAndGender(int ageGroup,String gender);
+
+	public void updateEventCategory(EventCategoryDTO update) throws Exception;
+
+	public void deleteEventCategory(int eventCatId) throws Exception;
 }

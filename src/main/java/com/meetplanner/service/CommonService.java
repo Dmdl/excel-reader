@@ -78,4 +78,8 @@ public interface CommonService {
 	public int getLstBibForAgeGroup(int ageGroupId);
 	
 	public List<EventDTO> getEventsForAgeGroupAndGender(int ageGroup,String gender);
+
+	public void updateEventCategory(EventCategoryDTO update) throws Exception;
+
+	public void deleteEventCategory(int eventCatId) throws Exception;
 }

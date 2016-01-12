@@ -296,4 +296,16 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		return null;
 	}
 
+	@Override
+	public void updateEventCategory(EventCategoryDTO update) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteEventCategory(int eventCatId) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
