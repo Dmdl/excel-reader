@@ -12,6 +12,7 @@ public class EventDTO {
 	private String participants;
 	private int eventCategoryId;
 	private List<AgeGroupDTO> ageGroups;
+	private String eventCategory;
 
 	public int getId() {
 		return id;
@@ -59,6 +60,14 @@ public class EventDTO {
 
 	public void setAgeGroups(List<AgeGroupDTO> ageGroups) {
 		this.ageGroups = ageGroups;
+	}
+
+	public String getEventCategory() {
+		return eventCategory;
+	}
+
+	public void setEventCategory(String eventCategory) {
+		this.eventCategory = eventCategory;
 	}
 
 	@Override
