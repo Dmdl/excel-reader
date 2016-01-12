@@ -117,7 +117,7 @@ public class EventResultsBean implements Serializable{
 						disableSubmit = true;
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured"));
 					}catch(NoDataException e){
-						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Athlete not found for BIB Number "+each.getBibNumber()));
+						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Invalid BIB number "+each.getBibNumber()+" for selected criteria "));
 						each.setName(null);
 						each.setGroup(null);
 						disableSubmit = true;
