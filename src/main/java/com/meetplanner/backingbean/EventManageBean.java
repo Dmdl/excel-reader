@@ -79,11 +79,22 @@ public class EventManageBean implements Serializable{
 			if(ok){
 				resetFields();
 				events = fileUploadService.getAllEvents();
+				resetFeilds();
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Successfully Saved."));
 			}
 		}catch(Exception e){
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Error Occured."));
 		}
+	}
+	
+	public void resetFeilds(){
+		try{
+			List<AgeGroupDTO> ageGroupSource = commonService.getAgeGroups();
+			List<AgeGroupDTO> ageGroupTarget = new ArrayList<AgeGroupDTO>();
+			ageGroupsPickList = new DualListModel<AgeGroupDTO>(ageGroupSource, ageGroupTarget);
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 	}
 	
 	public void addGroup(){
