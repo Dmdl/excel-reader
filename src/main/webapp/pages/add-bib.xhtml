@@ -12,7 +12,7 @@
 			<div class="ui-fluid">
 			<div align="center" class="headingColor"><h2>Add / Update BIB Numbers</h2></div>
 				<p:tabView dynamic="true" cache="true">
-				<p:ajax event="tabChange" listener="#{bibNumbers.onTabChange}" update="lastBibInput athleteTable"/>
+				<p:ajax event="tabChange" listener="#{bibNumbers.onTabChange}" update="lastBibInput athleteTable selectAgeGroup selectGender selectAgeGroupUpdate selectGenderUpdate athleteTableUpdate"/>
 					<p:tab title="Add BIB Numbers" id="addTab">
 						<p:panelGrid columns="5" cellpadding="10" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-4" layout="grid" style="width:80%;" styleClass="panelGridCenter">
 							<h:outputText value="Age Group" />
@@ -36,7 +36,7 @@
 								<f:selectItem itemLabel="Women" itemValue="F" />
 							</p:selectOneMenu>
 							
-							<p:commandButton value="Search" action="#{bibNumbers.search()}" update="addBib athleteTable" process="addTab"></p:commandButton>
+							<p:commandButton value="Search" action="#{bibNumbers.search()}" update="addBib athleteTable" process="addTab" disabled="true"></p:commandButton>
 						</p:panelGrid>
 						<br/><br/><br/>
 						<p:panelGrid columns="4" columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-1,ui-grid-col-1" style="width:90%;" styleClass="panelGridCenter">

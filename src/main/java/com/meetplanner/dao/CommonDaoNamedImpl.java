@@ -67,10 +67,10 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 	}
 
 	@Override
-	public List<Athlete> serachAthleteByBibOrName(String bib, String name) {
+	public List<Athlete> serachAthleteByBibOrName(String bib, String name,int group) {
 		List<Athlete> results = null;
 		try{
-			String sql = "SELECT athlete.id AS athlete_id,athlete.name AS athlete_name,date_of_birth,group_id,nic,gender,age_group_id,bib,groups.name AS group_name FROM athlete LEFT JOIN groups ON athlete.group_id=groups.id WHERE athlete.name LIKE :pname";
+			String sql = "SELECT athlete.id AS athlete_id,athlete.name AS athlete_name,date_of_birth,group_id,nic,gender,age_group_id,bib,groups.name AS group_name,age_groups.age_group FROM athlete LEFT JOIN groups ON athlete.group_id=groups.id LEFT JOIN age_groups ON athlete.age_group_id=age_groups.id WHERE athlete.name LIKE :pname";
 			String quName = "%" + name + "%";
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("pname", quName);
@@ -78,6 +78,11 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 				System.out.println("Appending bib number...");
 				sql +=" AND bib=:pbib";
 				parameters.put("pbib", bib);
+			}
+			if(group!=0){
+				System.out.println("Appending group...");
+				sql +=" AND group_id=:pgroup_id";
+				parameters.put("pgroup_id", group);
 			}
 			results = getNamedParameterJdbcTemplate().query(sql,parameters,new UpdateAthleteRowMapper());
 		}catch(Exception e){
@@ -289,6 +294,18 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 			String gender) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void updateEventCategory(EventCategoryDTO update) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteEventCategory(int eventCatId) throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

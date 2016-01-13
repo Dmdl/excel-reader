@@ -7,6 +7,9 @@ public class EventCategoryDTO {
 	private double pointFirst;
 	private double pointSecond;
 	private double pointThird;
+	private double pointForth;
+	private double pointFifth;
+	private double pointSixth;
 
 	public int getId() {
 		return id;
@@ -46,6 +49,30 @@ public class EventCategoryDTO {
 
 	public void setPointThird(double pointThird) {
 		this.pointThird = pointThird;
+	}
+
+	public double getPointForth() {
+		return pointForth;
+	}
+
+	public void setPointForth(double pointForth) {
+		this.pointForth = pointForth;
+	}
+
+	public double getPointFifth() {
+		return pointFifth;
+	}
+
+	public void setPointFifth(double pointFifth) {
+		this.pointFifth = pointFifth;
+	}
+
+	public double getPointSixth() {
+		return pointSixth;
+	}
+
+	public void setPointSixth(double pointSixth) {
+		this.pointSixth = pointSixth;
 	}
 
 }

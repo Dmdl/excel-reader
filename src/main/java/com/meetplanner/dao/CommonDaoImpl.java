@@ -163,7 +163,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 	}
 
 	@Override
-	public List<Athlete> serachAthleteByBibOrName(String bib, String name) {
+	public List<Athlete> serachAthleteByBibOrName(String bib, String name,int group) {
 		return null;
 	}
 
@@ -427,8 +427,8 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 
 	@Override
 	public void addEventCategory(EventCategoryDTO eventcategory) throws Exception {
-		String sql = "INSERT INTO event_category(category_name,point_first,point_second,point_third) VALUES (?,?,?,?)";
-		getJdbcTemplate().update(sql,new Object[] {eventcategory.getCategoryName(),eventcategory.getPointFirst(),eventcategory.getPointSecond(),eventcategory.getPointThird()});
+		String sql = "INSERT INTO event_category(category_name,point_first,point_second,point_third,point_forth,point_fifth,point_sixth) VALUES (?,?,?,?,?,?,?)";
+		getJdbcTemplate().update(sql,new Object[] {eventcategory.getCategoryName(),eventcategory.getPointFirst(),eventcategory.getPointSecond(),eventcategory.getPointThird(),eventcategory.getPointForth(),eventcategory.getPointFifth(),eventcategory.getPointSixth()});
 	}
 
 	@Override
@@ -518,6 +518,18 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 			e.printStackTrace();
 			return events;
 		}
+	}
+
+	@Override
+	public void updateEventCategory(EventCategoryDTO update) throws Exception{
+		String sql = "UPDATE event_category SET category_name=?,point_first=?,point_second=?,point_third=?,point_forth=?,point_fifth=?,point_sixth=? WHERE id=?";
+		getJdbcTemplate().update(sql,update.getCategoryName(),update.getPointFirst(),update.getPointSecond(),update.getPointThird(),update.getPointForth(),update.getPointFifth(),update.getPointSixth(),update.getId());
+	}
+
+	@Override
+	public void deleteEventCategory(int eventCatId) throws Exception {
+		String sql = "DELETE FROM event_category WHERE id=?";
+		getJdbcTemplate().update(sql, new Object[] {eventCatId});
 	}
 		
 }

@@ -20,6 +20,7 @@ public class Athlete implements Serializable{
 	private String bibNumber;
 	private int groupId;
 	private ResultDTO eventResult = new ResultDTO();
+	private String ageGroupString;
 
 	public String getId() {
 		return id;
@@ -123,6 +124,14 @@ public class Athlete implements Serializable{
 
 	public void setEvents(List<EventDTO> events) {
 		this.events = events;
+	}
+
+	public String getAgeGroupString() {
+		return ageGroupString;
+	}
+
+	public void setAgeGroupString(String ageGroupString) {
+		this.ageGroupString = ageGroupString;
 	}
 	
 }

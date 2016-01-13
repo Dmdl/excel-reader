@@ -61,8 +61,8 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	}
 
 	@Override
-	public List<Athlete> serachAthleteByBibOrName(String bib, String name) {
-		return commonDao.serachAthleteByBibOrName(bib, name);
+	public List<Athlete> serachAthleteByBibOrName(String bib, String name,int group) {
+		return commonDao.serachAthleteByBibOrName(bib, name,group);
 	}
 
 	@Transactional(rollbackFor=GenricSqlException.class)
@@ -191,6 +191,16 @@ public class CommonServiceImpl implements CommonService,Serializable{
 	@Override
 	public List<EventDTO> getEventsForAgeGroupAndGender(int ageGroup,String gender) {
 		return commonDao.getEventsForAgeGroupAndGender(ageGroup, gender);
+	}
+
+	@Override
+	public void updateEventCategory(EventCategoryDTO update) throws Exception{
+		commonDao.updateEventCategory(update);
+	}
+
+	@Override
+	public void deleteEventCategory(int eventCatId) throws Exception {
+		commonDao.deleteEventCategory(eventCatId);
 	}
 
 }

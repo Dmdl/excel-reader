@@ -27,7 +27,7 @@ public interface CommonDao {
 
 	public boolean saveAthletesPerformances(List<ResultDTO> results);
 
-	public List<Athlete> serachAthleteByBibOrName(String bib, String name);
+	public List<Athlete> serachAthleteByBibOrName(String bib, String name,int group);
 
 	public boolean updateAthlete(Athlete athlete) throws GenricSqlException;
 	
@@ -82,4 +82,8 @@ public interface CommonDao {
 	public List<Integer> checkForExistingBibNumbers(List<Integer> bib);
 	
 	public List<EventDTO> getEventsForAgeGroupAndGender(int ageGroup,String gender);
+
+	public void updateEventCategory(EventCategoryDTO update) throws Exception;
+
+	public void deleteEventCategory(int eventCatId) throws Exception;
 }

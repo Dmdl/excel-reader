@@ -72,6 +72,9 @@
 							    <p:column headerText="Gender">
 							    	<h:outputText value="#{event.participants eq 'F' ? 'Women' : 'Men'}" />
 							    </p:column>
+							    <p:column headerText="Event Category">
+							    	<h:outputText value="#{event.eventCategory}" />
+							    </p:column>
 							    <p:column headerText="">
 							    	<div align="center">
 								    	<p:commandButton value="Edit" action="#{eventBean.editEvent(event)}" process="eventTblUpdate" update=":addEventFrm:mainAccPnl:addEventTabview:updateEventGrid"/>

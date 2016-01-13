@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import com.meetplanner.dao.mappers.AgeGroupRowMapper;
 import com.meetplanner.dao.mappers.EventRowMapper;
+import com.meetplanner.dao.mappers.EventUpdateRowMapper;
 import com.meetplanner.dto.AgeGroupDTO;
 import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.GroupDTO;
@@ -62,9 +63,12 @@ public class FileUploadDaoImpl extends JdbcDaoSupport implements FileUploadDao {
 	public List<EventDTO> getAllEvents() {
 		List<EventDTO> events = new ArrayList<EventDTO>();
 		try{
-			String sql = "SELECT * FROM events";
-			events = (List<EventDTO>) getJdbcTemplate().query(sql,
-					new BeanPropertyRowMapper<>(EventDTO.class));
+			//String sql = "SELECT * FROM events";
+			String sql = "SELECT events.id, events.event_name,events.participants,events.type,events.event_category_id,event_category.category_name"+
+						" FROM events"+
+						" JOIN event_category ON event_category.id=events.event_category_id";
+			/*events = (List<EventDTO>) getJdbcTemplate().query(sql,new BeanPropertyRowMapper<>(EventDTO.class));*/
+			events = (List<EventDTO>) getJdbcTemplate().query(sql,new EventUpdateRowMapper());
 			return events;
 		}catch(Exception e){
 			e.printStackTrace();

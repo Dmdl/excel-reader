@@ -17,6 +17,9 @@ public class EventCategoryRowMapper implements RowMapper<EventCategoryDTO>{
 		cat.setPointFirst(rs.getDouble("point_first"));
 		cat.setPointSecond(rs.getDouble("point_second"));
 		cat.setPointThird(rs.getDouble("point_third"));
+		cat.setPointForth(rs.getDouble("point_forth"));
+		cat.setPointFifth(rs.getDouble("point_fifth"));
+		cat.setPointSixth(rs.getDouble("point_sixth"));
 		return cat;
 	}
 

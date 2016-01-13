@@ -56,10 +56,10 @@ public class AddAthlete implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Select Events"));
 			return;
 		}
-		if(athleteEvents.size()>3){
+		/*if(athleteEvents.size()>3){
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Maximum Number of Events is 3"));
 			return;
-		}
+		}*/
 		AgeGroupDTO ageGroupSelect = commonService.getAgeGroup(Integer.parseInt(selectedAgeGroup));
 		if(!CommonUtill.isDateBetween(dateOfBirth, ageGroupSelect.getFromAge(), ageGroupSelect.getToAge())){
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Date of Birth Do not Match with Age Group"));

@@ -18,8 +18,8 @@ public class SerchServiceImpl implements SerchService {
 	private CommonDao commonDao;
 
 	@Override
-	public List<Athlete> searchAthlete(String bib, String name) {
-		return commonDao.serachAthleteByBibOrName(bib, name);
+	public List<Athlete> searchAthlete(String bib, String name,int group) {
+		return commonDao.serachAthleteByBibOrName(bib, name,group);
 	}
 
 	@Override

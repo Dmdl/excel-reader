@@ -21,6 +21,7 @@ public class UpdateAthleteRowMapper implements RowMapper<Athlete> {
 		athlete.setAgeGroup(rs.getString("age_group_id"));
 		athlete.setBibNumber(rs.getString("bib"));
 		athlete.setGroup(rs.getString("group_name"));
+		athlete.setAgeGroupString(rs.getString("age_group"));
 		return athlete;
 	}
 
