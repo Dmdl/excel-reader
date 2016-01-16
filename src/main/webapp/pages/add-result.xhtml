@@ -39,7 +39,11 @@
 									<p:commandButton value="Remove Row" action="#{resultsBean.RemoveRow()}" process="trackResultTabMan" update="addResult trackResultTableMan"></p:commandButton>
 								</div>
 								<br/>
-								<p:dataTable id="trackResultTableMan" var="result" value="#{resultsBean.resultToFill}">
+								<p:dataTable id="trackResultTableMan" var="result" value="#{resultsBean.resultToFill}">								
+								
+									<p:column headerText="Place">
+								        <div align="center"><h:inputText value="#{result.eventResult.place}" /></div>
+								    </p:column>
 								    <p:column headerText="BIB Number">
 								        <div align="center"><h:inputText value="#{result.bibNumber}" /></div>
 								    </p:column>
@@ -89,6 +93,10 @@
 								</div>
 								<br/>
 								<p:dataTable id="trackResultTableWomen" var="result" value="#{resultsBean.resultToFill}">
+								    <p:column headerText="Place">
+								        <div align="center"><h:inputText value="#{result.eventResult.place}" /></div>
+								    </p:column>
+								    
 								    <p:column headerText="BIB Number">
 								        <div align="center"><h:inputText value="#{result.bibNumber}" /></div>
 								    </p:column>
@@ -142,6 +150,10 @@
 								</div>
 								<br/>
 								<p:dataTable id="feildResultTableMan" var="result" value="#{resultsBean.resultToFill}">
+								    <p:column headerText="Place">
+								        <div align="center"><h:inputText value="#{result.eventResult.place}" /></div>
+								    </p:column>
+								    
 								    <p:column headerText="BIB Number">
 								        <div align="center"><h:inputText value="#{result.bibNumber}" /></div>
 								    </p:column>
@@ -190,6 +202,10 @@
 								</div>
 								<br/>
 								<p:dataTable id="feildResultTableWomen" var="result" value="#{resultsBean.resultToFill}">
+								    <p:column headerText="Place">
+								        <div align="center"><h:inputText value="#{result.eventResult.place}" /></div>
+								    </p:column>
+								    
 								    <p:column headerText="BIB Number">
 								        <div align="center"><h:inputText value="#{result.bibNumber}" /></div>
 								    </p:column>

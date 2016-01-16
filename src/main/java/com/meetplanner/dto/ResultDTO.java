@@ -8,6 +8,7 @@ public class ResultDTO {
 	private String performance;
 	private String name;
 	private String group;
+	private int place;
 
 	public int getAthleteId() {
 		return athleteId;
@@ -55,6 +56,14 @@ public class ResultDTO {
 
 	public void setGroup(String group) {
 		this.group = group;
+	}
+
+	public int getPlace() {
+		return place;
+	}
+
+	public void setPlace(int place) {
+		this.place = place;
 	}
 
 }

@@ -137,10 +137,10 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		return results;
 	}
 
-	private void updatePerformance(int athleteid,int eventId,double performance){
+	private void updatePerformance(int athleteid,int eventId,double performance,int place){
 		try{
-			String sql = "UPDATE athlete_events SET performance=? WHERE athlete_id=? AND event_id=?";
-			getJdbcTemplate().update(sql, performance,athleteid,eventId);
+			String sql = "UPDATE athlete_events SET performance=?,place=? WHERE athlete_id=? AND event_id=?";
+			getJdbcTemplate().update(sql, performance,place,athleteid,eventId);
 		}catch(Exception e){
 			e.printStackTrace();
 			throw new RuntimeException();
@@ -152,7 +152,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		boolean ok = false;
 		try{
 			for(ResultDTO each:results){
-				updatePerformance(each.getAthleteId(), each.getEventId(), Double.parseDouble(each.getPerformance()));
+				updatePerformance(each.getAthleteId(), each.getEventId(), Double.parseDouble(each.getPerformance()),each.getPlace());
 			}
 			ok = true;
 		}catch(Exception e){
@@ -191,7 +191,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 	public Athlete getAthleteFromBibNumber(String bib,int ageGroupId,int eventId,String gender) throws GenricSqlException,NoDataException{
 		Athlete athlete = null;
 		try{
-			String sql = "SELECT athlete.id AS athlete_id,athlete.name AS thlete_name,athlete.nic,athlete.bib,groups.name AS group_name,athlete_events.performance"+
+			String sql = "SELECT athlete.id AS athlete_id,athlete.name AS thlete_name,athlete.nic,athlete.bib,groups.name AS group_name,athlete_events.performance,athlete_events.place AS athlete_place"+
 						" FROM athlete LEFT JOIN groups ON athlete.group_id=groups.id"+
 						" LEFT JOIN athlete_events ON athlete.id=athlete_events.athlete_id"+
 						" WHERE athlete.bib=? AND athlete.age_group_id=? AND athlete_events.event_id=? AND athlete.gender=?";
@@ -209,7 +209,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		boolean ok = false;
 		try{
 			for(Athlete each:athletes){
-				updatePerformance(Integer.parseInt(each.getId()),eventId,Double.parseDouble(each.getEventResult().getPerformance()));
+				updatePerformance(Integer.parseInt(each.getId()),eventId,Double.parseDouble(each.getEventResult().getPerformance()),each.getEventResult().getPlace());
 			}
 			ok = true;
 		}catch(Exception e){

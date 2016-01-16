@@ -113,6 +113,7 @@ public class EventResultsBean implements Serializable{
 						each.setBibNumber(ath.getBibNumber());
 						each.setGroup(ath.getGroup());
 						each.getEventResult().setPerformance(ath.getEventResult().getPerformance());
+						each.getEventResult().setPlace(ath.getEventResult().getPlace());
 					}catch(GenricSqlException e){
 						disableSubmit = true;
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured"));
@@ -281,5 +282,4 @@ public class EventResultsBean implements Serializable{
 	public void setEventList(HashMap<Integer, String> eventList) {
 		this.eventList = eventList;
 	}
-	
 }

@@ -18,6 +18,7 @@ public class EventResultRowMapper implements RowMapper<Athlete>{
 		athlete.setNic(rs.getString("nic"));
 		athlete.setBibNumber(rs.getString("bib"));
 		athlete.getEventResult().setPerformance(rs.getString("performance"));
+		athlete.getEventResult().setPlace(rs.getInt("athlete_place"));
 		return athlete;
 	}
 
