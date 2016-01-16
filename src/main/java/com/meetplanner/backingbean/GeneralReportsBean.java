@@ -31,6 +31,7 @@ public class GeneralReportsBean implements Serializable {
 	private List<PlayerListDTO> groupathleteList;
 	private int selectedEvent;
 	private List<PlayerEventDTO> eventAthletes;
+	private List<PlayerEventDTO> eventResult;
 
 	public GeneralReportsBean() {
 		fileUploadService = (FileUploadService) SpringApplicationContex.getBean("fileUploadService");
@@ -75,6 +76,14 @@ public class GeneralReportsBean implements Serializable {
 		System.out.println("selectedEvent "+selectedEvent+" selectedAgeGroup "+selectedAgeGroup+" gender "+gender);
 		eventAthletes = reportService.getEventWiseAthletes(selectedEvent, selectedAgeGroup, gender);
 		if(eventAthletes ==null || eventAthletes.size()==0){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "No matching records for search criteria"));
+		}
+	}
+	
+	public void searchEventResults(){
+		System.out.println("selectedEvent "+selectedEvent+" selectedAgeGroup "+selectedAgeGroup+" gender "+gender);
+		eventResult = reportService.getEventWiseAthletes(selectedEvent, selectedAgeGroup, gender);
+		if(eventResult ==null || eventResult.size()==0){
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "No matching records for search criteria"));
 		}
 	}
@@ -149,6 +158,14 @@ public class GeneralReportsBean implements Serializable {
 
 	public void setEventAthletes(List<PlayerEventDTO> eventAthletes) {
 		this.eventAthletes = eventAthletes;
+	}
+
+	public List<PlayerEventDTO> getEventResult() {
+		return eventResult;
+	}
+
+	public void setEventResult(List<PlayerEventDTO> eventResult) {
+		this.eventResult = eventResult;
 	}
 
 }

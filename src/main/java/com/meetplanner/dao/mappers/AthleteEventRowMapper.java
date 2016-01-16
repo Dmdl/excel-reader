@@ -17,6 +17,8 @@ public class AthleteEventRowMapper implements RowMapper<PlayerEventDTO>{
 		pla.setAthleteName(rs.getString("athlete_name"));
 		pla.setDateOfBirth(rs.getDate("date_of_birth"));
 		pla.setGroupName(rs.getString("group_name"));
+		pla.setPerformance(rs.getDouble("performance"));
+		pla.setPlace(rs.getInt("place"));
 		return pla;
 	}
 
