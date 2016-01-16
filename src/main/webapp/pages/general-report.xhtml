@@ -9,8 +9,8 @@
 	<ui:define name="content">
 		<p:growl id="printRepGr" showDetail="true"></p:growl>
 
-		<h:form>
-			<div style="margin-left:10%;">
+		<h:form id="genRepFrm">
+			<div style="margin-left:5%;">
 			<div align="center" class="headingColor"><h2>General Reports</h2></div>
 				<p:accordionPanel id="generalRepPnl">
 					<p:tab id="grpWiseRepTab" title="Group Wise Athlete Count">
@@ -42,6 +42,101 @@
 							
 							<p:commandButton value="Print" action="#{reportBean.printGroupAthleteReport()}" ajax="false"/>
 						</p:panelGrid>					
+					</p:tab>
+					<p:tab id="tabCompPlayer" title="Player List - School/Club">
+						<p:panelGrid id="compantathletePnl" columns="2" style="width:60%;">
+							<p:outputLabel value="School/Club Name" />
+							<p:selectOneMenu style="width:150px;" value="#{generalRepBen.selectedGroup}" required="true" requiredMessage="Group is required">									
+								<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
+				                <f:selectItems value="#{generalRepBen.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="Age Group" />
+							<p:selectOneMenu style="width:150px;" value="#{generalRepBen.selectedAgeGroup}" required="true" requiredMessage="Age Group is required">									
+								<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
+				                <f:selectItems value="#{generalRepBen.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
+							</p:selectOneMenu>
+							
+							<h:outputText value="Gender" />
+							<p:selectOneMenu value="#{generalRepBen.gender}" id="selectGender" style="width:150px;" required="true" requiredMessage="Gender is Required">
+								<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
+								<f:selectItem itemLabel="Men" itemValue="M" />
+								<f:selectItem itemLabel="Women" itemValue="F" />
+							</p:selectOneMenu>
+							
+							<p:commandButton value="search" action="#{generalRepBen.searchAthletes()}" process="compantathletePnl" update="printRepGr groupathleteTbl"/>
+							<p:commandButton value="Clear" action="#{generalRepBen.resetAthleteGroup()}" process="compantathletePnl" update="groupathleteTbl"/>
+						</p:panelGrid>
+						<br/><br/>
+						<p:dataTable id="groupathleteTbl" value="#{generalRepBen.groupathleteList}" var="athlete">
+							<!-- <p:column headerText="Id">
+						    	<h:outputText value="#{athlete.id}" />
+						    </p:column> -->
+						    <p:column headerText="BIB No">
+						    	<h:outputText value="#{athlete.bibNumber}" />
+						    </p:column>
+						    <p:column headerText="Name">
+						    	<h:outputText value="#{athlete.athleteName}" />
+						    </p:column>
+						    <p:column headerText="DOB">
+						    	<h:outputText value="#{athlete.dateOfBirth}" />
+						    </p:column>
+						    <p:column headerText="Events">						    								    	
+						    	<ui:repeat value="#{athlete.events}" var="eve">
+						    		<p:outputLabel value="#{eve.eventName}" /><br/>
+						    	</ui:repeat>  						    	
+						    </p:column>
+						    <p:column headerText="Age Group">
+						    	<h:outputText value="#{athlete.ageGroup}" />
+						    </p:column>
+						    <p:column headerText="Gender">
+						    	<h:outputText value="#{athlete.gender eq 'F' ? 'Women' : 'Men'}" />
+						    </p:column>
+						</p:dataTable>
+					</p:tab>
+					<p:tab id="tabEventPlayer" title="Player List - Event">
+						<p:panelGrid columns="2" id="eventPlayerPnl" style="width:60%;">
+							<p:outputLabel value="Event" />
+							<p:selectOneMenu style="width:150px;" value="#{generalRepBen.selectedEvent}" required="true" requiredMessage="Event is required">									
+								<f:selectItem itemLabel="Select Event" itemValue="" noSelectionOption="true" />
+				                <f:selectItems value="#{generalRepBen.eventList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
+							</p:selectOneMenu>
+							
+							<p:outputLabel value="Age Group" />
+							<p:selectOneMenu style="width:150px;" value="#{generalRepBen.selectedAgeGroup}" required="true" requiredMessage="Age Group is required">									
+								<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
+				                <f:selectItems value="#{generalRepBen.ageList.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
+							</p:selectOneMenu>
+							
+							<h:outputText value="Gender" />
+							<p:selectOneMenu value="#{generalRepBen.gender}" id="selectGenderEvent" style="width:150px;" required="true" requiredMessage="Gender is Required">
+								<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
+								<f:selectItem itemLabel="Men" itemValue="M" />
+								<f:selectItem itemLabel="Women" itemValue="F" />
+							</p:selectOneMenu>
+							
+							<p:commandButton value="search" action="#{generalRepBen.searchEventAthletes()}" update="printRepGr eventAthleteTbl" process="eventPlayerPnl"/>
+							<p:commandButton value="clear"/>
+						</p:panelGrid>
+						<br/><br/>
+						<p:dataTable id="eventAthleteTbl" value="#{generalRepBen.eventAthletes}" var="athlete">
+							<!-- <p:column headerText="Id">
+						    	<h:outputText value="#{athlete.id}" />
+						    </p:column> -->
+						    <p:column headerText="BIB No">
+						    	<h:outputText value="#{athlete.bibNumber}" />
+						    </p:column>
+						    <p:column headerText="Name">
+						    	<h:outputText value="#{athlete.athleteName}" />
+						    </p:column>
+						    <p:column headerText="School/Club">
+						    	<h:outputText value="#{athlete.groupName}" />
+						    </p:column>
+						    
+						    <p:column headerText="Date of Birth">
+						    	<h:outputText value="#{athlete.dateOfBirth}" />
+						    </p:column>						    
+						</p:dataTable>
 					</p:tab>
 				</p:accordionPanel>						
 			</div>

@@ -1,7 +1,10 @@
 package com.meetplanner.dto;
 
-public class ResultDTO {
+import java.io.Serializable;
 
+public class ResultDTO implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private int athleteId;
 	private int eventId;
 	private String bibNo;

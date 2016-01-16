@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
+import com.meetplanner.dao.mappers.AthleteEventRowMapper;
+import com.meetplanner.dao.mappers.AthleteReportRowMapper;
 import com.meetplanner.dao.mappers.AthleteRowMapper;
 import com.meetplanner.dao.mappers.GroupRowMapper;
 import com.meetplanner.dao.mappers.GroupWiseAthleteCountMapper;
@@ -12,11 +14,12 @@ import com.meetplanner.dao.mappers.ReportRowMapper;
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.GroupAthleteCountDTO;
 import com.meetplanner.dto.GroupDTO;
+import com.meetplanner.dto.PlayerEventDTO;
+import com.meetplanner.dto.PlayerListDTO;
 import com.meetplanner.dto.ReportDTO;
 import com.meetplanner.exception.GenricSqlException;
 
-public class ReportDaoImpl extends JdbcDaoSupport implements ReportDao,
-		Serializable {
+public class ReportDaoImpl extends JdbcDaoSupport implements ReportDao,Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -72,6 +75,39 @@ public class ReportDaoImpl extends JdbcDaoSupport implements ReportDao,
 		}catch(Exception e){
 			e.printStackTrace();
 			return resultList;
+		}
+	}
+
+	@Override
+	public List<PlayerListDTO> getGroupWiseAthlete(int groupId, int ageGroupId,String gender) {
+		try{
+			String sql = "SELECT athlete.id AS athlete_id,athlete.name AS athlete_name,athlete.date_of_birth,athlete.bib,athlete.gender,groups.name AS group_name,events.event_name AS event_name,age_groups.age_group AS age_group"+
+						" FROM athlete JOIN groups ON athlete.group_id=groups.id"+
+						" JOIN age_groups ON age_groups.id=athlete.age_group_id"+
+						" LEFT JOIN athlete_events ON athlete.id=athlete_events.athlete_id"+
+						" JOIN EVENTS ON events.id=athlete_events.event_id"+
+						" WHERE athlete.group_id=? AND athlete.age_group_id=? AND athlete.gender=?";
+			
+			return getJdbcTemplate().query(sql, new Object[] {groupId,ageGroupId,gender}, new AthleteReportRowMapper());
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public List<PlayerEventDTO> getEventWiseAthletes(int eventId,int ageGroupId, String gender) {
+		try{
+			String sql = "SELECT athlete.id AS athlete_id,athlete.bib AS bib_number,athlete.name AS athlete_name,athlete.date_of_birth,groups.name AS group_name"+
+						" FROM athlete_events"+
+						" LEFT JOIN athlete ON athlete.id=athlete_events.athlete_id"+
+						" LEFT JOIN groups ON athlete.group_id=groups.id"+
+						" WHERE athlete_events.event_id=? AND athlete.age_group_id=? AND athlete.gender=?";
+			
+			return getJdbcTemplate().query(sql, new Object[] {eventId,ageGroupId,gender}, new AthleteEventRowMapper());
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
 		}
 	}
 
