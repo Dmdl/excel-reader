@@ -107,10 +107,17 @@ public class AddAthlete implements Serializable {
 		nic = null;
 		List<EventDTO> eventsSource = new ArrayList<EventDTO>();
         List<EventDTO> eventsTarget = new ArrayList<EventDTO>();
-        if(activeIndex == 0){
+        /*if(activeIndex == 0){
         	eventsSource = searchService.getFilteredEventList("M", null);
         }else if(activeIndex == 1){
         	eventsSource = searchService.getFilteredEventList("F", null);
+        }
+        events = new DualListModel<EventDTO>(eventsSource, eventsTarget);*/
+        
+        if(activeIndex == 0 && null!=selectedAgeGroup){
+        	eventsSource = commonService.getEventsForAgeGroupAndGender(Integer.parseInt(selectedAgeGroup),"M");
+        }else if(activeIndex == 1 && null!=selectedAgeGroup){
+        	eventsSource = commonService.getEventsForAgeGroupAndGender(Integer.parseInt(selectedAgeGroup),"F");
         }
         events = new DualListModel<EventDTO>(eventsSource, eventsTarget);
 	}
