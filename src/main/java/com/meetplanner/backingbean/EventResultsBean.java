@@ -35,6 +35,7 @@ public class EventResultsBean implements Serializable{
 	private SerchService searchService;
 	private int activeIndexTrack;
 	private int activeIndexFeild;
+	private boolean disablePlace = true;
 	
 	public EventResultsBean(){
 		resultToFill = new ArrayList<Athlete>(0);
@@ -114,6 +115,7 @@ public class EventResultsBean implements Serializable{
 						each.setGroup(ath.getGroup());
 						each.getEventResult().setPerformance(ath.getEventResult().getPerformance());
 						each.getEventResult().setPlace(ath.getEventResult().getPlace());
+						disablePlace = false;
 					}catch(GenricSqlException e){
 						disableSubmit = true;
 						FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Error Occured"));
@@ -282,4 +284,13 @@ public class EventResultsBean implements Serializable{
 	public void setEventList(HashMap<Integer, String> eventList) {
 		this.eventList = eventList;
 	}
+
+	public boolean isDisablePlace() {
+		return disablePlace;
+	}
+
+	public void setDisablePlace(boolean disablePlace) {
+		this.disablePlace = disablePlace;
+	}
+	
 }

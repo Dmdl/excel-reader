@@ -42,7 +42,7 @@
 								<p:dataTable id="trackResultTableMan" var="result" value="#{resultsBean.resultToFill}">								
 								
 									<p:column headerText="Place">
-								        <div align="center"><h:inputText value="#{result.eventResult.place}" /></div>
+								        <div align="center"><h:inputText value="#{result.eventResult.place}" disabled="#{resultsBean.disablePlace}"/></div>
 								    </p:column>
 								    <p:column headerText="BIB Number">
 								        <div align="center"><h:inputText value="#{result.bibNumber}" /></div>
