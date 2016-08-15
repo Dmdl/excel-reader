@@ -13,6 +13,12 @@ public class ResultDTO implements Serializable{
 	private String group;
 	private int place;
 
+	public ResultDTO(){}
+	
+	public ResultDTO(int place){
+		this.place = place;
+	}
+	
 	public int getAthleteId() {
 		return athleteId;
 	}

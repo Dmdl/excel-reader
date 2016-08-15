@@ -36,6 +36,7 @@ public class EventResultsBean implements Serializable{
 	private int activeIndexTrack;
 	private int activeIndexFeild;
 	private boolean disablePlace = true;
+	private int place = 1;
 	
 	public EventResultsBean(){
 		resultToFill = new ArrayList<Athlete>(0);
@@ -135,7 +136,11 @@ public class EventResultsBean implements Serializable{
 	
 	public void addRow(){
 		if((null!=selectedAgeGroup && !"".equals(selectedAgeGroup)) && (null!=selectedEvent && !"".equals(selectedEvent))){
-			resultToFill.add(new Athlete());
+			ResultDTO dto = new ResultDTO(place);
+			Athlete athlete = new Athlete();
+			athlete.setEventResult(dto);
+			resultToFill.add(athlete);
+			place = place+1;
 		}else{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Select Event and Age group"));
 		}
@@ -143,6 +148,7 @@ public class EventResultsBean implements Serializable{
 	
 	public void RemoveRow(){
 		if(null!= resultToFill && resultToFill.size()>0){
+			place = place -1;
 			resultToFill.remove(resultToFill.size()-1);
 		}else{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "No Rows to Remove"));
@@ -156,6 +162,7 @@ public class EventResultsBean implements Serializable{
 		if(null!=eventList){
 			eventList.clear();
 		}
+		place = 1;
 		AccordionPanel accPanel = (AccordionPanel) event.getComponent();
 		System.out.println("track "+activeIndexTrack+" feild "+activeIndexFeild+" main active in "+accPanel.getActiveIndex());
 		int accPanelActiveIndex = Integer.parseInt(accPanel.getActiveIndex());
