@@ -33,7 +33,7 @@
 						<p:inputText value="#{athlete.athleteName}" required="true" requiredMessage="Name is required" style="width:50%;"/>
 						
 						<p:outputLabel value="Date of Birth" />
-						<p:calendar id="dobm" value="#{athlete.dateOfBirth}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-50:c+1" required="true" requiredMessage="Date of Birth is required"/>
+						<p:calendar id="dobm" value="#{athlete.dateOfBirth}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-50:c+50" required="true" requiredMessage="Date of Birth is required"/>
 						
 						<p:outputLabel value="Event/s" />
 						<!--<p:selectOneMenu style="width:200px;" value="#{athlete.selectedEvent}" required="true" requiredMessage="Event is required">
