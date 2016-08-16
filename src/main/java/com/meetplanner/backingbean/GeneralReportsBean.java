@@ -13,6 +13,7 @@ import com.meetplanner.dto.EventDTO;
 import com.meetplanner.dto.GroupDTO;
 import com.meetplanner.dto.PlayerEventDTO;
 import com.meetplanner.dto.PlayerListDTO;
+import com.meetplanner.service.CommonService;
 import com.meetplanner.service.FileUploadService;
 import com.meetplanner.service.ReportService;
 import com.meetplanner.util.SpringApplicationContex;
@@ -32,8 +33,10 @@ public class GeneralReportsBean implements Serializable {
 	private int selectedEvent;
 	private List<PlayerEventDTO> eventAthletes;
 	private List<PlayerEventDTO> eventResult;
+	private CommonService commonService;
 
 	public GeneralReportsBean() {
+		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
 		fileUploadService = (FileUploadService) SpringApplicationContex.getBean("fileUploadService");
 		reportService = (ReportService) SpringApplicationContex.getBean("reportService");
 		List<GroupDTO> groups = fileUploadService.getAllGroups();
@@ -85,6 +88,18 @@ public class GeneralReportsBean implements Serializable {
 		eventResult = reportService.getEventWiseAthletes(selectedEvent, selectedAgeGroup, gender);
 		if(eventResult ==null || eventResult.size()==0){
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "No matching records for search criteria"));
+		}
+	}
+	
+	public void onAgeGroupChange(){
+		System.out.println("gender "+gender+" age group "+selectedAgeGroup);
+		eventList.clear();
+		List<EventDTO> eventForAgeGroup = commonService.getEventsForAgeGroupAndGender(selectedAgeGroup,gender);
+		if (eventForAgeGroup.size() > 0) {
+			System.out.println("number of events "+eventForAgeGroup.size());
+			for (EventDTO e : eventForAgeGroup) {
+				eventList.put(e.getId(), e.getEventName());
+			}
 		}
 	}
 	
