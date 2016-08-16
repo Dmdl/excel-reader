@@ -111,4 +111,20 @@ public class ReportDaoImpl extends JdbcDaoSupport implements ReportDao,Serializa
 		}
 	}
 
+	@Override
+	public List<PlayerEventDTO> getEventWiseAthletesWithPlace(int selectedEvent, int selectedAgeGroup, String gender) {
+		try{
+			String sql = "SELECT athlete.id AS athlete_id,athlete.bib AS bib_number,athlete.name AS athlete_name,athlete.date_of_birth,groups.name AS group_name,athlete_events.performance,athlete_events.place"+
+						" FROM athlete_events"+
+						" LEFT JOIN athlete ON athlete.id=athlete_events.athlete_id"+
+						" LEFT JOIN groups ON athlete.group_id=groups.id"+
+						" WHERE athlete_events.event_id=? AND athlete.age_group_id=? AND athlete.gender=? AND athlete_events.place!=0";
+			
+			return getJdbcTemplate().query(sql, new Object[] {selectedEvent,selectedAgeGroup,gender}, new AthleteEventRowMapper());
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

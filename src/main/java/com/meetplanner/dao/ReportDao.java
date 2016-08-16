@@ -23,4 +23,6 @@ public interface ReportDao {
 	public List<PlayerListDTO> getGroupWiseAthlete(int groupId,int ageGroupId,String gender);
 	
 	public List<PlayerEventDTO> getEventWiseAthletes(int eventId,int ageGroupId,String gender);
+
+	public List<PlayerEventDTO> getEventWiseAthletesWithPlace(int selectedEvent, int selectedAgeGroup, String gender);
 }

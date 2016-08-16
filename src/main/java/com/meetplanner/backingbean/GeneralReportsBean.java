@@ -85,7 +85,8 @@ public class GeneralReportsBean implements Serializable {
 	
 	public void searchEventResults(){
 		System.out.println("selectedEvent "+selectedEvent+" selectedAgeGroup "+selectedAgeGroup+" gender "+gender);
-		eventResult = reportService.getEventWiseAthletes(selectedEvent, selectedAgeGroup, gender);
+		//eventResult = reportService.getEventWiseAthletes(selectedEvent, selectedAgeGroup, gender);
+		eventResult = reportService.getEventWiseAthletesWithPlace(selectedEvent, selectedAgeGroup, gender);
 		if(eventResult ==null || eventResult.size()==0){
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info!", "No matching records for search criteria"));
 		}

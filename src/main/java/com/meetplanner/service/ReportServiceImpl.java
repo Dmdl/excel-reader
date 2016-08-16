@@ -92,4 +92,9 @@ public class ReportServiceImpl implements ReportService,Serializable{
 		return reportDao.getEventWiseAthletes(eventId, ageGroupId, gender);
 	}
 
+	@Override
+	public List<PlayerEventDTO> getEventWiseAthletesWithPlace(int selectedEvent, int selectedAgeGroup, String gender) {
+		return reportDao.getEventWiseAthletesWithPlace(selectedEvent, selectedAgeGroup, gender);
+	}
+
 }
