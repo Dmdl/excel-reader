@@ -30,6 +30,7 @@ public class FileUploadbackingBean implements Serializable{
 	private Map<Integer, String> allGroups=new HashMap<Integer, String>();
 	private FileUploadService fileUploadService;
 	private String selectedGroup;
+	private String gender;
 
 	public FileUploadbackingBean(){
 		try{		
@@ -63,7 +64,7 @@ public class FileUploadbackingBean implements Serializable{
 				}
 				String filePath=FILE_SAVE_LOCATION+event.getFile().getFileName();
 				System.out.println("filePath:::::::::::: "+filePath);
-				reader.read(filePath);
+				reader.read(filePath,gender);
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "File Upload successful", "File Upload successful"));
 			}catch(Exception e){
 				e.printStackTrace();
@@ -127,6 +128,14 @@ public class FileUploadbackingBean implements Serializable{
 
 	public void setSelectedGroup(String selectedGroup) {
 		this.selectedGroup = selectedGroup;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 }

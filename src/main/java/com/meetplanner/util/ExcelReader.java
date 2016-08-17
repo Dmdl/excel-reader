@@ -36,7 +36,7 @@ public class ExcelReader implements Reader {
 	private FileUploadService fileUploadService;
 
 	@Override
-	public void read(String path) throws Exception{
+	public void read(String path,String gender) throws Exception{
 		readExcelFile(path);
 	}
 

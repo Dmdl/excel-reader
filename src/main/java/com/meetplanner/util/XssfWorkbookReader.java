@@ -17,6 +17,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
+import com.meetplanner.dto.Athlete;
+import com.meetplanner.dto.EventDTO;
+
 /**
  * @author lakmal dasanayake
  *
@@ -26,18 +29,16 @@ public class XssfWorkbookReader implements Reader {
 
 	private static final int START_INDEX = 2;
 	private static final int EVENTS_ATART_INDEX = 9;
-	// private static final int EVENTS_ATART_INDEX = 9;
-	private String[] eventsMen = { "100M", "200M", "400M", "800M", "1500M", "5000M", "1500M W", "110M H", "400M H",
-			"L/J", "H/J", "T/J", "S/P", "D/T", "J/T", "H/T" };
 
 	Map<Integer, String> eventMap = new HashMap<>();
 
 	@Override
-	public void read(String path) throws Exception {
-		this.readExcelFile(path);
+	public void read(String path, String gender) throws Exception {
+		System.out.println("gender --- " + gender);
+		this.readExcelFile(path, gender);
 	}
 
-	private void readExcelFile(String path) {
+	private void readExcelFile(String path, String gender) {
 		try {
 			FileInputStream in = new FileInputStream(path);
 			OPCPackage pkg = OPCPackage.open(in);
@@ -99,11 +100,10 @@ public class XssfWorkbookReader implements Reader {
 						}
 						eachSheetContent.add(new ArrayList<String>(eachRowContent));
 						eachRowContent.clear();
-						System.out.println();
 					}
 				}
 				System.out.println();
-				processEachSheet(eachSheetContent);
+				processEachSheet(eachSheetContent, gender);
 			}
 			wb.close();
 		} catch (Exception e) {
@@ -111,20 +111,32 @@ public class XssfWorkbookReader implements Reader {
 		}
 	}
 
-	private void processEachSheet(List<List<String>> eachSheetContent) {
+	private void processEachSheet(List<List<String>> eachSheetContent, String gender) {
+		List<Athlete> athletes = new ArrayList<>(0);
 		for (List<String> row : eachSheetContent) {
-			for (String cell : row) {
-				if(!"".equals(cell)){
-					System.out.print(cell + "   ");
-				}				
+			if (null != row && row.size() > 0 && !"".equals(row.get(0))) {
+				Athlete athlete = new Athlete();
+				athlete.setBibNumber(row.get(2));
+				athlete.setName(row.get(3));
+				// athlete.setDateOfBirth(row.get(5));
+				athlete.setNic(row.get(4));
+				athlete.setEmpNo(row.get(1));
+				athlete.setGender(gender);
+				List<String> events = getMatchingEvents(row);
+				List<EventDTO> athleteEvents = new ArrayList<>(0);
+				for (String ev : events) {
+					EventDTO event = new EventDTO();
+					event.setEventName(ev);
+					event.setParticipants(gender);
+					event.setType("T");
+					event.setEventCategoryId(1);
+					athleteEvents.add(event);
+				}
+				athlete.setEvents(athleteEvents);
+				athletes.add(athlete);
 			}
-			System.out.println();
-			List<String> events = getMatchingEvents(row);
-			for(String ev :events){
-				System.out.print(ev +" ");
-			}
-			System.out.println();
 		}
+		print(athletes);
 	}
 
 	public void getEventsFromHeader(LinkedList<String> header) {
@@ -132,37 +144,34 @@ public class XssfWorkbookReader implements Reader {
 		int count = 0;
 		for (int k = EVENTS_ATART_INDEX; k < header.size() - 2; k++) {
 			System.out.print(header.get(k) + "   ");
-			//eventMap.put(k, header.get(k));
 			eventMap.put(count, header.get(k));
 			count++;
 		}
 	}
 
-	private List<String> getEvents(List<String> eachRow) {
-		List<String> events = new ArrayList<>(0);
-		for (int k = EVENTS_ATART_INDEX ; k < eachRow.size(); k++) {
-			String event = eachRow.get(k);
-			if (!"".equals(event)) {
-				String matchingEvent = eventMap.get(k);
-				if(null!=matchingEvent){
-					events.add(matchingEvent);
-				}				
-			}
-		}
-		return events;
-	}
-	
 	private List<String> getMatchingEvents(List<String> eachRow) {
 		List<String> events = new ArrayList<>(0);
 		int count = 0;
-		for (int k = EVENTS_ATART_INDEX ; k < eachRow.size(); k++) {
+		for (int k = EVENTS_ATART_INDEX; k < eachRow.size(); k++) {
 			String cellVal = eachRow.get(k);
-			if("x".equalsIgnoreCase(cellVal)){
+			if ("x".equalsIgnoreCase(cellVal)) {
 				String eventname = eventMap.get(count);
 				events.add(eventname);
 			}
 			count++;
 		}
 		return events;
+	}
+
+	private void print(List<Athlete> athletes) {
+		for (Athlete ath : athletes) {
+			List<EventDTO> events = ath.getEvents();
+			System.out.println("bib -> " + ath.getBibNumber() + " name -> " + ath.getName());
+			for (EventDTO ev : events) {
+				System.out.print(ev.getEventName());
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
 }

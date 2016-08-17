@@ -19,12 +19,20 @@
 		<h:form>
 		<div align="center" class="headingColor"><h2>Upload excel File</h2></div>
 			<p:panelGrid columns="2" styleClass="companyHeaderGrid panelGridCenter">		
-				<p:outputLabel for="groupType" value="Select Group " />
+				<!-- <p:outputLabel for="groupType" value="Select Group " />
 	            <p:selectOneMenu id="groupType" value="#{fileUploadbackingBean.selectedGroup}" style="width:150px;">                
 	                <f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
 	                <f:selectItems value="#{fileUploadbackingBean.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" 
 	                itemLabel="#{entry.value}"/>
-	            </p:selectOneMenu>
+	            </p:selectOneMenu> -->
+	            
+	            <h:outputText value="Gender" />
+				<p:selectOneMenu id="selectGenderEvent" value="#{fileUploadbackingBean.gender}" style="width:150px;" required="true" requiredMessage="Gender is Required">
+					<p:ajax event="change" update="@this" />
+					<f:selectItem itemLabel="Select Gender" itemValue="" noSelectionOption="true" />
+					<f:selectItem itemLabel="Men" itemValue="M" />
+					<f:selectItem itemLabel="Women" itemValue="F" />
+				</p:selectOneMenu>
 			</p:panelGrid>
 		</h:form>
 		<br /><br />
