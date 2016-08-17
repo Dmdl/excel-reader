@@ -119,7 +119,7 @@ public class XssfWorkbookReader implements Reader {
 				}				
 			}
 			System.out.println();
-			List<String> events = getEvents(row);
+			List<String> events = getMatchingEvents(row);
 			for(String ev :events){
 				System.out.print(ev +" ");
 			}
@@ -139,7 +139,6 @@ public class XssfWorkbookReader implements Reader {
 	}
 
 	private List<String> getEvents(List<String> eachRow) {
-		System.out.println("number of cells "+eachRow.size());
 		List<String> events = new ArrayList<>(0);
 		for (int k = EVENTS_ATART_INDEX ; k < eachRow.size(); k++) {
 			String event = eachRow.get(k);
