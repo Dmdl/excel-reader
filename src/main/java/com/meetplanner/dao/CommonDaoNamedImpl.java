@@ -308,4 +308,28 @@ public class CommonDaoNamedImpl extends NamedParameterJdbcDaoSupport implements 
 		
 	}
 
+	@Override
+	public int addGroup(String groupName) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int addAgeGroupForUpload(AgeGroupDTO dto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int addEventForUpload(EventDTO dto,String gender) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public EventDTO getEvent(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

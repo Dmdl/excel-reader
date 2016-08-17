@@ -2,6 +2,7 @@ package com.meetplanner.dao;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,14 +43,14 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		boolean success = false;
 		try{
 			final String sql = "INSERT INTO athlete " +
-					"(name, date_of_birth, group_id,nic,employee_no,gender,age_group_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+					"(name, date_of_birth, group_id,nic,employee_no,gender,age_group_id,bib) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
 						 
 //			int count = getJdbcTemplate().update(sql, new Object[] { athlete.getName(),athlete.getDateOfBirth(),athlete.getGroup(),athlete.getNic(),athlete.getEmpNo(),athlete.getGender(),athlete.getAgeGroup()});
 			KeyHolder keyHolder = new GeneratedKeyHolder();
 			getJdbcTemplate().update(
 			    new PreparedStatementCreator() {
 			        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-			            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"name","date_of_birth","group_id","nic","employee_no","gender","age_group_id"});
+			            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"name","date_of_birth","group_id","nic","employee_no","gender","age_group_id","bib"});
 			            ps.setString(1, athlete.getName());
 			            ps.setDate(2, new java.sql.Date(athlete.getDateOfBirth().getTime()));
 			            ps.setString(3, athlete.getGroup());
@@ -57,6 +58,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 			            ps.setString(5, athlete.getEmpNo());
 			            ps.setString(6, athlete.getGender());
 			            ps.setString(7, athlete.getAgeGroup());
+			            ps.setString(8, athlete.getBibNumber());
 			            return ps;
 			        }
 			    },keyHolder);
@@ -531,5 +533,145 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		String sql = "DELETE FROM event_category WHERE id=?";
 		getJdbcTemplate().update(sql, new Object[] {eventCatId});
 	}
-		
+
+	@Override
+	public int addGroup(final String groupName) {
+		if(!isGroupExist(groupName)){
+			final String sql = "INSERT INTO groups(NAME) VALUES (?)";
+			KeyHolder keyHolder = new GeneratedKeyHolder();
+			getJdbcTemplate().update(
+			    new PreparedStatementCreator() {
+			        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+			            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"name"});
+			            ps.setString(1, groupName);		        
+			            return ps;
+			        }
+			    },keyHolder);
+			int key = keyHolder.getKey().intValue();
+			return key;
+		}else{
+			return getGroupId(groupName);
+		}
+	}
+	
+	private boolean isGroupExist(String groupName){
+		boolean ok = false;
+		String sql = "SELECT COUNT(*) FROM groups WHERE groups.name =?";
+		try{
+			int total = getJdbcTemplate().queryForObject(
+	                sql,new Object[] { groupName }, Integer.class);
+			if(total>0){
+				ok = true;
+			}
+			return ok;
+		}catch(Exception e){
+			return ok;
+		}		
+	}
+	
+	private int getGroupId(String groupname){
+		String sql = "SELECT groups.id FROM groups WHERE groups.name = ?";		
+		int id = getJdbcTemplate().queryForObject(
+                sql,new Object[] { groupname }, Integer.class);
+		return id;
+	}
+	
+	public int addAgeGroupForUpload(final AgeGroupDTO ageGroup) {
+		if(!isAgeGroupExist(ageGroup.getAgeGroup())){
+			final String sql = "INSERT INTO age_groups(age_group,from_date,to_date,bib_from,bib_to) VALUES (?,?,?,?,?)";
+			KeyHolder keyHolder = new GeneratedKeyHolder();
+			getJdbcTemplate().update(
+			    new PreparedStatementCreator() {
+			        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+			            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"age_group","from_date","to_date","bib_from","bib_to"});
+			            ps.setString(1, ageGroup.getAgeGroup());
+			            ps.setDate(2, new Date(ageGroup.getFromAge().getTime()));
+			            ps.setDate(3, new Date(ageGroup.getToAge().getTime()));
+			            ps.setInt(4, ageGroup.getFromBibNumber());
+			            ps.setInt(5, ageGroup.getToBibNumber());
+			            return ps;
+			        }
+			    },keyHolder);
+			int key = keyHolder.getKey().intValue();
+			return key;
+		}else{
+			return getAgeGroupId(ageGroup.getAgeGroup());
+		}
+	}
+	
+	private boolean isAgeGroupExist(String ageGroupName){
+		boolean ok = false;
+		String sql = "SELECT COUNT(*) FROM age_groups WHERE age_groups.age_group =?";
+		try{
+			int total = getJdbcTemplate().queryForObject(
+	                sql,new Object[] { ageGroupName }, Integer.class);
+			if(total>0){
+				ok = true;
+			}
+			return ok;
+		}catch(Exception e){
+			return ok;
+		}		
+	}
+	
+	private int getAgeGroupId(String groupname){
+		String sql = "SELECT age_groups.id FROM age_groups WHERE age_groups.age_group = ?";		
+		int id = getJdbcTemplate().queryForObject(
+                sql,new Object[] { groupname }, Integer.class);
+		return id;
+	}
+	
+	public int addEventForUpload(final EventDTO event,String gender) {
+		if(!isEventExist(event.getEventName(),gender)){
+			final String sql = "INSERT INTO EVENTS(event_name,type,participants,event_category_id) VALUES (?,?,?,?)";
+			
+			KeyHolder keyHolder = new GeneratedKeyHolder();
+			getJdbcTemplate().update(
+			    new PreparedStatementCreator() {
+			        public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+			            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"event_name","type","participants","event_category_id"});
+			            ps.setString(1, event.getEventName());
+			            ps.setString(2, event.getType());
+			            ps.setString(3, event.getParticipants());
+			            ps.setInt(4, event.getEventCategoryId());	            
+			            return ps;
+			        }
+			    },keyHolder);
+			int key = keyHolder.getKey().intValue();
+			return key;
+		}else{
+			return getEventId(event.getEventName(),gender);
+		}
+	}
+	
+	private boolean isEventExist(String eventName,String gender){
+		boolean ok = false;
+		String sql = "SELECT COUNT(*) FROM events WHERE events.event_name =? AND participants= ?";
+		try{
+			int total = getJdbcTemplate().queryForObject(
+	                sql,new Object[] { eventName, gender }, Integer.class);
+			if(total>0){
+				ok = true;
+			}
+			return ok;
+		}catch(Exception e){
+			return ok;
+		}		
+	}
+	
+	private int getEventId(String eventName,String gender){
+		String sql = "SELECT events.id FROM events WHERE events.event_name = ? AND participants= ?";		
+		int id = getJdbcTemplate().queryForObject(
+                sql,new Object[] { eventName, gender }, Integer.class);
+		return id;
+	}
+	
+	public EventDTO getEvent(int id){
+		String sql = "SELECT * FROM `events` WHERE id=?";
+		List<EventDTO> list = getJdbcTemplate().query(sql, new Object[] {id}, new EventRowMapper());
+		if(null!=list && list.size()>0){
+			return list.get(0);
+		}
+		return null;
+	}
 }

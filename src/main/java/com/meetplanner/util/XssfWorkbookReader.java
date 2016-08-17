@@ -2,6 +2,7 @@ package com.meetplanner.util;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -15,10 +16,12 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.meetplanner.dto.Athlete;
 import com.meetplanner.dto.EventDTO;
+import com.meetplanner.service.FileUploadService;
 
 /**
  * @author lakmal dasanayake
@@ -29,7 +32,8 @@ public class XssfWorkbookReader implements Reader {
 
 	private static final int START_INDEX = 2;
 	private static final int EVENTS_ATART_INDEX = 9;
-
+	@Autowired
+	private FileUploadService fileUploadService;
 	Map<Integer, String> eventMap = new HashMap<>();
 
 	@Override
@@ -50,6 +54,7 @@ public class XssfWorkbookReader implements Reader {
 				LinkedList<String> sheetHeaders = new LinkedList<String>();
 				eachSheetContent.clear();
 				Sheet sheet = wb.getSheetAt(i);
+				String ageGroup = sheet.getSheetName();
 				System.out.println("--------------- " + sheet.getSheetName() + " -----------------");
 				int lastRowNum = sheet.getLastRowNum();
 
@@ -83,7 +88,7 @@ public class XssfWorkbookReader implements Reader {
 								if (XSSFCell.CELL_TYPE_NUMERIC == eachCell.getCellType()) {
 									// System.out.print(eachCell.getNumericCellValue()
 									// + " ");
-									cellVal = String.valueOf(eachCell.getNumericCellValue());
+									cellVal = String.valueOf(eachCell.getNumericCellValue());									
 								}
 
 								if (XSSFCell.CELL_TYPE_BLANK == eachCell.getCellType()) {
@@ -103,7 +108,7 @@ public class XssfWorkbookReader implements Reader {
 					}
 				}
 				System.out.println();
-				processEachSheet(eachSheetContent, gender);
+				processEachSheet(eachSheetContent, gender,ageGroup);
 			}
 			wb.close();
 		} catch (Exception e) {
@@ -111,16 +116,17 @@ public class XssfWorkbookReader implements Reader {
 		}
 	}
 
-	private void processEachSheet(List<List<String>> eachSheetContent, String gender) {
+	private void processEachSheet(List<List<String>> eachSheetContent, String gender,String ageGroup) {
 		List<Athlete> athletes = new ArrayList<>(0);
 		for (List<String> row : eachSheetContent) {
 			if (null != row && row.size() > 0 && !"".equals(row.get(0))) {
 				Athlete athlete = new Athlete();
 				athlete.setBibNumber(row.get(2));
 				athlete.setName(row.get(3));
-				// athlete.setDateOfBirth(row.get(5));
+				athlete.setDateOfBirth(new Date());
 				athlete.setNic(row.get(4));
 				athlete.setEmpNo(row.get(1));
+				athlete.setGroup(row.get(8));
 				athlete.setGender(gender);
 				List<String> events = getMatchingEvents(row);
 				List<EventDTO> athleteEvents = new ArrayList<>(0);
@@ -137,6 +143,11 @@ public class XssfWorkbookReader implements Reader {
 			}
 		}
 		print(athletes);
+		try{
+			fileUploadService.saveAthlete(athletes,ageGroup);
+		}catch(Exception e){
+			e.printStackTrace();
+		}		
 	}
 
 	public void getEventsFromHeader(LinkedList<String> header) {
@@ -166,7 +177,7 @@ public class XssfWorkbookReader implements Reader {
 	private void print(List<Athlete> athletes) {
 		for (Athlete ath : athletes) {
 			List<EventDTO> events = ath.getEvents();
-			System.out.println("bib -> " + ath.getBibNumber() + " name -> " + ath.getName());
+			System.out.println("bib -> " + ath.getBibNumber() + " name -> " + ath.getName()+" group ->"+ath.getGroup());
 			for (EventDTO ev : events) {
 				System.out.print(ev.getEventName());
 			}

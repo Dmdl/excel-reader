@@ -86,4 +86,12 @@ public interface CommonDao {
 	public void updateEventCategory(EventCategoryDTO update) throws Exception;
 
 	public void deleteEventCategory(int eventCatId) throws Exception;
+	
+	public int addGroup(String groupName);
+	
+	public int addAgeGroupForUpload(AgeGroupDTO dto);
+	
+	public int addEventForUpload(EventDTO dto,String gender);
+	
+	public EventDTO getEvent(int id);
 }
