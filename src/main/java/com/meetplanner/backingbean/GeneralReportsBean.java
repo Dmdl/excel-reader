@@ -104,6 +104,10 @@ public class GeneralReportsBean implements Serializable {
 		}
 	}
 	
+	public void getEventResultExcel(){
+		System.out.println("downloading excel report");
+	}
+	
 	public Map<Integer, String> getAllGroups() {
 		return allGroups;
 	}

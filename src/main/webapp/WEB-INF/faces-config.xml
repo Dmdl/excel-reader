@@ -34,7 +34,7 @@ http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 		</managed-property>
 		<managed-property>
 			<property-name>reader</property-name>
-			<value>#{excelReader}</value>
+			<value>#{xssfWorkbookReader}</value>
 		</managed-property>
 	</managed-bean>
 	

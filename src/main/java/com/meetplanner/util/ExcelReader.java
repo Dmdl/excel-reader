@@ -12,10 +12,12 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellReference;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +43,10 @@ public class ExcelReader implements Reader {
 	public void readExcelFile(String file) {
 		try {
 			FileInputStream in = new FileInputStream(file);
-			POIFSFileSystem fs = new POIFSFileSystem(in);
-			HSSFWorkbook wb = new HSSFWorkbook(fs);
+			//POIFSFileSystem fs = new POIFSFileSystem(in);			
+			OPCPackage pkg = OPCPackage.open(in);
+			XSSFWorkbook wb = new XSSFWorkbook(pkg);
+			//HSSFWorkbook wb = new HSSFWorkbook(fs);
 			List<LinkedList<String>> allRows=new LinkedList<LinkedList<String>>();
 			for(int i=0;i<wb.getNumberOfSheets();i++){
 				allRows.clear();
