@@ -115,7 +115,10 @@ public class EventResultsBean implements Serializable{
 						each.setBibNumber(ath.getBibNumber());
 						each.setGroup(ath.getGroup());
 						each.getEventResult().setPerformance(ath.getEventResult().getPerformance());
-						each.getEventResult().setPlace(ath.getEventResult().getPlace());
+						int newPlace = ath.getEventResult().getPlace();
+						if(newPlace !=0){
+							each.getEventResult().setPlace(newPlace);
+						}						
 						disablePlace = false;
 					}catch(GenricSqlException e){
 						disableSubmit = true;
