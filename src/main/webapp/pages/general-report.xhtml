@@ -15,7 +15,10 @@
 				<p:accordionPanel id="generalRepPnl">
 					<p:tab id="grpWiseRepTab" title="Group Wise Athlete Count">
 						<p:panelGrid id="grpWiseRepGrid" columns="2" columnClasses="ui-grid-col-10,ui-grid-col-2">
-							<p:dataTable id="athleteTbl" var="result" value="#{reportBean.groupAthlete}">
+							<p:dataTable id="athleteTbl" var="result" value="#{reportBean.groupAthlete}" rowIndexVar="rowIndex">
+								<p:column headerText="#">
+					                #{rowIndex+1}
+					            </p:column>
 								<p:column headerText="Group Name">
 							    	<h:outputText value="#{result.groupName}" />
 							    </p:column>
@@ -29,7 +32,7 @@
 					<p:tab id="groupAthTab" title="Group Wise Athlete">
 						<p:panelGrid id="grpAthletePnl" columns="3" columnClasses="ui-grid-col-1,ui-grid-col-10,ui-grid-col-1">
 							<p:commandButton value="View" action="#{reportBean.showAthleteTable()}" process="grpAthletePnl" update="grpAthleteTbl"/>
-							<p:dataTable id="grpAthleteTbl" var="result" value="#{reportBean.groupWiseAthletes}">
+							<p:dataTable id="grpAthleteTbl" var="result" value="#{reportBean.groupWiseAthletes}" rowIndexVar="rowIndex">								
 								<p:column headerText="Group Name">
 							    	<h:outputText value="#{result.groupName}" />
 							    </p:column>

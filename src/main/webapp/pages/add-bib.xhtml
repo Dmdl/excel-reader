@@ -40,7 +40,7 @@
 						</p:panelGrid>
 						<br/><br/><br/>
 						<p:panelGrid columns="4" columnClasses="ui-grid-col-8,ui-grid-col-2,ui-grid-col-1,ui-grid-col-1" style="width:90%;" styleClass="panelGridCenter">
-							<p:dataTable id="athleteTable" var="athlete" value="#{bibNumbers.athleteList}" editable="false">
+							<p:dataTable id="athleteTable" var="athlete" value="#{bibNumbers.athleteList}" editable="false" rowIndexVar="rowIndex">
 								
 								<f:facet name="header">
 						           Asign BIB Numbers
@@ -48,6 +48,10 @@
 						        
 								<p:ajax event="rowEdit" listener="#{bibNumbers.addBulkBbiNumbers}" update="addBib athleteTable" />
        							<p:ajax event="rowEditCancel" listener="#{bibNumbers.onRowCancel}" update="addBib"/>
+								
+								<p:column headerText="#">
+					                #{rowIndex+1}
+					            </p:column>
 								
 								<p:column headerText="Id" rendered="false">
 						           <p:cellEditor>
