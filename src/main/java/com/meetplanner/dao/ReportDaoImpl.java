@@ -118,7 +118,7 @@ public class ReportDaoImpl extends JdbcDaoSupport implements ReportDao,Serializa
 						" FROM athlete_events"+
 						" LEFT JOIN athlete ON athlete.id=athlete_events.athlete_id"+
 						" LEFT JOIN groups ON athlete.group_id=groups.id"+
-						" WHERE athlete_events.event_id=? AND athlete.age_group_id=? AND athlete.gender=? AND athlete_events.place!=0";
+						" WHERE athlete_events.event_id=? AND athlete.age_group_id=? AND athlete.gender=? AND athlete_events.place!=0 ORDER BY athlete_events.place ASC";
 			
 			return getJdbcTemplate().query(sql, new Object[] {selectedEvent,selectedAgeGroup,gender}, new AthleteEventRowMapper());
 		}catch(Exception e){
