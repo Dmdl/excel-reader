@@ -638,12 +638,36 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 			        }
 			    },keyHolder);
 			int key = keyHolder.getKey().intValue();
+			addEventAgeGroup(key,event.getAgeGroups());
 			return key;
 		}else{
 			return getEventId(event.getEventName(),gender);
 		}
 	}
 	
+	private void addEventAgeGroup(int eventId, List<AgeGroupDTO> ageGroups) {
+		for(AgeGroupDTO each : ageGroups){
+			if(!isEventGroupExists(eventId,each.getId())){
+				addEventAgeGroups(eventId, each.getId());
+			}
+		}
+	}
+	
+	private boolean isEventGroupExists(int eventId,int ageGroupId){
+		boolean ok = false;
+		String sql = "SELECT COUNT(*) FROM event_age_groups WHERE event_age_groups.event_id =? AND event_age_groups.age_group_id= ?";
+		try{
+			int total = getJdbcTemplate().queryForObject(
+	                sql,new Object[] { eventId, ageGroupId }, Integer.class);
+			if(total>0){
+				ok = true;
+			}
+			return ok;
+		}catch(Exception e){
+			return ok;
+		}
+	}
+
 	private boolean isEventExist(String eventName,String gender){
 		boolean ok = false;
 		String sql = "SELECT COUNT(*) FROM events WHERE events.event_name =? AND participants= ?";

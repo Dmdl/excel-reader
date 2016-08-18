@@ -88,7 +88,8 @@ public class XssfWorkbookReader implements Reader {
 								if (XSSFCell.CELL_TYPE_NUMERIC == eachCell.getCellType()) {
 									// System.out.print(eachCell.getNumericCellValue()
 									// + " ");
-									cellVal = String.valueOf(eachCell.getNumericCellValue());									
+									double numericCellValue = eachCell.getNumericCellValue();
+									cellVal = String.valueOf((int) numericCellValue);									
 								}
 
 								if (XSSFCell.CELL_TYPE_BLANK == eachCell.getCellType()) {

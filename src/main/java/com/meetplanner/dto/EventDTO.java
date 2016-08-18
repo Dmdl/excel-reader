@@ -1,5 +1,6 @@
 package com.meetplanner.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -11,7 +12,7 @@ public class EventDTO {
 	private String type;
 	private String participants;
 	private int eventCategoryId;
-	private List<AgeGroupDTO> ageGroups;
+	private List<AgeGroupDTO> ageGroups = new ArrayList<>(0);
 	private String eventCategory;
 
 	public int getId() {

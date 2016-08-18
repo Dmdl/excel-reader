@@ -83,9 +83,12 @@ public class FileUploadServiceImpl implements FileUploadService,Serializable {
 			int ageGroupId = commonDao.addAgeGroupForUpload(age);
 			athlete.setAgeGroup(String.valueOf(ageGroupId));
 			
+			age.setId(ageGroupId);
+			
 			List<EventDTO> events = athlete.getEvents();
 			List<EventDTO> toAdd = new ArrayList<>();
 			for(EventDTO event :events){
+				event.getAgeGroups().add(age);
 				int eventId = commonDao.addEventForUpload(event,gender);
 				EventDTO athEvent = commonDao.getEvent(eventId);
 				toAdd.add(athEvent);
