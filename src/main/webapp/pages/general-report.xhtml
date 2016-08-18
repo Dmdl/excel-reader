@@ -122,10 +122,13 @@
 							<p:commandButton value="clear"/>
 						</p:panelGrid>
 						<br/><br/>
-						<p:dataTable id="eventAthleteTbl" value="#{generalRepBen.eventAthletes}" var="athlete">
+						<p:dataTable id="eventAthleteTbl" value="#{generalRepBen.eventAthletes}" var="athlete" rowIndexVar="rowIndex">
 							<!-- <p:column headerText="Id">
 						    	<h:outputText value="#{athlete.id}" />
 						    </p:column> -->
+						    <p:column headerText="#">
+					                #{rowIndex+1}
+					            </p:column>
 						    <p:column headerText="BIB No">
 						    	<h:outputText value="#{athlete.bibNumber}" />
 						    </p:column>
