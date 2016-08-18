@@ -1,6 +1,9 @@
 package com.meetplanner.util;
 
 import java.io.FileInputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +14,7 @@ import java.util.Map;
 
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -35,6 +39,7 @@ public class XssfWorkbookReader implements Reader {
 	@Autowired
 	private FileUploadService fileUploadService;
 	Map<Integer, String> eventMap = new HashMap<>();
+	private DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 
 	@Override
 	public void read(String path, String gender) throws Exception {
@@ -84,12 +89,16 @@ public class XssfWorkbookReader implements Reader {
 							while (iterator.hasNext()) {
 								String cellVal = "";
 								XSSFCell eachCell = (XSSFCell) iterator.next();
-
+																
 								if (XSSFCell.CELL_TYPE_NUMERIC == eachCell.getCellType()) {
 									// System.out.print(eachCell.getNumericCellValue()
 									// + " ");
 									double numericCellValue = eachCell.getNumericCellValue();
-									cellVal = String.valueOf((int) numericCellValue);									
+									cellVal = String.valueOf((int) numericCellValue);
+									if (DateUtil.isCellDateFormatted(eachCell)){
+										Date date = eachCell.getDateCellValue();
+										cellVal = formatDate(date);
+									}
 								}
 
 								if (XSSFCell.CELL_TYPE_BLANK == eachCell.getCellType()) {
@@ -124,7 +133,7 @@ public class XssfWorkbookReader implements Reader {
 				Athlete athlete = new Athlete();
 				athlete.setBibNumber(row.get(2));
 				athlete.setName(row.get(3));
-				athlete.setDateOfBirth(new Date());
+				athlete.setDateOfBirth(StringToDate(row.get(5)));
 				athlete.setNic(row.get(4));
 				athlete.setEmpNo(row.get(1));
 				athlete.setGroup(row.get(8));
@@ -185,5 +194,17 @@ public class XssfWorkbookReader implements Reader {
 			System.out.println();
 		}
 		System.out.println();
+	}
+	
+	private String formatDate(Date toFormat){		
+		return df.format(toFormat);
+	}
+	
+	private Date StringToDate(String date){
+		try {
+			return df.parse(date);
+		} catch (ParseException e) {
+			return new Date();
+		}
 	}
 }
