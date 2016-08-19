@@ -9,7 +9,7 @@ public class PlayerEventDTO {
 	private String athleteName;
 	private Date dateOfBirth;
 	private String groupName;
-	private double performance;
+	private String performance;
 	private int place;
 
 	public int getId() {
@@ -52,11 +52,11 @@ public class PlayerEventDTO {
 		this.groupName = groupName;
 	}
 
-	public double getPerformance() {
+	public String getPerformance() {
 		return performance;
 	}
 
-	public void setPerformance(double performance) {
+	public void setPerformance(String performance) {
 		this.performance = performance;
 	}
 
