@@ -139,7 +139,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		return results;
 	}
 
-	private void updatePerformance(int athleteid,int eventId,double performance,int place){
+	private void updatePerformance(int athleteid,int eventId,String performance,int place){
 		try{
 			String sql = "UPDATE athlete_events SET performance=?,place=? WHERE athlete_id=? AND event_id=?";
 			getJdbcTemplate().update(sql, performance,place,athleteid,eventId);
@@ -154,7 +154,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		boolean ok = false;
 		try{
 			for(ResultDTO each:results){
-				updatePerformance(each.getAthleteId(), each.getEventId(), Double.parseDouble(each.getPerformance()),each.getPlace());
+				updatePerformance(each.getAthleteId(), each.getEventId(), each.getPerformance(),each.getPlace());
 			}
 			ok = true;
 		}catch(Exception e){
@@ -211,7 +211,7 @@ public class CommonDaoImpl extends JdbcDaoSupport implements CommonDao,Serializa
 		boolean ok = false;
 		try{
 			for(Athlete each:athletes){
-				updatePerformance(Integer.parseInt(each.getId()),eventId,Double.parseDouble(each.getEventResult().getPerformance()),each.getEventResult().getPlace());
+				updatePerformance(Integer.parseInt(each.getId()),eventId,each.getEventResult().getPerformance(),each.getEventResult().getPlace());
 			}
 			ok = true;
 		}catch(Exception e){
