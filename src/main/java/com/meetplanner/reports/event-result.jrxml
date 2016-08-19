@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2016-08-19T23:59:00 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificate" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dd6ea222-4d61-4014-af3e-9c70f984752a">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="13"/>
+	<property name="ireport.y" value="0"/>
+	<field name="place" class="java.lang.Integer">
+		<fieldDescription><![CDATA[place]]></fieldDescription>
+	</field>
+	<field name="athleteName" class="java.lang.String">
+		<fieldDescription><![CDATA[athleteName]]></fieldDescription>
+	</field>
+	<field name="bibNumber" class="java.lang.String">
+		<fieldDescription><![CDATA[bibNumber]]></fieldDescription>
+	</field>
+	<field name="performance" class="java.lang.String">
+		<fieldDescription><![CDATA[performance]]></fieldDescription>
+	</field>
+	<field name="groupName" class="java.lang.String">
+		<fieldDescription><![CDATA[groupName]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="36" uuid="e9f7f698-81fc-4806-88ca-f13290f49395"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Event Result]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="17" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="3" width="60" height="23" uuid="0854ad81-49b5-4010-b6b7-bdf3e7844f52"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Place]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="61" y="3" width="68" height="23" uuid="b9fe922f-c17e-49a0-bba1-ae61257a76b9"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[bibNumber]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="443" y="3" width="79" height="23" uuid="85d9db2d-fc92-4bdf-ae7d-84caf5614972"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[performance]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="129" y="4" width="151" height="23" uuid="c9d05d6c-ac34-4132-a7f1-df47fbe85c97"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[athleteName]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="4" width="163" height="23" uuid="b17b2ea4-9231-4013-ad30-1e1f62342847"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[groupName]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="1" y="0" width="60" height="20" uuid="9cac90f9-7ac9-4ff5-8386-6e20252b225f"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{place}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="61" y="0" width="68" height="20" uuid="75dfce7b-7f61-4141-83d0-ec311193bd8e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{bibNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="0" width="79" height="20" uuid="c75101c7-df1a-4c36-b654-9affa3d545a1"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{performance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="129" y="0" width="150" height="20" uuid="aac00276-2f4d-4a8d-9d2a-e08c9e0bfdaa"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{athleteName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="279" y="0" width="164" height="20" uuid="bf9b6c11-b746-45f7-b8f2-cf209170dae1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{groupName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="17" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="12" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="12" splitType="Stretch"/>
+	</summary>
+</jasperReport>

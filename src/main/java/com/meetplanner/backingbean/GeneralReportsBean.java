@@ -1,11 +1,15 @@
 package com.meetplanner.backingbean;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import com.meetplanner.dto.AgeGroupDTO;
@@ -17,6 +21,18 @@ import com.meetplanner.service.CommonService;
 import com.meetplanner.service.FileUploadService;
 import com.meetplanner.service.ReportService;
 import com.meetplanner.util.SpringApplicationContex;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 public class GeneralReportsBean implements Serializable {
 
@@ -34,6 +50,7 @@ public class GeneralReportsBean implements Serializable {
 	private List<PlayerEventDTO> eventAthletes;
 	private List<PlayerEventDTO> eventResult;
 	private CommonService commonService;
+	private String reportType = "excel";
 
 	public GeneralReportsBean() {
 		commonService = (CommonService) SpringApplicationContex.getBean("commonService");
@@ -105,7 +122,66 @@ public class GeneralReportsBean implements Serializable {
 	}
 	
 	public void getEventResultExcel(){
-		System.out.println("downloading excel report");
+		/*ReportPrinter reportPrinter = new ReportPrinter();
+		reportPrinter.printReport(eventResult, "/com/meetplanner/reports/event-result.jrxml", new HashMap<String, Object>(), 1);*/
+		try {
+			genarateReport();
+		} catch (JRException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void genarateReport() throws JRException, IOException{
+		if(null!=reportType){
+			InputStream in = null;
+	        JasperDesign jasperDesign = null;
+	        JasperReport report = null;
+	        JasperPrint jasperPrint = null;
+	        JRBeanCollectionDataSource beanCollectionDataSource = null;
+	        try{       
+	            in = this.getClass().getClassLoader().getResourceAsStream("/com/meetplanner/reports/event-result.jrxml");
+	            jasperDesign = JRXmlLoader.load(in);
+	            report = JasperCompileManager.compileReport(jasperDesign);            
+	            beanCollectionDataSource = new JRBeanCollectionDataSource(eventResult);   
+	            jasperPrint = JasperFillManager.fillReport(report, new HashMap<String,Object>(), beanCollectionDataSource);
+	            
+	            FacesContext fc = FacesContext.getCurrentInstance();
+	            ExternalContext ec = fc.getExternalContext();
+	            OutputStream output = ec.getResponseOutputStream();
+	            ec.responseReset();
+	            if(reportType.equals("pdf")){
+	            	ec.setResponseContentType("application/pdf");            
+		            ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + "testfile.pdf" + "\"");
+		            JasperExportManager.exportReportToPdfStream(jasperPrint, output);
+	            }else if(reportType.equals("excel")){
+	            	ec.setResponseContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");      
+	                ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + "event-result.xlsx" + "\"");
+	                JRXlsxExporter exporter = new JRXlsxExporter();
+	                exporter.setParameter(JRXlsExporterParameter.JASPER_PRINT, jasperPrint);
+	                exporter.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, output);
+	                exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, Boolean.FALSE);
+	                exporter.setParameter(JRXlsExporterParameter.IS_DETECT_CELL_TYPE, Boolean.TRUE);
+	                exporter.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, Boolean.FALSE);
+	                exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+	                exporter.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, Boolean.TRUE);
+	                exporter.exportReport();
+	            }	            
+	            fc.responseComplete();
+	        }finally{
+	            jasperPrint = null;
+	            jasperDesign = null;
+	            report = null;
+	            beanCollectionDataSource = null;
+	            if (in != null) {
+	                try {
+	                    in.close();
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	            jasperPrint = null;
+	        }
+		}
 	}
 	
 	public Map<Integer, String> getAllGroups() {
