@@ -10,7 +10,7 @@ public class ReportDTO {
 	private String nic;
 	private String gender;
 	private String bibNumber;
-	private double performance;
+	private String performance;
 	private String ageGroup;
 
 	public int getId() {
@@ -61,11 +61,11 @@ public class ReportDTO {
 		this.bibNumber = bibNumber;
 	}
 
-	public double getPerformance() {
+	public String getPerformance() {
 		return performance;
 	}
 
-	public void setPerformance(double performance) {
+	public void setPerformance(String performance) {
 		this.performance = performance;
 	}
 

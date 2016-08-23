@@ -19,7 +19,7 @@ public class ReportRowMapper implements RowMapper<ReportDTO>{
 		report.setDateOfBirth(rs.getDate("date_of_birth"));
 		report.setGender(rs.getString("gender"));
 		report.setNic(rs.getString("nic"));
-		report.setPerformance(rs.getDouble("performance"));
+		report.setPerformance(rs.getString("performance"));
 		return report;
 	}
 

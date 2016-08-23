@@ -9,7 +9,7 @@
 	<field name="nic" class="java.lang.String"/>
 	<field name="gender" class="java.lang.String"/>
 	<field name="bibNumber" class="java.lang.String"/>
-	<field name="performance" class="java.lang.Double"/>
+	<field name="performance" class="java.lang.String"/>
 	<field name="ageGroup" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
