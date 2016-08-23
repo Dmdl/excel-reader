@@ -19,7 +19,7 @@
 					<p:inputText value="#{updateAthlete.searchname}"/>
 					
 					<h:outputText value="School/Club Name" />
-					<p:selectOneMenu id="selectGroupSearch" style="width:150px;" value="#{updateAthlete.searchGroup}">								
+					<p:selectOneMenu id="selectGroupSearch" style="width:150px;" value="#{updateAthlete.searchGroup}" filter="true" filterMatchMode="startsWith">								
 						<f:selectItem itemLabel="Select Group" itemValue="" noSelectionOption="true" />
 		                <f:selectItems value="#{commonData.allGroups.entrySet()}" var="entry" itemValue="#{entry.key}" itemLabel="#{entry.value}"/>					
 					</p:selectOneMenu>
